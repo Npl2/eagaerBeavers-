@@ -1,0 +1,79 @@
+* {
+    margin: auto;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid black;
+    padding: 15px;
+    border-color: blue;
+    background-color: blue;
+}
+
+a {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: large;
+    text-decoration-line: none;
+    font-weight: bold;
+    color: white;
+}
+
+a#link:hover {
+    color: yellow;;
+}
+
+main {
+    padding-top: 5px;
+    background-image: url(/images/car14.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+}
+
+p.info{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+    font-weight:normal;
+    color:lightgrey;
+}
+
+h3 {
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight:bolder;
+}
+
+.button {
+    color: black;
+    background-color: white;
+}
+
+.button:hover {
+    color: white;
+    background-color: black;
+}
+
+div#form {
+    padding-top: 10px;
+}
+
+.form input {
+    padding: 1rem;
+    border: none;
+    width: 20rem;
+    font-size: large;
+    font-weight: bold;
+}
+
+footer {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid blue;
+    margin: auto;
+    background-color: blue;
+    color: white;
+}
