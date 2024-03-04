@@ -3,13 +3,18 @@
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
+require_once('mongoClient.php');
 
 function doLogin($username,$password)
 {
-    // lookup username in databas
-    // check password
-    return true;
-    //return false if not valid
+    $mongoClientDB = new MongoClientDB();
+    $data = $mongoClientDB->isDatabaseConnected();
+    if ($data){
+      echo "Connected Sucessfully";
+      return TRUE;
+    }
+    echo "ALAS! Error Received";
+    return FALSE;
 }
 
 function requestProcessor($request)

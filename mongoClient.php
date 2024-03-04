@@ -1,17 +1,32 @@
 #!/usr/bin/php
 <?php
-$connection = new MongoClient( "mongodb://testadmin:test1234@ds041633.mongolab.com:41633/sys_integration" );
-$mongodb = $connection->selectDB('sys_integration');
-$collection = new MongoCollection($mongodb,'loghistory');
-var_dump($connection);
-var_dump($collection);
-//$collection->insert(array("username"=>"steeeve"));
+use MongoDB\Driver\ServerApi;
+require_once __DIR__ . '/vendor/autoload.php';
 
-//echo "data inserted\n";
-$cursor = $collection->find(array("username"=>"steeeve"));
-echo "find results:\n";
-foreach ($cursor as $doc)
-{
-  var_dump($doc);
+class MongoClientDB {
+    private $client;
+    private $db;
+
+    public function __construct() {
+        $connectionString = "mongodb+srv://hp548:Winter2022@systemintg.aahdnzc.mongodb.net/?retryWrites=true&w=majority&appName=SystemIntg";
+        $apiVersion = new ServerApi(ServerApi::V1);
+        $this->client = new MongoDB\Client($connectionString, [], ['serverApi' => $apiVersion]);
+        $this->db = $this->client->selectDatabase('cardeal');
+    }
+
+    public function findUserByUsername($username) {
+        $collection = $this->db->selectCollection('users');
+        return $collection->findOne(['username' => $username]);
+    }
+
+    // checking
+    public function isDatabaseConnected() {
+        try {
+            $this->db->listCollections();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }
 ?>
