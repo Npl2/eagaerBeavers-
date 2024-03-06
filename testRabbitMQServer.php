@@ -6,9 +6,14 @@ require_once('rabbitMQLib.inc');
 
 function doLogin($username,$password)
 {
+    if (!empty($username) && !empty($password)) {
+    	return true;
+    } else {
+    	return false; 
+    }
     // lookup username in databas
     // check password
-    return true;
+    //return true;
     //return false if not valid
 }
 
