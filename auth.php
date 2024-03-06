@@ -1,14 +1,15 @@
 <?php
-include 'eagaerBeavers-/auth2.php';
+
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
+require 'vendor/autoload.php';
 
 // Create a connection to RabbitMQ
-$connection = new AMQPStreamConnection('172.28.222.209', 5672, 'admin', 'admin');
+$connection = new AMQPStreamConnection('172.28.222.209', 5672, 'kerlos77', 'kerlos77','testHost');
 $channel = $connection->channel();
 
 // Declare a queue for receiving messages
-$channel->queue_declare('FE2BE', false, false, false, false);
+$channel->queue_declare('AUTHENTICATION', false, false, false, false);
 
 echo "-={[Back-end] Waiting for Front-end messages. To exit press CTRL+C}=-\n";
 
