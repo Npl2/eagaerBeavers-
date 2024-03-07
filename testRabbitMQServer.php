@@ -5,16 +5,34 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('mongoClient.php');
 
-function doLogin($username,$password)
-{
-    $mongoClientDB = new MongoClientDB();
-    $data = $mongoClientDB->isDatabaseConnected();
-    if ($data){
-      echo "Connected Sucessfully";
-      return TRUE;
-    }
-    echo "ALAS! Error Received";
-    return FALSE;
+function doLogin($username, $password) {
+  $mongoClientDB = new MongoClientDB();
+  $user = $mongoClientDB->findUserByUsername($username);
+
+  if ($user !== null && password_verify($password, $user['password'])) {
+      echo "Login successful";
+      return "Login successful";
+  } else {
+      echo "Login failed";
+      return "Login failed";
+  }
+}
+
+function insertUser($username, $password){
+  $mongoClientDB = new MongoClientDB();
+  if (!$mongoClientDB->isDatabaseConnected()) {
+      echo "Failed to connect to the database.";
+      return false;
+  }
+  $result = $mongoClientDB->insertUser($username, $password);
+  
+  if ($result['success']) {
+      echo "User successfully inserted.";
+      return true;
+  } else {
+      echo "Failed to insert user: " . $result['message'];
+      return false;
+  }
 }
 
 function requestProcessor($request)
@@ -29,6 +47,8 @@ function requestProcessor($request)
   {
     case "login":
       return doLogin($request['username'],$request['password']);
+    case "signup":
+      return insertUser($request['username'], $request['password']);
     case "validate_session":
       return doValidate($request['sessionId']);
   }
