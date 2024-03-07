@@ -91,7 +91,7 @@ $callback = function ($message) use ($channel) {
         );
 
         // Send a new error message to FrontEnd 
-        $errorConnection = new AMQPStreamConnection('192.168.191.111', 5672, 'admin', 'admin');
+        $errorConnection = new AMQPStreamConnection('172.28.59.245', 5672, 'npl2', 'npl2', 'testHost');
         $errorChannel = $errorConnection->channel();
         $errorChannel->queue_declare('BE2FE', false, false, false, false);
         $errorMessage = new AMQPMessage($errorMessageBody);
