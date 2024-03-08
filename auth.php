@@ -91,7 +91,7 @@ $callback = function ($message) use ($channel) {
         );
 
         // Send a new error message to FrontEnd 
-        $errorConnection = new AMQPStreamConnection('192.168.191.111', 5672, 'admin', 'admin');
+        $errorConnection = new AMQPStreamConnection('172.28.59.245', 5672, 'kerlos77', 'kerlos77');
         $errorChannel = $errorConnection->channel();
         $errorChannel->queue_declare('BE2FE', false, false, false, false);
         $errorMessage = new AMQPMessage($errorMessageBody);
@@ -121,7 +121,7 @@ $callback = function ($message) use ($channel) {
     	);
 
     	// Send a new message to the database
-    	$successConnection = new AMQPStreamConnection('192.168.191.111', 5672, 'admin', 'admin');
+    	$successConnection = new AMQPStreamConnection('172.28.131.210', 5672, 'kerlos77', 'kerlos77');
     	$successChannel = $successConnection->channel();
     	$successChannel->queue_declare('BE2DB', false, false, false, false);
     	$successMessage = new AMQPMessage($successMessageBody);
