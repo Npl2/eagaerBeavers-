@@ -1,22 +1,3 @@
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Assuming your login.php script processes the login request
-    // Here, you can access form data using $_POST array
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    $email = $_POST["email"];
-    $firstname = $_POST["firstname"];
-    $lastname = $_POST["lastname"];
-    
-    // Example processing logic
-    // Check username and password and perform login validation
-    // For simplicity, here we just return a success message as JSON
-    $response = array("success" => true, "message" => "Login successful!");
-    echo json_encode($response);
-    exit; // Stop further execution
-}
-?>
-
 <html>
 <head>
     <title>Login Page</title>
@@ -41,12 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script>
         function SendLoginRequest() {
             const username = document.getElementById("un").value;
-			console.log(username);
             const password = document.getElementById("pw").value;
             const email = document.getElementById("mail").value;
             const firstname = document.getElementById("fn").value;
             const lastname = document.getElementById("ln").value;
-            console.log(lastname);
 
             const requestData = {
                 username: username,
@@ -55,9 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 firstname: firstname,
                 lastname: lastname
             };
-			console.log(requestData);
 
-            fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
+            fetch('login.php', { // Make sure this URL points to your login.php file correctly
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -66,14 +44,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             })
             .then(response => response.json())
             .then(data => {
-                // Handle the response from login.php
-                //handleLoginResponse(data);
-				console.log(data);
+                console.log(data);
+                handleLoginResponse(data); // Make sure this function is defined to handle the response
             })
             .catch(error => {
                 console.error('Error sending login request:', error);
             });
         }
+
 
         function handleLoginResponse(response) {
             try {
