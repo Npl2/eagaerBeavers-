@@ -8,7 +8,7 @@ require_once('mongoClient.php');
 function doLogin($username, $password) {
   $mongoClientDB = new MongoClientDB();
   $user = $mongoClientDB->findUserByUsername($username);
-
+  echo $user;
   if ($user !== null && password_verify($password, $user['password'])) {
       echo "Login successful";
       return "Login successful";

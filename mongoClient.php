@@ -8,9 +8,10 @@ class MongoClientDB {
     private $db;
 
     public function __construct() {
-        $connectionString = "mongodb+srv://hp548:Winter2022@systemintg.aahdnzc.mongodb.net/?retryWrites=true&w=majority&appName=SystemIntg";
+        $connectionString = "mongodb+srv://root:root@sysintg.ycowwfe.mongodb.net/?retryWrites=true&w=majority&appName=SysIntg";
         $apiVersion = new ServerApi(ServerApi::V1);
         $this->client = new MongoDB\Client($connectionString, [], ['serverApi' => $apiVersion]);
+        print($this->client);
         $this->db = $this->client->selectDatabase('carDeal');
     }
 
@@ -44,7 +45,7 @@ class MongoClientDB {
     // checking
     public function isDatabaseConnected() {
         try {
-            $this->db->listCollections();
+            echo $this->db->selectCollection('users');
             return true;
         } catch (Exception $e) {
             return false;
