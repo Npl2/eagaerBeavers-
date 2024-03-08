@@ -9,7 +9,7 @@ $connection = new AMQPStreamConnection('172.28.222.209', 5672, 'kerlos77', 'kerl
 $channel = $connection->channel();
 
 // Declare a queue for receiving messages
-$channel->queue_declare('AUTHENTICATION', false, false, false, false);
+$channel->queue_declare('FE2BE', false, false, false, false);
 
 echo "-={[Back-end] Waiting for Front-end messages. To exit press CTRL+C}=-\n";
 
