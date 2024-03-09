@@ -1,61 +1,72 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Assuming your login.php script processes the login request
-    // Here, you can access form data using $_POST array
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    $email = $_POST["email"];
-    $firstname = $_POST["firstname"];
-    $lastname = $_POST["lastname"];
-    
-    // Example processing logic
-    // Check username and password and perform login validation
-    // For simplicity, here we just return a success message as JSON
-    $response = array("success" => true, "message" => "Login successful!");
-    echo json_encode($response);
-    exit; // Stop further execution
-}
-?>
 
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+require 'vendor/autoload.php';
+require_once('path.inc');
+require_once('get_host_info.inc');
+require_once('rabbitMQLib.inc');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    // Prepare the data to be sent to RabbitMQ
+    $loginData = [
+        'type' => 'login',
+        'username' => $data['username'] ?? null,
+        'password' => $data['password'] ?? null,
+        
+    ];
+
+    $response = $client->send_request($loginData);
+    echo "Howdy Sur yerr";
+    return $response; 
+}
+
+?>
 <html>
 <head>
     <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Login working??? page</h1>
-    <div id="loginFormBox">
-        <form id="loginForm" onsubmit="return false;">
-            <label for="username">Username:</label>
-            <input type="text" id="un" name="username"><br><br>
-            <label for="password">Password:</label>
-            <input type="password" id="pw" name="password"><br><br>
-            <label for="email">Email:</label>
-            <input type="email" id="mail" name="email"><br><br>
-            <label for="firstname">First Name:</label>
-            <input type="text" id="fn" name="firstname"><br><br>
-            <label for="lastname">Last Name:</label>
-            <input type="text" id="ln" name="lastname"><br><br>
-            <button onclick="SendLoginRequest()">Login</button>
-        </form>
+<body class="bg-gray-100">
+    <div class="container mx-auto mt-10 p-4">
+        <h1 class="text-3xl mb-4">Login page</h1>
+        <div class="max-w-md mx-auto bg-white shadow-md rounded px-8 py-6">
+            <form id="loginForm" onsubmit="return false;">
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+                    <input type="text" id="un" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                    <input type="password" id="pw" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="SendLoginRequest()">Login</button>
+            </form>
+            <p class="mt-4 text-sm">Don't have an account? <a href="register.php" class="text-blue-500">Register</a></p>
+        </div>
+        <div id="textResponse" class="mt-4"></div>
+    </div>
+    <div id="textResponse">
     </div>
     <script>
         function SendLoginRequest() {
             const username = document.getElementById("un").value;
-			console.log(username);
             const password = document.getElementById("pw").value;
-            const email = document.getElementById("mail").value;
-            const firstname = document.getElementById("fn").value;
-            const lastname = document.getElementById("ln").value;
-            console.log(lastname);
+            //const email = document.getElementById("mail").value;
+            //const firstname = document.getElementById("fn").value;
+            //const lastname = document.getElementById("ln").value;
 
             const requestData = {
                 username: username,
                 password: password,
-                email: email,
-                firstname: firstname,
-                lastname: lastname
+                //email: email,
+                //firstname: firstname,
+                //lastname: lastname
             };
-			console.log(requestData);
 
             fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
                 method: 'POST',
@@ -64,23 +75,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 },
                 body: JSON.stringify(requestData)
             })
-            .then(response => response.json())
+
+            .then(response => response)
             .then(data => {
-                // Handle the response from login.php
-                //handleLoginResponse(data);
-				console.log(data);
+                console.log(data);
+                handleLoginResponse(data); // Make sure this function is defined to handle the response
             })
             .catch(error => {
                 console.error('Error sending login request:', error);
             });
         }
 
+
         function handleLoginResponse(response) {
             try {
-                document.getElementById("textResponse").innerHTML = "Response: " + JSON.stringify(response);
+                document.getElementById("textResponse").innerHTML = "Response: " + response;
                 
                 // Check if login was successful
-                if (response.success) {
+                if (response.status==200) {
                     console.log('Login succeeded!');
                 } else {
                     console.log('Login failed:', response.error);
