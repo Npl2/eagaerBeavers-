@@ -56,9 +56,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         function SendLoginRequest() {
             const username = document.getElementById("un").value;
             const password = document.getElementById("pw").value;
+<<<<<<< HEAD
             //const email = document.getElementById("mail").value;
             //const firstname = document.getElementById("fn").value;
             //const lastname = document.getElementById("ln").value;
+=======
+            const email = document.getElementById("mail").value;
+            const firstname = document.getElementById("fn").value;
+            const lastname = document.getElementById("ln").value;
+>>>>>>> 2a9a5dd8f7030376f6411bc8c809fe9361f418c9
 
             const requestData = {
                 username: username,
@@ -68,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 //lastname: lastname
             };
 
-            fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
+            fetch('login.php', { // Make sure this URL points to your login.php file correctly
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
