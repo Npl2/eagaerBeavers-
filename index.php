@@ -56,15 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         function SendLoginRequest() {
             const username = document.getElementById("un").value;
             const password = document.getElementById("pw").value;
-<<<<<<< HEAD
             //const email = document.getElementById("mail").value;
             //const firstname = document.getElementById("fn").value;
             //const lastname = document.getElementById("ln").value;
-=======
-            const email = document.getElementById("mail").value;
-            const firstname = document.getElementById("fn").value;
-            const lastname = document.getElementById("ln").value;
->>>>>>> 2a9a5dd8f7030376f6411bc8c809fe9361f418c9
 
             const requestData = {
                 username: username,
@@ -74,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 //lastname: lastname
             };
 
-            fetch('login.php', { // Make sure this URL points to your login.php file correctly
+            fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -84,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             .then(response => response)
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 handleLoginResponse(data); // Make sure this function is defined to handle the response
             })
             .catch(error => {
@@ -98,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 document.getElementById("textResponse").innerHTML = "Response: " + response;
                 
                 // Check if login was successful
-                if (response.status==200) {
+                if (response['message'] == "Login successful") {
                     console.log('Login succeeded!');
                 } else {
                     console.log('Login failed:', response.error);

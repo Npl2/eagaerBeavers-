@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = $client->send_request($registerData);
 
     // Check if register was successful
-    if ($response && $response['status'] == 'success') {
+    if ($response && $response.status == 200) {
         // Registration succeeded, show popup
         echo '<script>showPopup();</script>';
     } else {
