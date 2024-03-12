@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $response = $client->send_request($registerData);
 
-    // Check if register was successful
+    // Checks if register was successful
     if ($response && $response.status == 200) {
         // Registration succeeded, show popup
         echo '<script>showPopup();</script>';
@@ -36,37 +36,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Register Page</title>
-    <!-- Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet"> 
 </head>
-<body class="bg-gray-100">
-    <h1 class="text-3xl mt-10 mb-4 text-center">Register page</h1>
-    <div class="max-w-md mx-auto bg-white shadow-md rounded px-8 py-6">
-        <form id="registerForm" onsubmit="return false;">
-            <div class="mb-4">
-                <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
-                <input type="text" id="un" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <div class="mb-6">
-                <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
-                <input type="password" id="pw" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-            <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="SendregisterRequest()">Register</button>
-        </form>
-        <p class="mt-4 text-sm text-center">Already have an account? <a href="index.php" class="text-blue-500">Login</a></p>
-    </div>
-    <div id="textResponse" class="mt-4"></div>
+<body>
 
-    <!-- Popup container -->
-    <div id="popupContainer" class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 hidden">
-        <!-- Popup content -->
-        <div class="bg-white rounded-lg p-8 max-w-md">
-            <h2 class="text-lg font-semibold mb-4">Registration Successful!</h2>
-            <p>Your registration was successful.</p>
-            <!-- Close button -->
-            <button id="closePopup" class="mt-4 bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="hidePopup()">Close</button>
+    <header>
+        <h1 class="site-title">EagerDrivers</h1> 
+    </header>
+
+    <div class="login-container">
+
+        <div class="login-box">
+            <h1 class="login-heading">Register Account</h1>
+            <div class="line"></div>
+            <form id="loginForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="un" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="pw" name="password">
+                </div>
+                <button type="button" class="login-button" onclick="SendregisterRequest()">Register</button>
+            </form>
+            <p class="register-link">Already have an account? <a href="index.php">Login</a></p>
         </div>
+        <div id="textResponse" class="response-message"></div>
     </div>
+
+<!-- Fix later, unsure why the fixed position is causing layout problems
+    <footer>
+        <p>&copy; 2024 EagerDrivers. All rights reserved.</p>
+    </footer>
+-->
 
     <script>
         function SendregisterRequest() {

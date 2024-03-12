@@ -1,0 +1,63 @@
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Global styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
+}
+
+.discussionBox {
+    display: grid;
+    grid-template-columns: 25% auto; 
+    gap: 20px; 
+    padding: 20px;
+}
+
+/* Sidebar styles */
+.sideBar-topics {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.sideBar-topics h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+.sideBar-topics ul {
+    list-style-type: none;
+}
+
+.sideBar-topics ul li {
+    margin-bottom: 10px;
+}
+
+.sideBar-topics ul li a {
+    text-decoration: none;
+    color: #555;
+}
+
+.sideBar-topics ul li a:hover {
+    color: #777;
+}
+
+/* User Discussion styles */
+.user-discussion {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.user-discussion h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.user-discussion p {
+    color: #555;
+}

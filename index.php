@@ -29,29 +29,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Login Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet"> 
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto mt-10 p-4">
-        <h1 class="text-3xl mb-4">Login page</h1>
-        <div class="max-w-md mx-auto bg-white shadow-md rounded px-8 py-6">
+<body>
+
+    <header>
+        <h1 class="site-title">EagerDrivers</h1> 
+    </header>
+
+    <div class="login-container">
+        <div class="login-box">
+            <h1 class="Welcome">Welcome Back!</h1>
+            <p class="login-description">Please enter your credentials to log in</p>
+            <div class="line"></div>
             <form id="loginForm" onsubmit="return false;">
-                <div class="mb-4">
-                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
-                    <input type="text" id="un" name="username" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="un" name="username">
                 </div>
-                <div class="mb-6">
-                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
-                    <input type="password" id="pw" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="pw" name="password">
                 </div>
-                <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="SendLoginRequest()">Login</button>
+                <button type="button" class="login-button" onclick="SendLoginRequest()">Login</button>
             </form>
-            <p class="mt-4 text-sm">Don't have an account? <a href="register.php" class="text-blue-500">Register</a></p>
+            <p class="register-link">Don't have an account? <a href="register.php">Register</a></p>
         </div>
-        <div id="textResponse" class="mt-4"></div>
+        <div id="textResponse" class="response-message"></div>
     </div>
-    <div id="textResponse">
-    </div>
+
+<!-- Fix later, unsure why the fixed position is causing layout problems
+    <footer>
+        <p>&copy; 2024 EagerDrivers. All rights reserved.</p>
+    </footer>
+-->
     <script>
         function SendLoginRequest() {
             const username = document.getElementById("un").value;

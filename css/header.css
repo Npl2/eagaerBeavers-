@@ -1,0 +1,66 @@
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.siteName {
+    color: black;
+    margin-left: 20px;
+
+}
+
+/* Header styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333; 
+}
+
+h1 {
+    font-size: 24px;
+}
+
+/* Nav Menu */
+.left-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.left-menu ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.left-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease; 
+}
+
+.left-menu ul li a:hover {
+    color: #ccc; 
+}
+
+.right-menu span {
+    margin-right: 10px;
+}
+
+.right-menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+.right-menu a:hover {
+    background-color: #555; 
+}
+
+.username {
+    color: white;
+}
