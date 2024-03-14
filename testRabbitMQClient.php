@@ -14,17 +14,22 @@ else
   $msg = "test message";
 }
 
-$request = array();
-$request['type'] = "login";
-$request['username'] = "harsh P.";
-$request['password'] = "1212";
-$request['message'] = $msg;
-$response = $client->send_request($request);
+$login = array();
+$login['type'] = "login";
+$login['username'] = "kerlos_123";
+$login['password'] = "1212121";
+// $request['email'] = "kerlos12@gmail.com";
+// $request['firstName'] = 'kerlos';
+// $request['lastName'] = 'Awadalla';
+
+$response = $client->send_request($login);
 echo $response;
 //$response = $client->publish($request);
 
 echo "client received response: ".PHP_EOL;
-print_r($response);
+if (response['message'] == "Login successful"){
+  echo($response);
+}
 echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;

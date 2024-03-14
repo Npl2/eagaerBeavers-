@@ -11,7 +11,6 @@ class MongoClientDB {
         $connectionString = "mongodb+srv://root:root@sysintg.ycowwfe.mongodb.net/?retryWrites=true&w=majority&appName=SysIntg";
         $apiVersion = new ServerApi(ServerApi::V1);
         $this->client = new MongoDB\Client($connectionString, [], ['serverApi' => $apiVersion]);
-        print($this->client);
         $this->db = $this->client->selectDatabase('carDeal');
     }
 
@@ -45,7 +44,7 @@ class MongoClientDB {
     // checking
     public function isDatabaseConnected() {
         try {
-            echo $this->db->selectCollection('users');
+            $this->db->listCollections();
             return true;
         } catch (Exception $e) {
             return false;

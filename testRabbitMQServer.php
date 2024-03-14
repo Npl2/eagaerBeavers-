@@ -8,12 +8,13 @@ require_once('mongoClient.php');
 function doLogin($username, $password) {
   $mongoClientDB = new MongoClientDB();
   $user = $mongoClientDB->findUserByUsername($username);
-  echo $user;
+
   if ($user !== null && password_verify($password, $user['password'])) {
       echo "Login successful";
       return "Login successful";
   } else {
       echo "Login failed";
+      //http_response_code(500);
       return "Login failed";
   }
 }
@@ -28,9 +29,11 @@ function insertUser($username, $password){
   
   if ($result['success']) {
       echo "User successfully inserted.";
+      
       return true;
   } else {
       echo "Failed to insert user: " . $result['message'];
+      // http_response_code(500);
       return false;
   }
 }
@@ -46,7 +49,7 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "login":
-      return doLogin($request['username'],$request['password']);
+      return array("returnCode" => 1 ,'message' => doLogin($request['username'],$request['password']));
     case "signup":
       return insertUser($request['username'], $request['password']);
     case "validate_session":
