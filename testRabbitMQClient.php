@@ -16,7 +16,7 @@ else
 
 $login = array();
 $login['type'] = "login";
-$login['username'] = "kerlos_123";
+$login['username'] = "NEWHARSH_123";
 $login['password'] = "1212121";
 // $request['email'] = "kerlos12@gmail.com";
 // $request['firstName'] = 'kerlos';
@@ -27,8 +27,11 @@ echo $response;
 //$response = $client->publish($request);
 
 echo "client received response: ".PHP_EOL;
-if (response['message'] == "Login successful"){
-  echo($response);
+if ($response['message'] ==  true){
+  echo("Sucessfull");
+}
+else{
+  echo("Request Failed");
 }
 echo "\n\n";
 

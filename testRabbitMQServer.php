@@ -11,11 +11,11 @@ function doLogin($username, $password) {
 
   if ($user !== null && password_verify($password, $user['password'])) {
       echo "Login successful";
-      return "Login successful";
+      return true;
   } else {
       echo "Login failed";
       //http_response_code(500);
-      return "Login failed";
+      return false;
   }
 }
 
@@ -49,9 +49,9 @@ function requestProcessor($request)
   switch ($request['type'])
   {
     case "login":
-      return array("returnCode" => 1 ,'message' => doLogin($request['username'],$request['password']));
+      return array('message' => doLogin($request['username'],$request['password']));
     case "signup":
-      return insertUser($request['username'], $request['password']);
+      return array('message' => insertUser($request['username'],$request['password']));
     case "validate_session":
       return doValidate($request['sessionId']);
   }
