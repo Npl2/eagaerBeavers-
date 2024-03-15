@@ -22,25 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'type' => 'login',
         'username' => $data['username'] ?? null,
         'password' => $data['password'] ?? null,
-        
     ];
 
     $response = $client->send_request($loginData);
-    echo ($response);
-
-    if ($response['message'] == true) {
-        setcookie('username', $data['username'], time() + 3600, "/");
-        header('Content-Type: application/json');
-        echo json_encode(['success' => true, 'redirect' => 'forum.php']);
-    } else {
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false, 'message' => 'Login failed']);
-    }
-
-    
+    echo json_encode(['success' => $response]);
+    exit();
 }
 
 ?>
+
+
 <html>
 <head>
     <title>Login Page</title>
@@ -78,63 +69,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p>&copy; 2024 EagerDrivers. All rights reserved.</p>
     </footer>
 -->
-    <script>
-        function SendLoginRequest() {
-            const username = document.getElementById("un").value;
-            const password = document.getElementById("pw").value;
-            //const email = document.getElementById("mail").value;
-            //const firstname = document.getElementById("fn").value;
-            //const lastname = document.getElementById("ln").value;
+<script>
+    function SendLoginRequest() {
+        const username = document.getElementById("un").value;
+        const password = document.getElementById("pw").value;
 
-            const requestData = {
-                username: username,
-                password: password,
-                //email: email,
-                //firstname: firstname,
-                //lastname: lastname
-            };
+        const requestData = {
+            username: username,
+            password: password,
+        };
 
-            fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
-                })
-                .then(response => response.json()) // Parse JSON response
-                .then(data => {
-                    console.log(data.success);
-                    if (data.success) {
-                        alert("Successfully logged in.");
-                        window.location.href = data.redirect;
-                    } else {
-                        // If login failed, show the returned message
-                        document.getElementById("textResponse").innerHTML = data.message;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error sending login request:', error);
-                    document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
-                });
-
-        }
-
-
-        function handleLoginResponse(response) {
-            try {
-                document.getElementById("textResponse").innerHTML = "Response: " + response;
-                
-                // Check if login was successful
-                if (response['message'] == "Login successful") {
-                    console.log('Login succeeded!');
-                } else {
-                    console.log('Login failed:', response.error);
-                }
-            } catch (error) {
-                console.error('Error parsing login response:', error);
-                document.getElementById("textResponse").innerHTML = "Error: Failed to parse response.";
+        fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => response.json()) // Parse response as JSON
+        .then(data => {
+            if (data.success) {
+                alert("Successfully logged in.");
+                window.location.href = 'forum.php'; // Redirect directly
+            } else {
+                document.getElementById("textResponse").innerHTML = 'Login failed';
             }
-        }   
-    </script>
+        })
+        .catch(error => {
+            console.error('Error sending login request:', error);
+            document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
+        });
+    }
+</script>
+
 </body>
 </html>
