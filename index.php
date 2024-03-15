@@ -7,6 +7,11 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+if (isset($_COOKIE['username'])) {
+    header('Location: forum.php');
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
@@ -21,8 +26,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     $response = $client->send_request($loginData);
-    echo "Howdy Sur yerr";
-    return $response; 
+    echo ($response);
+
+    if ($response['message'] == true) {
+        setcookie('username', $data['username'], time() + 3600, "/");
+        header('Location: forum.php');
+        echo json_encode(["status" => "success", "message" => "Login successful"]); 
+        return array(["status" => "success", "message" => "Login successful"]);
+    } else {
+
+        echo json_encode(["status" => "failed", "message" => "Login failed"]);
+    }
+
+    
 }
 
 ?>
@@ -89,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             .then(response => response)
             .then(data => {
-                //console.log(data);
                 handleLoginResponse(data); // Make sure this function is defined to handle the response
             })
             .catch(error => {
@@ -101,9 +116,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         function handleLoginResponse(response) {
             try {
                 document.getElementById("textResponse").innerHTML = "Response: " + response;
-                console.log(request['message'])
+                
                 // Check if login was successful
-                if (response['message'] == 1) {
+                if (response['message'] == "Login successful") {
                     console.log('Login succeeded!');
                 } else {
                     console.log('Login failed:', response.error);

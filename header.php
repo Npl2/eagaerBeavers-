@@ -11,7 +11,7 @@
                 </nav>
             </div>
             <div class="right-menu">
-                <span class="username">Welcome, [Logic for Username]</span>
-                <a href="index.php" class="logout-button">Logout</a>
+                <span class="username">Welcome, <?php echo htmlspecialchars($_COOKIE['username']); ?>!</span>
+                <a href="logout.php" class="logout-button">Logout</a>
             </div>
 </header>
