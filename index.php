@@ -7,6 +7,11 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+if (isset($_COOKIE['username'])) {
+    header('Location: forum.php');
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
@@ -21,8 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     $response = $client->send_request($loginData);
-    echo "Howdy Sur yerr";
-    return $response; 
+    if ($response == true) {
+        
+        setcookie('username', $data['username'], time() + 3600, "/");
+
+        echo json_encode(["status" => "success", "message" => "Login successful"]); 
+    } else {
+
+        echo json_encode(["status" => "failed", "message" => "Login failed"]);
+    }
+
+    
 }
 
 ?>
@@ -89,7 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             .then(response => response)
             .then(data => {
-                //console.log(data);
                 handleLoginResponse(data); // Make sure this function is defined to handle the response
             })
             .catch(error => {
@@ -100,14 +113,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         function handleLoginResponse(response) {
             try {
-                document.getElementById("textResponse").innerHTML = "Response: " + response;
-                
-                // Check if login was successful
-                if (response['message'] == "Login successful") {
-                    console.log('Login succeeded!');
-                } else {
-                    console.log('Login failed:', response.error);
-                }
+                if (data.status === "success") {
+                    alert(data.message);
+                    window.location.href = 'forum.php';
+                    } else {
+                        document.getElementById("textResponse").innerHTML = data.message;
+                    }
             } catch (error) {
                 console.error('Error parsing login response:', error);
                 document.getElementById("textResponse").innerHTML = "Error: Failed to parse response.";
