@@ -10,7 +10,7 @@ require_once('rabbitMQLib.inc');
 header('Content-Type: application/json');
 
 if (isset($_COOKIE['username'])) {
-    echo json_encode(['redirect' => 'forum.php']);
+    header('Location: forum.php');
     exit();
 }
 
