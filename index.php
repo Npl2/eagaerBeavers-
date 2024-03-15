@@ -7,40 +7,35 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+header('Content-Type: application/json');
+
 if (isset($_COOKIE['username'])) {
-    header('Location: forum.php');
+    echo json_encode(['redirect' => 'forum.php']);
     exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
     $data = json_decode(file_get_contents('php://input'), true);
 
-    // Prepare the data to be sent to RabbitMQ
     $loginData = [
         'type' => 'login',
-        'username' => $data['username'] ?? null,
-        'password' => $data['password'] ?? null,
-        
+        'username' => $data['username'] ?? '',
+        'password' => $data['password'] ?? '',
     ];
 
     $response = $client->send_request($loginData);
-    echo ($response);
 
-    if ($response['message'] == true) {
+    if ($response && $response['message'] == true) {
         setcookie('username', $data['username'], time() + 3600, "/");
-        echo '<script>alert("It is here")</script>';
-        return $response;
+        echo json_encode(['success' => true, 'message' => 'Login successful', 'redirect' => 'forum.php']);
     } else {
-
-        return 0;
+        echo json_encode(['success' => false, 'message' => 'Login failed']);
     }
-
-    
+    exit();
 }
-
 ?>
+
 <html>
 <head>
     <title>Login Page</title>
@@ -80,44 +75,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 -->
     <script>
         function SendLoginRequest() {
-            const username = document.getElementById("un").value;
-            const password = document.getElementById("pw").value;
-            //const email = document.getElementById("mail").value;
-            //const firstname = document.getElementById("fn").value;
-            //const lastname = document.getElementById("ln").value;
+        const username = document.getElementById("un").value;
+        const password = document.getElementById("pw").value;
 
-            const requestData = {
-                username: username,
-                password: password,
-                //email: email,
-                //firstname: firstname,
-                //lastname: lastname
-            };
+        const requestData = { username: username, password: password };
 
-            fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
-            })
-            .then(response => response.json()) 
-            .then(data => {
-                if (data['message'] === 1) {
-                    alert("sucessfully logged in");
-                    window.location.href = 'forum.php';
-                } else {
-                    document.getElementById("textResponse").innerHTML = data.message;
-                }
-            })
-            .catch(error => {
-                console.error('Error sending login request:', error);
-                document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
-            });
-                }
+        fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.redirect) {
+                // Server requested a redirect (user already logged in or just logged in successfully)
+                window.location.href = data.redirect;
+            } else if (data.success) {
+                alert(data.message);
+                window.location.href = data.redirect;
+            } else {
+                document.getElementById("textResponse").innerHTML = "Login failed: " + data.message;
+            }
+        })
+        .catch(error => {
+            console.error('Error sending login request:', error);
+            document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
+        });
+    }
 
 
-        function handleLoginResponse(response) {
+        
+                function handleLoginResponse(response) {
             try {
                 document.getElementById("textResponse").innerHTML = "Response: " + response;
                 
