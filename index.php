@@ -7,35 +7,39 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-header('Content-Type: application/json');
-
 if (isset($_COOKIE['username'])) {
-    echo json_encode(['redirect' => 'forum.php']);
+    header('Location: forum.php');
     exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
     $data = json_decode(file_get_contents('php://input'), true);
 
+    // Prepare the data to be sent to RabbitMQ
     $loginData = [
         'type' => 'login',
-        'username' => $data['username'] ?? '',
-        'password' => $data['password'] ?? '',
+        'username' => $data['username'] ?? null,
+        'password' => $data['password'] ?? null,
+        
     ];
 
     $response = $client->send_request($loginData);
+    echo ($response);
 
-    if ($response && $response['message'] == true) {
+    if ($response['message'] == true) {
         setcookie('username', $data['username'], time() + 3600, "/");
-        echo json_encode(['success' => true, 'message' => 'Login successful', 'redirect' => 'forum.php']);
+        return $response;
     } else {
-        echo json_encode(['success' => false, 'message' => 'Login failed']);
-    }
-    exit();
-}
-?>
 
+        return 0;
+    }
+
+    
+}
+
+?>
 <html>
 <head>
     <title>Login Page</title>
@@ -75,37 +79,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 -->
     <script>
         function SendLoginRequest() {
-        const username = document.getElementById("un").value;
-        const password = document.getElementById("pw").value;
+            const username = document.getElementById("un").value;
+            const password = document.getElementById("pw").value;
+            //const email = document.getElementById("mail").value;
+            //const firstname = document.getElementById("fn").value;
+            //const lastname = document.getElementById("ln").value;
 
-        const requestData = { username: username, password: password };
+            const requestData = {
+                username: username,
+                password: password,
+                //email: email,
+                //firstname: firstname,
+                //lastname: lastname
+            };
 
-        fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.redirect) {
-                // Server requested a redirect (user already logged in or just logged in successfully)
-                window.location.href = data.redirect;
-            } else if (data.success) {
-                alert(data.message);
-                window.location.href = data.redirect;
-            } else {
-                document.getElementById("textResponse").innerHTML = "Login failed: " + data.message;
-            }
-        })
-        .catch(error => {
-            console.error('Error sending login request:', error);
-            document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
-        });
-    }
+            fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(response => response.json()) 
+            .then(data => {
+                if (data['message'] === 1) {
+                    alert("sucessfully logged in");
+                    window.location.href = 'forum.php';
+                } else {
+                    document.getElementById("textResponse").innerHTML = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Error sending login request:', error);
+                document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
+            });
+                }
 
 
-        
-                function handleLoginResponse(response) {
+        function handleLoginResponse(response) {
             try {
                 document.getElementById("textResponse").innerHTML = "Response: " + response;
                 
