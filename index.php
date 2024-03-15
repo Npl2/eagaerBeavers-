@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         return $response;
     } else {
 
-        echo json_encode(["status" => "failed", "message" => "Login failed"]);
+        return 0;
     }
 
     
