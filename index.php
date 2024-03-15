@@ -30,10 +30,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($response['message'] == true) {
         setcookie('username', $data['username'], time() + 3600, "/");
-        return $response;
+
+        echo json_encode(['success' => true, 'redirect' => 'forum.php']);
     } else {
 
-        return 0;
+        echo json_encode(['success' => false, 'message' => 'Login failed']);
     }
 
     
@@ -100,15 +101,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 },
                 body: JSON.stringify(requestData)
             })
-            .then(response => response.json()) 
-            .then(data => {
-                if (data['message'] === 1) {
-                    alert("sucessfully logged in");
-                    window.location.href = 'forum.php';
-                } else {
-                    document.getElementById("textResponse").innerHTML = data.message;
-                }
-            })
+            ..then(data => {
+                console.log(data.success);
+        if (data.success) {
+            
+            alert("Successfully logged in.");
+            window.location.href = data.redirect;
+        } else {
+            // If login failed, show the returned message
+            document.getElementById("textResponse").innerHTML = data.message;
+        }
+    })
             .catch(error => {
                 console.error('Error sending login request:', error);
                 document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
