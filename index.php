@@ -101,9 +101,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         function handleLoginResponse(response) {
             try {
                 document.getElementById("textResponse").innerHTML = "Response: " + response;
-                
+                console.log(request['message'])
                 // Check if login was successful
-                if (response['message'] == "Login successful") {
+                if (response['message'] == 1) {
                     console.log('Login succeeded!');
                 } else {
                     console.log('Login failed:', response.error);
