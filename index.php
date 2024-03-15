@@ -23,8 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'username' => $data['username'] ?? null,
         'password' => $data['password'] ?? null,
     ];
-
+    
     $response = $client->send_request($loginData);
+    if($response){
+        setcookie('username', $data['username'], time() + 3600, "/");
+    }
     echo json_encode(['success' => $response]);
     exit();
 }
