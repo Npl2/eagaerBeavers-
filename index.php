@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
     
     $response = $client->send_request($loginData);
-    if($response){
+    if($response['message']){
         setcookie('username', $data['username'], time() + 3600, "/");
     }
     echo json_encode(['success' => $response]);
@@ -91,7 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         })
         .then(response => response.json()) // Parse response as JSON
         .then(data => {
-            if (data.success) {
+            console.log(data.success.message);
+            if (data.success.message) {
                 alert("Successfully logged in.");
                 window.location.href = 'forum.php'; // Redirect directly
             } else {
