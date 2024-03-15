@@ -30,10 +30,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($response['message'] == true) {
         setcookie('username', $data['username'], time() + 3600, "/");
-
+        header('Content-Type: application/json');
         echo json_encode(['success' => true, 'redirect' => 'forum.php']);
     } else {
-
+        header('Content-Type: application/json');
         echo json_encode(['success' => false, 'message' => 'Login failed']);
     }
 
@@ -100,23 +100,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(requestData)
-            })
-            ..then(data => {
-                console.log(data.success);
-        if (data.success) {
-            
-            alert("Successfully logged in.");
-            window.location.href = data.redirect;
-        } else {
-            // If login failed, show the returned message
-            document.getElementById("textResponse").innerHTML = data.message;
+                })
+                .then(response => response.json()) // Parse JSON response
+                .then(data => {
+                    console.log(data.success);
+                    if (data.success) {
+                        alert("Successfully logged in.");
+                        window.location.href = data.redirect;
+                    } else {
+                        // If login failed, show the returned message
+                        document.getElementById("textResponse").innerHTML = data.message;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending login request:', error);
+                    document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
+                });
+
         }
-    })
-            .catch(error => {
-                console.error('Error sending login request:', error);
-                document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
-            });
-                }
 
 
         function handleLoginResponse(response) {
