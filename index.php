@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($response['message'] == true) {
         setcookie('username', $data['username'], time() + 3600, "/");
-        
+        echo '<script>alert("It is here")</script>';
         return $response;
     } else {
 
