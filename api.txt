@@ -1,0 +1,22 @@
+################# demo request to ping the apis ########################
+
+# For getYearsByMake
+$request = array();
+$request['type'] = "getYearsByMake";
+$request['make'] = "Tesla";
+
+
+# For getMakes
+$request = array();
+$request['type'] = "getMakes";
+// Any of the make or year must not be empty
+$request['make'] = "Tesla";
+$request['year'] = "2018";
+// Add optional parameters (if required)
+$request['page'] = 1;
+$request['limit'] = 10;
+$request['sort'] = 'name';
+$request['direction'] = 'asc';
+
+
+

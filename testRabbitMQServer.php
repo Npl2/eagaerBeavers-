@@ -3,32 +3,63 @@
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
+require('car_api.php');
 
-function doLogin($username,$password)
-{
-    // lookup username in databas
-    // check password
-    return true;
-    //return false if not valid
-}
+
 
 function requestProcessor($request)
 {
+  $carApi = new CarApiFunctions();
   echo "received request".PHP_EOL;
   var_dump($request);
   if(!isset($request['type']))
   {
-    return "ERROR: unsupported message type";
+    return array("returnCode" => '400', 'message'=>"ERROR: unsupported message type");
   }
   switch ($request['type'])
   {
-    case "login":
-      return doLogin($request['username'],$request['password']);
+    case "getYearsByMake":
+      $response = $carApi->getYearsByMake($make);
+      if ($response !== null) {
+        return array('returnCode' => '200', 'response' => $response);
+      } else {
+        return array('returnCode' => '500', 'message' => 'Internal Server Error');
+      }
+      case "getMakes":
+        $response = $carApi->getMakes(
+            $request['page'] ?? null,
+            $request['limit'] ?? null,
+            $request['sort'] ?? null,
+            $request['direction'] ?? null,
+            $request['make'] ?? null,
+            $request['year'] ?? null
+        );
+        if ($response['error']!=null){
+          return array('returnCode' => '500', 'message' => $response['error']);
+        }
+
+
+        $dataresponse = $response['data'] ?? null;
+        
+
+        if ($dataresponse !== null) {
+            return array('returnCode' => '200', 'response' => $dataresponse);
+        } else {
+            return array('returnCode' => '500', 'message' => 'Internal Server Error');
+        }
+
     case "validate_session":
-      return doValidate($request['sessionId']);
+      $isValid = doValidate($request['sessionId']);
+      if ($isValid) {
+        return array('returnCode' => '200', 'message' => 'Session is valid');
+      } else {
+        return array('returnCode' => '403', 'message' => 'Session is invalid');
+      }
+    default:
+      return array("returnCode" => '404', 'message'=>"Request type not found");
   }
-  return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
+
 
 $server = new rabbitMQServer("testRabbitMQ.ini","testServer");
 
