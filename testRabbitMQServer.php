@@ -65,7 +65,7 @@ function requestProcessor($request, $channel, $replyQueue, $correlationId) {
     }
 }
 
-$connection = new AMQPStreamConnection('127.0.0.1', 5672, 'test', 'test', 'testHost');
+$connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
 $channel = $connection->channel();
 
 setupMessaging($channel);
