@@ -1,98 +1,93 @@
-
 <?php
+
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 require 'vendor/autoload.php';
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
-/*
-if (!isset($_COOKIE['username'])) {
-    header('Location: index.php');
+
+function handleAjaxRequest($make, $year) {
+    $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
+    $exchangeName = 'car_api_exchange';
+    $routingKey = 'car_request';
+
+    $request = array(
+        'type' => 'getMakes', 
+        'make' => $make,
+        'year' => $year,
+    );
+
+    $response = $client->send_request($request,$exchangeName, $routingKey);
+
+    if ($response && isset($response['returnCode']) && $response['returnCode'] == '200') {
+        echo json_encode($response['data']);
+    } else {
+        echo json_encode(array('error' => 'No data found or error occurred.'));
+    }
+
     exit();
 }
-*/
+
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+    $make = isset($_POST['make']) ? $_POST['make'] : null;
+    $year = isset($_POST['year']) ? $_POST['year'] : null;
+    handleAjaxRequest($make, $year);
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/header.css" rel="stylesheet">
     <title>Get Years by Make</title>
+    <!-- Your CSS links here -->
 </head>
-<?php include 'header.php'; ?>
 <body>
     <h1>Get Years by Make</h1>
-    <form id="typeForm" method="POST">
-        <label for="type">Enter Type:</label>
-        <input type="text" id="type" name="type" required>
+    <form id="typeForm">
+        <label for="make">Make:</label>
+        <input type="text" id="make" name="make">
+        <label for="year">Year:</label>
+        <input type="text" id="year" name="year">
         <button type="submit">Submit</button>
     </form>
+
+    <div id="responseTable"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#typeForm').submit(function(event) {
-                event.preventDefault(); // Prevent the form from submitting normally
+                event.preventDefault();
 
-                var type = $('#type').val(); // Get the type entered by the user
+                var make = $('#make').val();
+                var year = $('#year').val();
 
-                // Make AJAX request to the PHP script
                 $.ajax({
                     url: '',
                     method: 'POST',
-                    data: {
-                        type: type
-                    },
+                    data: { make: make, year: year },
+                    dataType: 'json',
                     success: function(response) {
-                        $('#response').html(response); // Display response from PHP script
+                        if(response.error) {
+                            $('#responseTable').html('<p>' + response.error + '</p>');
+                        } else {
+                            var table = '<table><tr><th>ID</th><th>Name</th></tr>';
+                            $.each(response, function(index, item) {
+                                table += '<tr><td>' + item.id + '</td><td>' + item.name + '</td></tr>';
+                            });
+                            table += '</table>';
+
+                            $('#responseTable').html(table);
+                        }
                     },
                     error: function() {
-                        $('#response').html('<p>Error: Unable to retrieve data.</p>'); // Display error message
+                        $('#responseTable').html('<p>Error: Unable to retrieve data.</p>');
                     }
                 });
             });
         });
     </script>
-    <?php
-
-        // Check if type is set in POST request
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['type'])) {
-            $type = $_POST['type'];
-
-            // Create RabbitMQ client
-            $client = new rabbitMQClient("testRabbitMQ.ini","testServer");
-
-            // Prepare request data
-            $request = array();
-            $request['type'] = "getYearsByMake";
-            $request['make'] = $type;
-
-            // Send request to RabbitMQ server
-            $response = $client->send_request($request);
-
-
-            // Handle response
-            if ($response['returnCode'] == '200') {
-                // Parse the response and display information
-                $data = json_decode($response['response'], true);
-                /*
-                echo "<h2>Vehicle Information</h2>";
-                echo "<p>Make: " . $data['make'] . "</p>";
-                echo "<p>Model: " . $data['model'] . "</p>";
-                */
-                // Add more fields as needed
-            } else {
-                echo "Error ({$response['returnCode']}): {$response['message']}"; // Output error message
-            }
-        } else {
-            echo "Error: Type not provided."; // Output error message if type is not provided
-        }
-
-        
-    ?>
-
 </body>
 </html>

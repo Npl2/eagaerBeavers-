@@ -9,6 +9,9 @@ require_once('rabbitMQLib.inc');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
+    $exchangeName = 'user_auth';
+    $routingKey = 'user_management';
+
     $data = json_decode(file_get_contents('php://input'), true);
 
     // Prepare the data to be sent to RabbitMQ
@@ -19,10 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
     ];
 
-    $response = $client->send_request($registerData);
+    $response = $client->send_request($registerData, $exchangeName, $routingKey);
 
     // Checks if register was successful
-    if ($response && $response.status == 200) {
+    if ($response && $response['message'] === true) {
         // Registration succeeded, show popup
         echo '<script>showPopup();</script>';
     } else {
