@@ -14,17 +14,17 @@ if (!isset($_COOKIE['username'])) {
         <link href="css/forum.css" rel="stylesheet"> 
         <link href="css/header.css" rel="stylesheet">
     </head>
-    <body>
-        <?php
+    <?php
             include 'header.php';
-        ?>
+    ?>
+    <body>
         <div class="discussionBox">
             <div class="sideBar-topics">
                 <h2>Categories</h2>
                 <ul>
-                    <li><a href="#">General Discussion</a></li>
-                    <li><a href="#">Tech Talk</a></li>
-                    <li><a href="#">News and Updates</a></li>
+                    <li><a href="#">Cars</a></li>
+                    <li><a href="#">Makes</a></li>
+                    <li><a href="#">Models</a></li>
                 </ul>
             </div>
             <div class="user-discussion">

@@ -1,6 +1,6 @@
 <?php
 
-require_once('VINreader.php');
+require_once('API_test.php');
 
 // Check if type is set in POST request
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['type'])) {

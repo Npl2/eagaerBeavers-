@@ -3,11 +3,11 @@
             <div class="left-menu">
                 <nav>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Discussion</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="VINreader.php">VIN Reader</a></li>
+                        <li><a href="vehicleListings.php">Vehicle Listings</a></li>
+                        <li><a href="forum.php">Discussion Forum</a></li>
+                        <li><a href="registerVehicle.php">Register Vehicle</a></li>
+                        <li><a href="recallManagement.php">Recall Management</a></li>
+                        <li><a href="API_test.php">API Test</a></li>
                     </ul>
                 </nav>
             </div>
