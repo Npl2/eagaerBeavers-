@@ -13,7 +13,6 @@ class CarApiFunctions {
                 "header" => "Accept: application/json\r\n"
             ]
         ]);
-    
         $response = file_get_contents($url, false, $context);
         if ($response !== false) {
             return json_decode($response, true);
@@ -44,7 +43,6 @@ class CarApiFunctions {
                     "header" => "Accept: application/json\r\n"
                 ]
             ]);
-    
             $response = file_get_contents($url, false, $context);
             if ($response !== false) {
                 return json_decode($response, true);

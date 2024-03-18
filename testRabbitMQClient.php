@@ -14,11 +14,15 @@ else
   $msg = "test message";
 }
 
+$exchangeName = 'car_api_exchange';
+$routingKey = 'car_request';
 $request = array();
-$request['type'] = "getYearsByMake";
-$request['make'] = "Ford";
+$request['type'] = "getMakes";
+// Any of the make or year must not be empty
 
-$response = $client->send_request($request);
+$request['year'] = "2018";
+
+$response = $client->send_request($request,$exchangeName, $routingKey);
 //$response = $client->publish($request);
 
 echo "client received response: ".PHP_EOL;
