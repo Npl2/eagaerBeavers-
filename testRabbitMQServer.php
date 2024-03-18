@@ -7,6 +7,20 @@ require_once('mongoClient.php');
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
+function setupMessaging($channel) {
+    $exchangeName = 'user_auth';
+    $queueNameUser = 'testQueue';
+    $routingKeyUser = 'user_management';
+
+    // Declare the exchange
+    $channel->exchange_declare($exchangeName, 'direct', false, true, false);
+
+    // Declare and bind the user management queue
+    $channel->queue_declare($queueNameUser, false, true, false, false);
+    $channel->queue_bind($queueNameUser, $exchangeName, $routingKeyUser);
+}
+
+
 /*
 function createQueues(){
   $connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
@@ -66,7 +80,7 @@ function requestProcessor($request)
   $channel = $connection->channel();
   $channel->queue_decalre('frontend_login_queue', false, true, false, false);
   */
-  global $channel;
+
   if(!isset($request['type']))
   {
     return "ERROR: unsupported message type";
@@ -83,15 +97,40 @@ function requestProcessor($request)
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
-$connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
+$connection = new AMQPStreamConnection('127.0.0.1', 5672, 'test', 'test', 'testHost');
 $channel = $connection->channel();
-$channel->queue_declare('frontend_login_queue', false, true, false, false);
 
-$server = new rabbitMQServer("testRabbitMQ.ini","testServer");
+setupMessaging($channel);
 
-echo "testRabbitMQServer BEGIN".PHP_EOL;
-$server->process_requests('requestProcessor');
-echo "testRabbitMQServer END".PHP_EOL;
-exit();
+echo "User Management Server ready to receive messages".PHP_EOL;
+
+$callback = function($msg) use ($channel) {
+  $request = json_decode($msg->body, true);
+  $response = requestProcessor($request);
+  
+  // Prepare the response message
+  $responseMsg = new AMQPMessage(
+      json_encode($response),
+      array('correlation_id' => $msg->get('correlation_id'))
+  );
+  
+  // Publish the response message to the queue specified in the reply_to header
+  $channel->basic_publish(
+      $responseMsg, 
+      '', 
+      $msg->get('reply_to')
+  );
+
+  echo 'Processed request and sent response: ', json_encode($response), "\n";
+};
+
+$channel->basic_consume('testQueue', '', false, true, false, false, $callback);
+
+while($channel->is_consuming()) {
+    $channel->wait();
+}
+
+$channel->close();
+$connection->close();
 ?>
 

@@ -1,6 +1,6 @@
 {
   "require": {
-      "videlalvaro/php-amqplib": "2.5.*",
-    "mongodb/mongodb": "^1.17"
+      "mongodb/mongodb": "^1.17",
+    "php-amqplib/php-amqplib": "^3.6"
   }
 }
