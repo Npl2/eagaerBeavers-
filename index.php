@@ -7,17 +7,6 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-createQueue();
-
-function createQueue(){
-    $connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
-    $channel = $connection->channel();
-
-    $channel->queue_declare('frontend_login_queue', false, true, false, false);
-
-    $channel->close();
-    $connection->close();
-}
 
 if (isset($_COOKIE['username'])) {
     header('Location: forum.php');
@@ -27,6 +16,9 @@ if (isset($_COOKIE['username'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
+    $exchangeName = 'user_auth';
+    $routingKey = 'user_management';
+
     $data = json_decode(file_get_contents('php://input'), true);
 
     // Prepare the data to be sent to RabbitMQ
@@ -36,8 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'password' => $data['password'] ?? null,
     ];
     
-    $response = $client->send_request($loginData);
-    if($response['message']){
+    $response = $client->send_request($loginRequest, $exchangeName, $routingKey);
+    if($response && $response['message'] === true){
         setcookie('username', $data['username'], time() + 3600, "/");
     }
     echo json_encode(['success' => $response]);
