@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'password' => $data['password'] ?? null,
     ];
     
-    $response = $client->send_request($loginRequest, $exchangeName, $routingKey);
+    $response = $client->send_request($loginData, $exchangeName, $routingKey);
     if($response && $response['message'] === true){
         setcookie('username', $data['username'], time() + 3600, "/");
     }

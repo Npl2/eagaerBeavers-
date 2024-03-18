@@ -31,10 +31,6 @@ if (!isset($_COOKIE['username'])) {
         <button type="submit">Submit</button>
     </form>
 
-    <div id="response"></div>
-
-    <div id="response"></div>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -82,9 +78,11 @@ if (!isset($_COOKIE['username'])) {
             if ($response['returnCode'] == '200') {
                 // Parse the response and display information
                 $data = json_decode($response['response'], true);
+                /*
                 echo "<h2>Vehicle Information</h2>";
                 echo "<p>Make: " . $data['make'] . "</p>";
                 echo "<p>Model: " . $data['model'] . "</p>";
+                */
                 // Add more fields as needed
             } else {
                 echo "Error ({$response['returnCode']}): {$response['message']}"; // Output error message
