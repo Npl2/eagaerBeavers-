@@ -4,7 +4,25 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('mongoClient.php');
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
+/*
+function createQueues(){
+  $connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
+  $channel = $connection->channel();
+
+  $channel->queue_declare('frontend_login_queue', false, true, false, false);
+
+  $channel->close();
+  $connection->close();
+}
+*/
+/*
+function connectRabbitMQ(){
+  return new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
+}
+*/
 function doLogin($username, $password) {
   $mongoClientDB = new MongoClientDB();
   $user = $mongoClientDB->findUserByUsername($username);
@@ -42,6 +60,13 @@ function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
   var_dump($request);
+
+  /* new code
+  $connection = connectRabbitMQ();
+  $channel = $connection->channel();
+  $channel->queue_decalre('frontend_login_queue', false, true, false, false);
+  */
+  global $channel;
   if(!isset($request['type']))
   {
     return "ERROR: unsupported message type";
@@ -57,6 +82,10 @@ function requestProcessor($request)
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
+
+$connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
+$channel = $connection->channel();
+$channel->queue_declare('frontend_login_queue', false, true, false, false);
 
 $server = new rabbitMQServer("testRabbitMQ.ini","testServer");
 
