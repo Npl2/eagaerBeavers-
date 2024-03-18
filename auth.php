@@ -1,5 +1,5 @@
 <?php
-
+/*
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 require 'vendor/autoload.php';
@@ -142,4 +142,5 @@ while ($channel->is_open()) {
 // Close the channel and the connection
 $channel->close();
 $connection->close();
+*/
 ?>

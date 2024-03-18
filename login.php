@@ -1,5 +1,5 @@
 <?php
-
+/*
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 require 'vendor/autoload.php';
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $channel = $connection->channel();
 
     // Declare a queue for receiving messages
-    $channel->queue_declare('FE2BE', true, false, false, false);
+    $channel->queue_declare('DBqueue', true, false, false, false);
     $data = json_decode(file_get_contents('php://input'), true);
 
     // Prepare the data to be sent to RabbitMQ
@@ -38,5 +38,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 echo "-={[Back-end] Waiting for Front-end messages. To exit press CTRL+C}=-\n";
-
+*/
 ?>

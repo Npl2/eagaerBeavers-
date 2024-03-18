@@ -7,6 +7,18 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+createQueue();
+
+function createQueue(){
+    $connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
+    $channel = $connection->channel();
+
+    $channel->queue_declare('frontend_login_queue', false, true, false, false);
+
+    $channel->close();
+    $connection->close();
+}
+
 if (isset($_COOKIE['username'])) {
     header('Location: forum.php');
     exit();
@@ -33,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-
 
 <html>
 <head>

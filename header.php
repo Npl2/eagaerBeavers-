@@ -7,6 +7,7 @@
                         <li><a href="#">Discussion</a></li>
                         <li><a href="#">About</a></li>
                         <li><a href="#">Contact</a></li>
+                        <li><a href="VINreader.php">VIN Reader</a></li>
                     </ul>
                 </nav>
             </div>
