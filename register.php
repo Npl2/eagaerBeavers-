@@ -24,15 +24,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $response = $client->send_request($registerData, $exchangeName, $routingKey);
 
-    // Checks if register was successful
-    if ($response && $response['message'] === true) {
-        // Registration succeeded, show popup
-        echo '<script>showPopup();</script>';
-    } else {
-        echo "Howdy Sur yerr";
-    }
 
-    return $response; 
+    //return $response; 
+    echo json_encode(['success' => $response]);
+    exit();
 }
 
 ?>
@@ -68,63 +63,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div id="textResponse" class="response-message"></div>
     </div>
 
-<!-- Fix later, unsure why the fixed position is causing layout problems
-    <footer>
-        <p>&copy; 2024 EagerDrivers. All rights reserved.</p>
-    </footer>
--->
+<script>
+    function SendregisterRequest() {
+        const username = document.getElementById("un").value;
+        const password = document.getElementById("pw").value;
 
-    <script>
-        function SendregisterRequest() {
-            const username = document.getElementById("un").value;
-            const password = document.getElementById("pw").value;
+        const requestData = {
+            username: username,
+            password: password,
+        };
 
-            const requestData = {
-                username: username,
-                password: password,
-            };
-
-            fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
-            })
-            .then(response => response)
-            .then(data => {
-                console.log(data);
-                handleregisterResponse(data); // Make sure this function is defined to handle the response
-            })
-            .catch(error => {
-                console.error('Error sending register request:', error);
-            });
-        }
-
-        function handleregisterResponse(response) {
-            try {
-                document.getElementById("textResponse").innerHTML = "Response: " + response;
-                
-                // Check if register was successful
-                if (response && response.status == 200) {
-                    // Registration succeeded, show popup
-                    showPopup();
-                } else {
-                    console.log('Registration failed:', response.error);
-                }
-            } catch (error) {
-                console.error('Error parsing register response:', error);
-                document.getElementById("textResponse").innerHTML = "Error: Failed to parse response.";
+        fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => response.json()) // Parse response as JSON
+        .then(data => {
+            console.log(data.success.message);
+            if (data.success.message) {
+                alert("Successfully registered.");
+                window.location.href = 'index.php'; // Redirect directly
+            } else {
+                document.getElementById("textResponse").innerHTML = 'Register failed';
             }
-        }   
-
-        function showPopup() {
-            document.getElementById('popupContainer').classList.remove('hidden');
-        }
-
-        function hidePopup() {
-            document.getElementById('popupContainer').classList.add('hidden');
-        }
-    </script>
+        })
+        .catch(error => {
+            console.error('Error sending register request:', error);
+            document.getElementById("textResponse").innerHTML = "Error: Failed to process request.";
+        });
+    }
+</script>
 </body>
 </html>

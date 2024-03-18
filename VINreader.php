@@ -8,7 +8,7 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
 function handleAjaxRequest($make, $year) {
-    $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
+    $client = new rabbitMQClient("testRabbitMQ.ini", "carAPI");
     $exchangeName = 'car_api_exchange';
     $routingKey = 'car_request';
 
@@ -21,7 +21,7 @@ function handleAjaxRequest($make, $year) {
     $response = $client->send_request($request,$exchangeName, $routingKey);
 
     if ($response && isset($response['returnCode']) && $response['returnCode'] == '200') {
-        echo json_encode($response['data']);
+        echo json_encode($response['response']);
     } else {
         echo json_encode(array('error' => 'No data found or error occurred.'));
     }
@@ -41,8 +41,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 <head>
     <meta charset="UTF-8">
     <title>Get Years by Make</title>
-    <!-- Your CSS links here -->
+    <link href="css/header.css" rel="stylesheet">
 </head>
+<?php
+            include 'header.php';
+        ?>
 <body>
     <h1>Get Years by Make</h1>
     <form id="typeForm">
@@ -57,10 +60,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        console.log("Am i here?")
         $(document).ready(function() {
             $('#typeForm').submit(function(event) {
                 event.preventDefault();
-
+                
                 var make = $('#make').val();
                 var year = $('#year').val();
 
@@ -70,6 +74,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
                     data: { make: make, year: year },
                     dataType: 'json',
                     success: function(response) {
+                        console.log("Success function");
+                        console.log(response);
                         if(response.error) {
                             $('#responseTable').html('<p>' + response.error + '</p>');
                         } else {
