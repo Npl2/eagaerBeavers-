@@ -1,26 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle reviews</title>
-    <link rel="stylesheet" href="vehicle_reviews.css">
-</head>
-<body>
-        <nav id="navigation">
-            <a href="index.html" id="link">EAGER_DRIVERS</a>
-            <a href="cars_for_sale.html" id="link">Cars for sale</a>
-            <a href="car_maintenance.html" id="link">Car maintenance</a>
-            <a href="vehicle_reviews.html" id="link">Vehicle reviews</a>
-            <a href="login.html" id="link">Login</a>
-        </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EAGER_DRIVERS</title>
+    <link rel="stylesheet" href="vehicle_reviews.css" />
+  </head>
+  <body>
+    <nav id="navigation">
+      <a href="index.html" id="link">EAGER_DRIVERS</a>
+      <a href="cars_for_sale.html" id="link">Cars for sale</a>
+      <a href="car_maintenance.html" id="link">Car maintenance</a>
+      <a href="vehicle_reviews.html" id="link">Vehicle reviews</a>
+      <a href="login.html" id="link">Login</a>
+      <a href="car_registration.html" id="link">Car Registration</a>
+    </nav>
 
-        <main>
-        VEHICLE REVIEWS
-        </main>
+    <main id="container">
+      <aside>
+        <form action="parts_search" method="post">
+          <div id="keyword">
+            <label for="Keyword">Keyword:</label>
+            <input type="text" />
+          </div>
+
+          <div id="category">
+            <label for="Category">Category:</label>
+            <select name="category" id="category">
+              <option value="Show all threads">Show all threads</option>
+              <option value="Not Applicable">Not Applicable</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Audio/Video/Electronics">
+                Audio/Video/Electronics
+              </option>
+              <option value="Show all threads">Show all threads</option>
+            </select>
+          </div>
+
+          <div id="price">
+            <label for="Price">Price:</label>
+            <input type="text" placeholder="min" />
+            <input type="text" placeholder="max" />
+          </div>
+
+          <div id="all">
+            <label for="Private or vendor listing"
+              >Private or Vendor Listing:</label
+            >
+            <input type="radio" id="listing" name="listing" value="listing" />
+            <label for="All listings">All</label>
+            <input type="radio" id="vendor" name="vendor" value="vendor" />
+            <label for="Vendor Listing">Vendor</label>
+            <input type="radio" id="private" name="private" value="private" />
+            <label for="Private Listing">Private</label>
+          </div>
+
+          <div id="location">
+            <label for="location">Location:</label>
+            <select name="location" id="location">
+              <option value="Not Applicable">Not Applicable</option>
+              <option value="Alabama">Alabama</option>
+              <option value="California">California</option>
+              <option value="Connecticut">Connecticut</option>
+              <option value="Delaware">Delaware</option>
+              <option value="Florida">Florida</option>
+              <option value="Georgia">Georgia</option>
+              <option value="New Jersey">New Jersey</option>
+              <option value="New York">New York</option>
+              <option value="Texas">Texas</option>
+            </select>
+
+            <input type="button" value="Search" />
+            <input type="button" value="Clear" />
+          </div>
+        </form>
+      </aside>
+
+      <div id="table">
+        <table>
+          <tr>
+            <th>FORUM</th>
+            <th>Last Posts</th>
+            <th>Threads</th>
+            <th>Posts</th>
+          </tr>
+
+          <tr>
+            <td>Audio, video, electronics</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>Brakes</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>Exhausts</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>Engine-power Adders</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>Intake/Fuel</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>Interior</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>Exterior FS</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>Steering & Suspension</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>Wheel & Tires</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>OEM Parts</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>Non G related items</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+        </table>
+      </div>
+    </main>
 
     <footer>
-        <p>Copyright &copy; EAGER_DRIVERS, LLC</p>
+      <p>Copyright &copy; EAGER_DRIVERS, LLC</p>
     </footer>
-</body>
+  </body>
 </html>

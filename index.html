@@ -1,45 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EAGER_DRIVERS</title>
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
-        <nav id="navigation">
-            <a href="index.html" id="link">EAGER_DRIVERS</a>
-            <a href="cars_for_sale.html" id="link">Cars for sale</a>
-            <a href="car_maintenance.html" id="link">Car maintenance</a>
-            <a href="vehicle_reviews.html" id="link">Vehicle reviews</a>
-            <a href="login.html" id="link">Login</a>
-        </nav>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <nav id="navigation">
+      <a href="index.html" id="link">EAGER_DRIVERS</a>
+      <a href="cars_for_sale.html" id="link">Cars for sale</a>
+      <a href="car_maintenance.html" id="link">Car maintenance</a>
+      <a href="vehicle_reviews.html" id="link">Vehicle reviews</a>
+      <a href="login.html" id="link">Login</a>
+      <a href="car_registration.html" id="link">Car Registration</a>
+    </nav>
 
-        <div id="main_container">
-            <main></main>
-                <div id="main_content">
-                    <div id="title">
-                    <h1 class="heading">EAGER_DRIVERS</h1>
-                    <p class="sub-heading">Beyond Boundaries, Behind the Wheel" encapsulates the essence of limitless exploration and the freedom that comes with driving. It speaks to the idea that when you're behind the wheel, you have the power to transcend boundaries, whether they be geographical, personal, or experiential. This motto conveys the adventurous spirit of the open road and the transformative experiences that await those who are willing to embark on a journey. It emphasizes the unique connection between the driver and their vehicle, highlighting the role of the car as a conduit to new horizons and unforgettable moments.</p>
-                    </div>
-                    <div class="account">
-                        <h1><b>CREATE AN ACCOUNT</b></h1>
-                        <form action="" method="post" class="form">
-                            <input type="text" placeholder="First Name" required><br><br>
-                            <input type="text" placeholder="Last Name" required><br><br>
-                            <input type="text" placeholder="Email" required><br><br>
-                            <input type="password" placeholder="Password" required><br><br>
-                            <input type="button" value="Create Account" class="button">
-                        </form>
-    
-                        <p id="privacy"><b>By creating an account you agree to our </b><a href="terms_of_service.html" target="_blank" class="privacy"><b>Terms of Service</b></a> <b>and</b> <a href="privacy_policy.html" target="_blank" class="privacy">Privacy Policy</a>.</p>
-                    </div>
-                </div>
+    <div id="main_container">
+      <main></main>
+      <div id="main_content">
+        <div id="title">
+          <h1 class="heading">EAGER_DRIVERS</h1>
+          <p class="sub-heading">
+            Beyond Boundaries, Behind the Wheel" encapsulates the essence of
+            limitless exploration and the freedom that comes with driving. It
+            speaks to the idea that when you're behind the wheel, you have the
+            power to transcend boundaries, whether they be geographical,
+            personal, or experiential. This motto conveys the adventurous spirit
+            of the open road and the transformative experiences that await those
+            who are willing to embark on a journey. It emphasizes the unique
+            connection between the driver and their vehicle, highlighting the
+            role of the car as a conduit to new horizons and unforgettable
+            moments.
+          </p>
         </div>
+        <div class="account">
+          <h1><b>CREATE AN ACCOUNT</b></h1>
+          <form action="" method="post" class="form">
+            <input
+              id="username"
+              type="text"
+              placeholder="Username"
+              required
+            /><br /><br />
+            <input
+              id="firstName"
+              type="text"
+              placeholder="First Name"
+              required
+            /><br /><br />
+            <input
+              id="lastName"
+              type="text"
+              placeholder="Last Name"
+              required
+            /><br /><br />
+            <input
+              id="email"
+              type="text"
+              placeholder="Email"
+              required
+            /><br /><br />
+            <input
+              id="password"
+              type="password"
+              placeholder="Password"
+              required
+            /><br /><br />
 
-        
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="confirm password"
+              required
+            /><br /><br />
+
+            <input
+              id="createAccount"
+              type="button"
+              value="Create Account"
+              class="button"
+            />
+          </form>
+
+          <p id="privacy">
+            <b>By creating an account you agree to our </b
+            ><a href="terms_of_service.html" target="_blank" class="privacy"
+              ><b>Terms of Service</b></a
+            >
+            <b>and</b>
+            <a href="privacy_policy.html" target="_blank" class="privacy"
+              >Privacy Policy</a
+            >.
+          </p>
+        </div>
+      </div>
+    </div>
+
     <footer>
-        <p>Copyright &copy; EAGER_DRIVERS, LLC</p>
+      <p>Copyright &copy; EAGER_DRIVERS, LLC</p>
     </footer>
-</body>
+
+    <!-- Include the jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+      // Wait for the document to be ready
+      $(document).ready(function () {
+        // Event listener for the login button click
+        $("#createAccount").on("click", function () {
+          // Payload data
+          var payload = {
+            username: $("#username").val(),
+            firstname: $("#firstName").val(),
+            lastname: $("#lastName").val(),
+            email: $("#email").val(),
+            password: $("#password").val(),
+            confirm: $("#confirmPassword").val(),
+          };
+
+          // Make an AJAX request to the PHP producer script
+          $.ajax({
+            type: "POST",
+            url: "auth.php", // Replace with the correct path to your producer script
+            contentType: "application/json",
+            data: JSON.stringify(payload),
+            success: function (response) {
+              console.log("Request sent successfully:", response);
+            },
+            error: function (error) {
+              console.error("Error sending request:", error);
+            },
+          });
+        });
+      });
+    </script>
+  </body>
 </html>
