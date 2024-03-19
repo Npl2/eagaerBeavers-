@@ -14,6 +14,7 @@ class MongoClientDB {
         $this->db = $this->client->selectDatabase('carDeal');
     }
 
+    ////////////////////// User authentication ///////////////////////////////
     // find user
     public function findUserByUsername($username) {
         $collection = $this->db->selectCollection('users');
@@ -40,7 +41,7 @@ class MongoClientDB {
           return ['success' => false, 'message' => 'Failed to insert user.'];
       }
     }
-  
+
     // checking
     public function isDatabaseConnected() {
         try {

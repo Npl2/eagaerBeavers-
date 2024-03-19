@@ -1,0 +1,106 @@
+/////////////////////////// BLOG POSTS ////////////////////////////
+
+// ADD BLOG POST
+$loginRequest = [
+    'type' => "add_blog_post",
+    'username' => "NEWHARSH_123",
+    'title' => "What is this piece of crap?",
+    'content' => 'Suspendisse tincidunt, magna nec lobortis aliquam, magna neque ullamcorper lectus, nec posuere erat ligula nec massa. Donec ultrices libero id odio eleifend, nec ornare leo pharetra. Donec elementum purus at ligula bibendum, ut scelerisque magna fringilla. Quisque libero eros, lacinia et augue sed, porta sodales sapien. Curabitur dignissim velit tincidunt sagittis bibendum. Praesent purus dui, egestas in sem sed, dictum iaculis lacus. Nam laoreet euismod quam vitae sagittis'
+];
+
+if ($response && $response['message']) {
+    echo "Successful";
+} else {
+    echo "Request Failed";
+}
+/////////////////////////////////////
+
+// LIST BLOG POSTS
+$loginRequest = [
+    'type' => "list_blog_posts",
+];
+
+$response = $client->send_request($loginRequest, $exchangeName, $routingKey);
+
+echo "Client received response: " . PHP_EOL;
+if ($response && $response['message'] == "Blog posts fetched successfully") {
+    echo "Successful" . PHP_EOL;
+    foreach ($response['data'] as $post) {
+        // Display the ObjectId
+        if (isset($post['_id']['$oid'])) {
+            echo "ID: " . $post['_id']['$oid'] . PHP_EOL;
+        } else {
+            echo "ID: Not Available" . PHP_EOL;
+        }
+
+        echo "Title: " . $post['title'] . PHP_EOL;
+        echo "Author: " . $post['author'] . PHP_EOL;
+        echo "Content: " . $post['content'] . PHP_EOL;
+
+        if (isset($post['created_at']['$date']['$numberLong'])) {
+            $timestampInSeconds = intval($post['created_at']['$date']['$numberLong']) / 1000;
+            $date = date('Y-m-d H:i:s', $timestampInSeconds);
+            echo "Posted on: " . $date . PHP_EOL;
+        }
+        echo "---------------------------------" . PHP_EOL;
+    }
+} else {
+    echo "Request Failed" . PHP_EOL;
+}
+///////////////////////////////////////
+
+// ADD COMMENT ON A POST
+
+$loginRequest = [
+    'type' => 'add_comment_post',
+    'postId' => "65f9624a6054d3b6ab071f44",
+    'username' => "nath",
+    "comment" => "yeah man this is soo true"
+];
+
+$response = $client->send_request($loginRequest, $exchangeName, $routingKey);
+
+echo "Client received response: " . PHP_EOL;
+if ($response && $response['success'] ) {
+    echo"COMMENT ADDED";
+} else {
+    echo "Request Failed" . PHP_EOL;
+}
+/////////////////////////////////
+
+
+// GET BLOG POST WITH COMMENT
+$loginRequest = [
+    'type' => 'get_blog_post_with_comments',
+    'postId' => "65f9624a6054d3b6ab071f44"
+];
+
+$response = $client->send_request($loginRequest, $exchangeName, $routingKey);
+
+echo "Client received response: " . PHP_EOL;
+if ($response && $response['message'] == "Blog post with comments fetched successfully" && $response['data']['success']) {
+    $post = $response['data']['post'];
+    echo "ID: " . $post['_id']['$oid'] . PHP_EOL;
+    echo "Author: " . $post['author'] . PHP_EOL;
+    echo "Title: " . $post['title'] . PHP_EOL;
+    echo "Content: " . $post['content'] . PHP_EOL;
+    $timestampInSeconds = intval($post['created_at']['$date']['$numberLong']) / 1000;
+    $date = date('Y-m-d H:i:s', $timestampInSeconds);
+    echo "Posted on: " . $date . PHP_EOL;
+    echo "Comments:" . PHP_EOL;
+    foreach ($post['comments'] as $comment) {
+        echo "    Comment ID: " . $comment['_id']['$oid'] . PHP_EOL;
+        echo "    Username: " . $comment['username'] . PHP_EOL;
+        echo "    Comment: " . $comment['comment'] . PHP_EOL;
+        $commentTimestampInSeconds = intval($comment['created_at']['$date']['$numberLong']) / 1000;
+        $commentDate = date('Y-m-d H:i:s', $commentTimestampInSeconds);
+        echo "    Posted on: " . $commentDate . PHP_EOL;
+        echo "    ---------------" . PHP_EOL;
+    }
+} else {
+    echo "Request Failed" . PHP_EOL;
+}
+///////////////////////////////
+
+
+

@@ -4,6 +4,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('mongoClient.php');
+require_once('mongoClient_Blog.php');
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
@@ -74,7 +75,7 @@ function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
   var_dump($request);
-
+  $mongoClientDB_BLOG = new MongoClientDB_BLOG(); 
   /* new code
   $connection = connectRabbitMQ();
   $channel = $connection->channel();
@@ -91,13 +92,34 @@ function requestProcessor($request)
       return array('message' => doLogin($request['username'],$request['password']));
     case "signup":
       return array('message' => insertUser($request['username'],$request['password']));
+    case "add_blog_post":
+      if (!isset($request['username']) || !isset($request['title']) || !isset($request['content'])) {
+          return ["returnCode" => '0', 'message' => "Missing information for adding blog post"];
+      }
+      $result = $mongoClientDB_BLOG->insertBlogPost($request['username'], $request['title'], $request['content']);
+      return ['message' => $result['message']];
+    case "add_comment_post":
+      if (!isset($request['postId']) || !isset($request['username']) || !isset($request['comment'])) {
+        return ["returnCode" => '0', 'message' => "Missing information for adding blog post"];
+    }
+    $result = $mongoClientDB_BLOG->addComment($request['postId'], $request['username'], $request['comment']);
+    return $result;
+    case "list_blog_posts":
+        $posts = $mongoClientDB_BLOG->listBlogPosts();
+        return ['message' => "Blog posts fetched successfully", 'data' => $posts];
+    case "get_blog_post_with_comments":
+        if (!isset($request['postId'])) {
+            return ["returnCode" => '0', 'message' => "No post ID provided"];
+        }
+        $postWithComments = $mongoClientDB_BLOG->getBlogPostWithComments($request['postId']);
+        return ['message' => "Blog post with comments fetched successfully", 'data' => $postWithComments];
     case "validate_session":
       return doValidate($request['sessionId']);
   }
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
-$connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
+$connection = new AMQPStreamConnection('127.0.0.1', 5672, 'test', 'test', 'testHost');
 $channel = $connection->channel();
 
 setupMessaging($channel);
