@@ -112,11 +112,11 @@
           // Payload data
           var payload = {
             username: $("#username").val(),
-            firstname: $("#firstName").val(),
-            lastname: $("#lastName").val(),
-            email: $("#email").val(),
+            // firstname: $("#firstName").val(),
+            // lastname: $("#lastName").val(),
+            // email: $("#email").val(),
             password: $("#password").val(),
-            confirm: $("#confirmPassword").val(),
+            // confirm: $("#confirmPassword").val(),
           };
 
           // Make an AJAX request to the PHP producer script
@@ -124,7 +124,7 @@
             type: "POST",
             url: "auth.php", // Replace with the correct path to your producer script
             contentType: "application/json",
-            data: JSON.stringify(payload),
+            data: payload,
             success: function (response) {
               console.log("Request sent successfully:", response);
             },
