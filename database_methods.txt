@@ -104,3 +104,64 @@ if ($response && $response['message'] == "Blog post with comments fetched succes
 
 
 
+/////////////////////////////////////////// CAR REG METHODS ////////////////////////////////////////
+
+// register Car
+$registerCarRequest = [
+    'type' => 'register_car',
+    'username' => 'nath',
+    'make' => 'Toyota',
+    'year' => '2020',
+    'model' => 'Camry',
+    'on_sale' => true
+];
+
+$response = $client->send_request($registerCarRequest, $exchangeName, $routingKey);
+
+echo "Client received response: " . PHP_EOL;
+if ($response && $response['message'] == "Car registration successful.") {
+    echo "Car registered successfully" . PHP_EOL;
+} else {
+    echo "Car registration failed: " . $response['message'] . PHP_EOL;
+}
+////////////////////////////////////////////////
+
+// display user cars
+$request = [
+    'type' => 'get_user_car_regs',
+    'username' => 'nath'
+];
+
+$response = $client->send_request($request, $exchangeName, $routingKey);
+if ($response && $response['message'] == "Car registrations fetched successfully") {
+    foreach ($response['data'] as $carReg) {
+        echo "Car Registration: " . $carReg['car_reg'] . " - Make: " . $carReg['make'] . ", Model: " . $carReg['model'] . ", Year: " . $carReg['year'] . ($carReg['on_sale'] ? " - On Sale" : "") . PHP_EOL;
+    }
+} else {
+    echo "Failed to fetch car registrations" . PHP_EOL;
+}
+/////////////////////////////////////////
+
+// display all the cars sale and not sale
+$request = [
+    'type' => 'list_all_car_regs'
+];
+$response = $client->send_request($request, $exchangeName, $routingKey);
+if ($response && $response['message'] == "All car registrations fetched successfully") {
+    echo "Cars On Sale:" . PHP_EOL;
+    foreach ($response['data'] as $carReg) {
+        if ($carReg['on_sale']) {
+            echo "User: " . $carReg['username'] . " - Make: " . $carReg['make'] . ", Model: " . $carReg['model'] . ", Year: " . $carReg['year'] . " - On Sale" . PHP_EOL;
+        }
+    }
+    
+    echo PHP_EOL . "Cars Not On Sale:" . PHP_EOL;
+    foreach ($response['data'] as $carReg) {
+        if (!$carReg['on_sale']) {
+            echo "User: " . $carReg['username'] . " - Make: " . $carReg['make'] . ", Model: " . $carReg['model'] . ", Year: " . $carReg['year'] . PHP_EOL;
+        }
+    }
+} else {
+    echo "Failed to list all car registrations" . PHP_EOL;
+}
+//////////////////////////////////////

@@ -5,6 +5,8 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('mongoClient.php');
 require_once('mongoClient_Blog.php');
+require_once('mongoClient_car.php');
+
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
@@ -75,7 +77,9 @@ function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
   var_dump($request);
-  $mongoClientDB_BLOG = new MongoClientDB_BLOG(); 
+  $mongoClientDB_BLOG = new MongoClientDB_BLOG();
+  $carRegistration = new MongoClientDB_CAR();
+ 
   /* new code
   $connection = connectRabbitMQ();
   $channel = $connection->channel();
@@ -113,6 +117,26 @@ function requestProcessor($request)
         }
         $postWithComments = $mongoClientDB_BLOG->getBlogPostWithComments($request['postId']);
         return ['message' => "Blog post with comments fetched successfully", 'data' => $postWithComments];
+    
+    case "register_car":
+      if (!isset($request['username']) || !isset($request['make']) || !isset($request['year']) || !isset($request['model']) || !isset($request['on_sale'])) {
+          return ["returnCode" => '0', 'message' => "Missing information for car registration"];
+      }
+      $result = $carRegistration->insertCarReg($request['username'], $request['make'], $request['year'], $request['model'], $request['on_sale']);
+      return ['message' => $result['success'] ? "Car registration successful." : "Failed to register car."];
+  
+    case "get_user_car_regs":
+        if (!isset($request['username'])) {
+            return ["returnCode" => '0', 'message' => "No username provided"];
+        }
+        $cars = $carRegistration->getCarRegsByUser($request['username']);
+        return ['message' => "Car registrations fetched successfully", 'data' => $cars];
+    
+    case "list_all_car_regs":
+        $cars = $carRegistration->listAllCarRegs();
+        return ['message' => "All car registrations fetched successfully", 'data' => $cars];
+    
+
     case "validate_session":
       return doValidate($request['sessionId']);
   }
