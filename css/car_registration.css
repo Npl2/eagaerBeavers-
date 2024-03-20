@@ -1,0 +1,145 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/*Navigation style start */
+nav {
+  background: blue;
+  position: sticky;
+  top: 0;
+}
+
+nav h4 {
+  color: #fff;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  padding: 2rem 0;
+  text-decoration: none;
+}
+
+nav h4 a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+ul a {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.5s ease-in;
+  margin-left: 1rem;
+  font-weight: bold;
+}
+
+ul a:hover {
+  color: #eeeeeec9;
+}
+
+.navContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1500px;
+  margin: auto;
+}
+
+ul a:visited,
+h4 a:visited {
+  color: #ffff;
+}
+/* Navigation style end */
+
+.container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bodyWrapper {
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.wallper {
+  width: 50%;
+  height: 100%;
+  background: url("https://images.unsplash.com/photo-1617531653520-4893f7bbf978?q=80&w=2020&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+    center center/cover no-repeat;
+}
+
+main {
+  height: 100vh;
+  width: 40rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formContent {
+  width: 100%;
+}
+
+label {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+input,
+select {
+  display: block;
+  padding: 0.5rem;
+  outline: none;
+  width: 100%;
+  margin-top: 0.2rem;
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 1rem;
+}
+
+.submitBtn {
+  text-align: center;
+}
+
+.submitBtn input {
+  display: inline-block;
+  width: 10rem;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  background: #eee;
+  transition: background 0.5s ease-in;
+}
+
+.submitBtn input:hover {
+  background: #a7a5a579;
+}
+
+.fullName,
+.contactDetails,
+.vehicleDetails,
+.vehicleDateInfo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.fullName div,
+.contactDetails div,
+.vehicleDetails div,
+.vehicleDateInfo div {
+  width: calc((100% - 1rem) / 2);
+}

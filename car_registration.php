@@ -5,25 +5,20 @@ require 'vendor/autoload.php';
 require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
-
 // Check if the user is already logged in
 if (isset($_COOKIE['username'])) {
     header('Location: index.php');
     exit();
 }
-
 // Handle registration form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
     $exchangeName = 'user_auth';
     $routingKey = 'user_management';
-
     // Get form data
     $make = $_POST['make'] ?? null;
     $model = $_POST['model'] ?? null;
     $year = $_POST['year'] ?? null;
-
     // Prepare the data to be sent to RabbitMQ
     $registrationData = [
         'type' => 'register_vehicle',
@@ -32,59 +27,95 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
         'year' => $year,
         'username' => $_COOKIE['username'] ?? null,
     ];
-
     $response = $client->send_request($registrationData, $exchangeName, $routingKey);
     echo json_encode(['success' => $response]);
     exit();
 }
 ?>
 
-<html>
-<head>
-    <title>Vehicle Registration</title>
-    <link href="css/index.css" rel="stylesheet"> 
-</head>
-<body>
-
-    <header>
-        <h1 class="site-title">EagerDrivers</h1> 
-    </header>
-
-    <div class="registration-container">
-        <div class="registration-box">
-            <h1 class="Welcome">Register Your Vehicle</h1>
-            <form id="registrationForm" method="post" onsubmit="return false;">
-                <div class="form-group">
-                    <label for="make">Make:</label>
-                    <input type="text" id="make" name="make">
-                </div>
-                <div class="form-group">
-                    <label for="model">Model:</label>
-                    <input type="text" id="model" name="model">
-                </div>
-                <div class="form-group">
-                    <label for="year">Year:</label>
-                    <input type="text" id="year" name="year">
-                </div>
-                <button type="button" class="register-button" onclick="SendRegistrationRequest()">Register</button>
-                <input type="hidden" name="register" value="1">
-            </form>
-        </div>
-        <div id="registrationResponse" class="response-message"></div>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Vehicle</title>
+    <link rel="stylesheet" href="/car_registration.css" />
+  </head>
+  <body>
+  <?php include 'header.php'; ?>
+  
+    <div class="container">
+      <div class="bodyWrapper">
+        <main>
+          <form class="formContent">
+            <p style="text-align: center; font-size: 2rem; margin-bottom: 3rem">
+              Register Vehicle
+            </p>
+            <div class="fullName">
+              <div>
+                <label for="firstName">First name</label>
+                <input type="text" name="firstName" id="firstName" />
+              </div>
+              <div>
+                <label for="lastName">Last name</label>
+                <input type="text" name="lastName" id="lastName" />
+              </div>
+            </div>
+            <div class="contactDetails">
+              <div class="address">
+                <label for="address">Address</label>
+                <input type="text" name="address" id="address" />
+              </div>
+              <div class="contact">
+                <label for="contact">Contact</label>
+                <input type="text" name="contact" id="contact" />
+              </div>
+            </div>
+            <div class="vehicleDetails">
+              <div>
+                <label for="vehicleMake">Make of your vehicle</label>
+                <select name="vehicleMake" id="vehicleMake">
+                  <option value="toyota">Toyota</option>
+                  <option value="ford">Ford</option>
+                  <option value="Honda">Honda</option>
+                  <option value="chevrolet">Chevrolet</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div>
+                <label for="vehicleModel">Model</label>
+                <input type="text" name="vehicleModel" id="vehicleModel" />
+              </div>
+            </div>
+            <div class="vehicleDateInfo">
+              <div>
+                <label for="vehicleYear">Year</label>
+                <input type="text" name="vehicleYear" id="vehicleYear" />
+              </div>
+              <div>
+                <label for="vin">VIN</label>
+                <input type="text" name="vin" id="vin" />
+              </div>
+            </div>
+            <div class="submitBtn">
+              <input type="submit" name="submit" value="Submit" id="submit" />
+            </div>
+          </form>
+        </main>
+      </div>
+      <div class="wallper"></div>
     </div>
 
-<script>
+    <script>
     function SendRegistrationRequest() {
         const make = document.getElementById("make").value;
         const model = document.getElementById("model").value;
         const year = document.getElementById("year").value;
-
         const requestData = {
             make: make,
             model: model,
             year: year,
         };
-
         fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
             method: 'POST',
             headers: {
@@ -106,7 +137,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             document.getElementById("registrationResponse").innerHTML = "Error: Failed to process request.";
         });
     }
-</script>
 
-</body>
+    document.querySelector("#submit").addEventListener("click", SendRegistrationRequest)
+
+</script>
+  </body>
 </html>
