@@ -1,41 +1,51 @@
 <?php
-use PhpAmqpLib\Connection\AMQPStreamConnection;
-use PhpAmqpLib\Message\AMQPMessage;
-require 'vendor/autoload.php';
-require_once('path.inc');
-require_once('get_host_info.inc');
-require_once('rabbitMQLib.inc');
+  use PhpAmqpLib\Connection\AMQPStreamConnection;
+  use PhpAmqpLib\Message\AMQPMessage;
+  require 'vendor/autoload.php';
+  require_once('path.inc');
+  require_once('get_host_info.inc');
+  require_once('rabbitMQLib.inc');
 
-if (!isset($_COOKIE['username'])) {
-    header('Location: index.php');
-    exit();
-}
+  if (!isset($_COOKIE['username'])) {
+      header('Location: index.php');
+      exit();
+  }
 
-// Handle registration form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 
-  $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
-  $exchangeName = 'user_auth';
-  $routingKey = 'user_management';
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-  // Get form data
-  $make = $_POST['make'] ?? null;
-  $model = $_POST['model'] ?? null;
-  $year = $_POST['year'] ?? null;
+    $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
+    $exchangeName = 'user_auth';
+    $routingKey = 'user_management';
 
-  // Prepare the data to be sent to RabbitMQ
-  $registrationData = [
-      'type' => 'register_vehicle',
-      'make' => $make,
-      'model' => $model,
-      'year' => $year,
-      'username' => $_COOKIE['username'] ?? null,
-  ];
+    $data = json_decode(file_get_contents('php://input'), true);
+
+    $make = $data['make'] ?? null;
+    $model = $data['model'] ?? null;
+    $year = $data['year'] ?? null;
+
+    $registrationData = [
+        'type' => 'register_car',
+        'make' => $make,
+        'model' => $model,
+        'year' => $year,
+        'username' => $_COOKIE['username'] ?? null,
+        'on_sale' => false, 
+    ];
 
   $response = $client->send_request($registrationData, $exchangeName, $routingKey);
-  echo json_encode(['success' => $response]);
+
+  if ($response && $response['message'] == "Car registration successful.") {
+  
+    echo json_encode(['success' => $response]);
+
+  } else {
+      echo json_encode(['success' => $response]);
+  }
+
   exit();
 }
+
 ?>
 
 <html>
@@ -54,15 +64,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
             <form id="registrationForm" method="post" onsubmit="return false;">
                 <div class="form-group">
                     <label for="make">Make:</label>
-                    <input type="text" id="make" name="make">
+                    <input type="text" id="mk" name="make">
                 </div>
                 <div class="form-group">
                     <label for="model">Model:</label>
-                    <input type="text" id="model" name="model">
+                    <input type="text" id="md" name="model">
                 </div>
                 <div class="form-group">
                     <label for="year">Year:</label>
-                    <input type="text" id="year" name="year">
+                    <input type="text" id="yr" name="year">
                 </div>
                 <button type="button" class="register-button" onclick="SendRegistrationRequest()">Register</button>
                 <input type="hidden" name="register" value="1">
@@ -73,9 +83,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 
     <script>
       function SendRegistrationRequest() {
-          const make = document.getElementById("make").value;
-          const model = document.getElementById("model").value;
-          const year = document.getElementById("year").value;
+          const make = document.getElementById("mk").value;
+          const model = document.getElementById("md").value;
+          const year = document.getElementById("yr").value;
 
           const requestData = {
               make: make,
@@ -90,10 +100,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
               },
               body: JSON.stringify(requestData)
           })
-          .then(response => response.json()) // Parse response as JSON
+          .then(response => response.json())
           .then(data => {
               console.log(data.success.message);
-              if (data.success.message) {
+              if (data.success) {
                   document.getElementById("registrationResponse").innerHTML = 'Vehicle registered successfully.';
               } else {
                   document.getElementById("registrationResponse").innerHTML = 'Failed to register vehicle.';

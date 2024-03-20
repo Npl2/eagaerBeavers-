@@ -33,7 +33,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $post['title']; ?></title>
-    <link href="css/forum.css" rel="stylesheet"> 
+    <link href="css/displayDiscussion.css" rel="stylesheet"> 
     <link href="css/header.css" rel="stylesheet">
 </head>
 <body>
