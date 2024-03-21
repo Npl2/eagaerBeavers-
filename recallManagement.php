@@ -1,23 +1,52 @@
-<?php
-if (!isset($_COOKIE['username'])) {
-    header('Location: index.php');
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Recall Management</title>
-        <link href="css/recallManagement.css" rel="stylesheet"> 
-        <link href="css/header.css" rel="stylesheet">
-    </head>
-    <?php
-        include 'header.php';
-    ?>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recall Management</title>
+    <link href="css/recallManagement.css" rel="stylesheet"> 
+    <link href="css/header.css" rel="stylesheet">
+</head>
+<body>
+    <?php include 'header.php'; ?>
 
-    </body>
+    <div id="car-registrations">
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        function getCarRegistrations() {
+            $.ajax({
+                url: 'carRegRecall.php',
+                method: 'GET',
+                success: function(data) {
+
+                    $('#car-registrations').html(data);
+                },
+                error: function() {
+
+                    console.log('Failed to fetch car registrations.');
+                }
+            });
+        }
+
+        function getRecalls(make, model, year, index) {
+            $.ajax({
+                url: 'getRecall.php',
+                method: 'POST',
+                data: { make: make, model: model, year: year },
+                success: function(data) {
+                    $('#recall-info-' + index).html(data); 
+                error: function() {
+                    console.log('Failed to fetch recalls.');
+                }
+        });
+    }
+        $(document).ready(function() {
+            getCarRegistrations();
+        });
+    </script>
+</body>
 </html>
