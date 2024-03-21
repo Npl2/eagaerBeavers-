@@ -53,12 +53,13 @@
     <title>Vehicle Registration</title>
     <link href="css/header.css" rel="stylesheet">
     <link href="css/registerVehicle.css" rel="stylesheet"> 
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
 
     <?php include 'header.php'; ?>
 
-    <div class="registration-container">
+    <!-- <div class="registration-container">
         <div class="registration-box">
             <h1 class="Welcome">Register Your Vehicle</h1>
             <form id="registrationForm" method="post" onsubmit="return false;">
@@ -79,8 +80,54 @@
             </form>
         </div>
         <div id="registrationResponse" class="response-message"></div>
-    </div>
+    </div> -->
 
+    <div class="h-screen flex items-center justify-center">
+      <form id="registrationForm" method="post" onsubmit="return false;" class="p-5 w-96 shadow-md rounded">
+        <h4 class="font-bold capitalize text-center text-lg">
+          Register Your Vehicle
+        </h4>
+        <div class="mt-1 border"></div>
+        <div class="mt-5 mb-3">
+          <label class="font-bold" for="mk">Make:</label>
+          <input
+            class="mt-2 p-1 block w-full border rounded"
+            type="text"
+            name="make"
+            id="mk"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="font-bold" for="md">Model:</label>
+          <input
+            class="mt-2 p-1 block w-full border rounded"
+            type="text"
+            name="model"
+            id="md"
+          />
+        </div>
+        <div class="mb-3">
+          <label class="font-bold" for="yr">Year</label>
+          <input
+            class="mt-2 p-1 block w-full border rounded"
+            type="text"
+            name="year"
+            id="yr"
+          />
+        </div>
+        <div>
+          <button
+            type="submit"
+            class="register-button p-1 block w-full bg-blue-500 hover:bg-blue-600 transition ease-in-out duration-200 text-white text-xs rounded" onclick="SendRegistrationRequest()"
+          >
+            Register
+          </button>
+          <input type="hidden" name="register" value="1">
+        </div>
+        <div id="registrationResponse" class="response-message mt-8 p-1 font-bold text-xs bg-gray-200 uppercase text-center"></div>
+      </form>
+    </div>
+    
     <script>
       function SendRegistrationRequest() {
           const make = document.getElementById("mk").value;
