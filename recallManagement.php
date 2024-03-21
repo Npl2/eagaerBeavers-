@@ -39,6 +39,7 @@
                 data: { make: make, model: model, year: year },
                 success: function(data) {
                     $('#recall-info-' + index).html(data); 
+                    console.log(index);
                 },
                 error: function() {
 

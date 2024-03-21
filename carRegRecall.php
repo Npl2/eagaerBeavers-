@@ -35,7 +35,7 @@ if ($response && $response['message'] === "Car registrations fetched successfull
         echo '</div>';
         echo '</div>';
         echo '<script>';
-        echo 'getRecalls("' . $carReg['make'] . '", "' . $carReg['model'] . '", "' . $carReg['year'] . '", "' . $index . '");'; 
+        echo 'setTimeout(function() { getRecalls("' . $carReg['make'] . '", "' . $carReg['model'] . '", "' . $carReg['year'] . '", "' . $index . '"); }, 0);'; // 2000 milliseconds delay
         echo '</script>';
     }
 } else {

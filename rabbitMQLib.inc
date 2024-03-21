@@ -16,6 +16,8 @@ class rabbitMQServer
 	private $exchange_type = "topic";
 	private $auto_delete = false;
 
+	private $conn_queue;
+
 	function __construct($machine, $server = "rabbitMQ")
 	{
 		$this->machine = getHostInfo(array($machine));
@@ -148,6 +150,8 @@ class rabbitMQClient
 	private $response_queue = array();
 	private $exchange_type = "topic";
 
+	private $conn_queue;
+	
 	function __construct($machine, $server = "rabbitMQ")
 	{
 		$this->machine = getHostInfo(array($machine));
@@ -176,7 +180,7 @@ class rabbitMQClient
 		  echo  "unknown uid\n";
 		  return true;
 		}
-    $this->conn_queue->ack($response->getDeliveryTag());
+    
 		$body = $response->getBody();
 		$payload = json_decode($body, true);
 		if (!(isset($payload)))
@@ -184,6 +188,7 @@ class rabbitMQClient
 			$payload = "[empty response]";
 		}
 		$this->response_queue[$uid] = $payload;
+		$this->conn_queue->ack($response->getDeliveryTag());
 		return false;
 	}
 
