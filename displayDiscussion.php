@@ -33,33 +33,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $post['title']; ?></title>
-    <link href="css/displayDiscussion.css" rel="stylesheet"> 
+    <!-- <link href="css/displayDiscussion.css" rel="stylesheet">  -->
     <link href="css/header.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <?php include 'header.php'; ?>
-    <div class="discussionBox">
-        <div class="user-discussion">
-            <h1><?php echo $post['title']; ?></h1>
-            <p>Author: <?php echo $post['author']; ?></p>
-            <p>Content: <?php echo $post['content']; ?></p>
-            <p>Posted on: <?php echo date('Y-m-d H:i:s', intval($post['created_at']['$date']['$numberLong']) / 1000); ?></p>
-            <h2>Comments:</h2>
-            <?php foreach ($post['comments'] as $comment): ?>
-                <div class="comment">
-                    <p>Username: <?php echo $comment['username']; ?></p>
-                    <p>Comment: <?php echo $comment['comment']; ?></p>
-                    <p>Posted on: <?php echo date('Y-m-d H:i:s', intval($comment['created_at']['$date']['$numberLong']) / 1000); ?></p>
-                </div>
-            <?php endforeach; ?>
-            <hr>
+    
+    <div class="h-screen flex items-center justify-center">
+        <div class="p-5 w-1/2 shadow-md rounded">
+            <h4 class="font-bold capitalize text-center text-lg">
+                Create Discussion
+            </h4>
+
+            <div class="mt-5 p-3 border border-1 border-gray-200 rounded">
+                <?php echo '<p>' . $post['title'] . '</p>' ?>
+                <?php echo '<p>' . $post['content'] . '</p>' ?>
+                <p class="mt-2 uppercase text-[0.55rem] font-bold text-right">
+                    From: ABena <span class="font-normal">|</span> Date: <?= date('Y-m-d H:i:s', intval($post['created_at']['$date']['$numberLong']) / 1000) ?>
+                </p>
+            </div>
+            <div class="h-20 text-[0.65rem] overflow-y-auto">
+                <?php foreach ($post['comments'] as $comment) : ?>
+                    <div class="mt-1 p-1">
+                        <p>
+                            <?= $comment['comment']; ?>
+                        </p>
+                        <p class="mt-1 uppercase text-[0.55rem] font-bold text-right">
+                            From: ABena <span class="font-normal">|</span> Date: <?= date('Y-m-d H:i:s', intval($comment['created_at']['$date']['$numberLong']) / 1000) ?>
+                        </p>
+                    </div>
+                <?php endforeach ?>
+            </div>
             <form action="addComment.php" method="post">
-                <input type="hidden" name="postId" value="<?php echo $discussionId; ?>">
-                <br>
-                <input type="hidden" id="username" name="username" value="<?php echo $_COOKIE['username']; ?>" required><br>
-                <label for="comment">Comment:</label><br>
-                <textarea id="comment" name="comment" rows="4" cols="50" required></textarea><br>
-                <input type="submit" value="Add Comment">
+                <input type="hidden" name="postId" value="<?= $discussionId; ?>">
+                <input type="hidden" id="username" name="username" value="<?= $_COOKIE['username']; ?>" required>
+                <textarea class="h-10 p-1 w-full text-xs italic rounded" name="comment" id="comment" placeholder="Type a comment"></textarea>
+                <div class="text-right text-xs">
+                    <button type="submit" class="w-12 p-1 font-bold text-white bg-blue-500 rounded">
+                        Post
+                    </button>
+                </div>
             </form>
         </div>
     </div>
