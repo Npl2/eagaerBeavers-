@@ -53,11 +53,9 @@ function requestProcessor($request, $channel, $replyQueue, $correlationId) {
               } else {
                 return array('returnCode' => '500', 'message' => 'Internal Server Error');
               }
-              
-              
-      
-             
-              
+              case "getRecall":
+                $response = $carApi->getRecall($request['make'], $request['model'], $request['year']);
+                return $response !== null ? array('returnCode' => '200', 'response' => $response) : array('returnCode' => '500', 'message' => 'Internal Server Error'); 
               break;
             default:
                 $response = array("returnCode" => '404', 'message'=>"Request type not found");

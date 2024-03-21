@@ -1,21 +1,6 @@
-#!/usr/bin/php
-<?php
-require_once('path.inc');
-require_once('get_host_info.inc');
-require_once('rabbitMQLib.inc');
+/////////////////////////// Recall ////////////////////////
 
-$client = new rabbitMQClient("testRabbitMQ.ini","testServer");
-if (isset($argv[1]))
-{
-  $msg = $argv[1];
-}
-else
-{
-  $msg = "test message";
-}
-
-$exchangeName = 'car_api_exchange';
-$routingKey = 'car_request';
+// get recall
 $request = [
   'type' => "getRecall", 
   'make' => "Honda",     
@@ -44,8 +29,6 @@ if (isset($response['response']) && count($response['response']) > 0) {
 } else {
   echo "No recall information is available at the moment." . PHP_EOL;
 }
-
-
-echo "\n\n";
+//////////////////////////////////////////////
 
 

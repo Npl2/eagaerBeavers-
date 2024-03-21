@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 
 class CarApiFunctions {
   private  $baseUrl = "https://carapi.app/api/";
+
     function getYearsByMake($make) {
         $url = "https://carapi.app/api/years?make=" . urlencode($make);
         
@@ -56,5 +57,23 @@ class CarApiFunctions {
         }
         
     }
+
+   function getRecall($make, $model, $year) {
+    $url = "https://api.nhtsa.gov/recalls/recallsByVehicle?make=" . urlencode($make) . "&model=" . urlencode($model) . "&modelYear=" . urlencode($year);
+    
+    $context = stream_context_create([
+        "http" => [
+            "method" => "GET",
+            "header" => "Accept: application/json\r\n"
+        ]
+    ]);
+    $response = file_get_contents($url, false, $context);
+    if ($response !== false) {
+        return json_decode($response, true);
+    } else {
+        return ["error" => "Error getting recall data from the API"];
+    }
+}
+
 }
 
