@@ -34,6 +34,57 @@ class MongoClientDB_CAR {
         return $this->client->db->carRegistrations->find()->toArray();
     }
 
+    public function insertRecallTodos($username, $make, $model, $year, $recalls) {
+        $todos = array_map(function ($recall) use ($username, $make, $model, $year) {
+            $component = $recall['Component'] ?? 'Unknown component';
+            $summary = $recall['Summary'] ?? 'No summary provided';
+            $consequence = $recall['Consequence'] ?? 'No consequence provided';
+            $remedy = $recall['Remedy'] ?? 'Contact dealer for more information on the remedy.';
+            $notes = $recall['Notes'] ?? 'No additional notes available';
+        
+            $taskDescription = "Recall Notice: " . $component . ". \n";
+            $taskDescription .= "Summary: " . $summary . ". \n";
+            $taskDescription .= "Consequence: " . $consequence . ". \n";
+            $taskDescription .= "Remedy: " . $remedy . ". \n";
+            $taskDescription .= $notes;
+
+            
+            return [
+                'username' => $username,
+                'make' => $make,
+                'model' => $model,
+                'year' => $year,
+                'task' => $taskDescription,
+                'created_at' => new MongoDB\BSON\UTCDateTime(),
+                'status' => 'pending'
+            ];
+        }, $recalls);
+    
+        $result = $this->client->db->recallTodos->insertMany($todos);
+    
+        return $result->getInsertedCount() == count($todos);
+    }
+    
+    public function getRecallTodosByUsername($username) {
+        $query = ['username' => $username];
+        $todosCursor = $this->client->db->recallTodos->find($query);
+        $todos = $todosCursor->toArray();
+
+        return $todos;
+    }
+
+    public function updateRecallTodoStatus($todoId, $newStatus) {
+        $objectId = new MongoDB\BSON\ObjectId($todoId);
+    
+        $result = $this->client->db->recallTodos->updateOne(
+            ['_id' => $objectId],
+            ['$set' => ['status' => $newStatus]]
+        );
+    
+        return $result->getModifiedCount() == 1;
+    }
+    
+
 }
 
 

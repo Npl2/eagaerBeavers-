@@ -165,3 +165,100 @@ if ($response && $response['message'] == "All car registrations fetched successf
     echo "Failed to list all car registrations" . PHP_EOL;
 }
 //////////////////////////////////////
+
+
+
+/////////////////////////////////// RECALL TODO //////////////////////////
+
+// add todo
+
+$recall = [
+    'Manufacturer' => 'Honda (American Honda Motor Co.)',
+    'NHTSACampaignNumber' => '19V182000',
+    'Component' => 'AIR BAGS:FRONTAL:DRIVER SIDE:INFLATOR MODULE',
+    'Summary' => 'Honda (American Honda Motor Co.) is recalling specific 2003 Acura 3.2CL, 2013-2016 ILX, 2013-2014 ILX Hybrid, 2003-2006 MDX, 2007-2016 RDX, 2002-2003 3.2TL, 2004-2006, and 2009-2014 TL, 2010-2013 ZDX and 2001-2007 and 2009 Honda Accord, 2001-2005 Civic, 2003-2005 Civic Hybrid, 2001-2005 Civic GX NGV, 2002-2007 and 2010-2011 CR-V, 2003-2011 Element, 2007 Fit, 2002-2004 Odyssey, 2003-2008 Pilot, and 2006-2014 Ridgeline vehicles. The affected vehicles received a replacement driver air bag inflator as part of a previous Takata inflator recall remedy or a replacement driver air bag module containing the same inflator type as a service part. Due to a manufacturing error, in the event of a crash necessitating deployment of the driver frontal air bag, these inflators may explode.',
+    'Consequence' => 'An explosion of an inflator within the driver frontal air bag module may result in sharp metal fragments striking the driver, front seat passenger or other occupants resulting in serious injury or death.',
+    'Remedy' => 'Honda will notify owners, and dealers will replace the driver\'s air bag inflator with an alternate inflator, free of charge. The recall began April 10, 2019.',
+    'Notes' => 'Owners may also contact the National Highway Traffic Safety Administration Vehicle Safety Hotline at 1-888-327-4236 (TTY 1-800-424-9153), or go to www.safercar.gov.',
+    'ModelYear' => '2012',
+    'Make' => 'HONDA',
+    'Model' => 'Civic'
+];
+
+$username = 'exampleUsername';
+$make = 'Honda';
+$model = 'Civic';
+$year = '2012';
+
+$recallsTodo = [
+    [
+        'Component' => $recall['Component'],
+        'Summary' => $recall['Summary'],
+        'Consequence' => $recall['Consequence'],
+        'Remedy' => $recall['Remedy'],
+        'Notes' => $recall['Notes']
+    ]
+];
+
+$request = [
+    'type' => 'insert_recall_todos',
+    'username' => $username,
+    'make' => $make,
+    'model' => $model,
+    'year' => $year,
+    'recalls' => $recallsTodo,
+];
+
+$response = $client->send_request($request, $exchangeName, $routingKey);
+
+if ($response && $response['message'] == "Recall todos inserted successfully.") {
+    echo "Recall todo successfully inserted for $make $model ($year).";
+} else {
+    echo "Failed to insert recall todo for $make $model ($year).";
+}
+////////////////////////////////////////////
+
+// displat the recall todo by username
+$request = [
+    'type' => 'get_recall_todos_by_username',
+    'username' => 'exampleUsername',
+];
+
+$response = $client->send_request($request, $exchangeName, $routingKey);
+
+if ($response && $response['message'] == "Recall todos fetched successfully") {
+    echo "Recall todos for user " . $request['username'] . ":\n";
+    foreach ($response['data'] as $todo) {
+        $id = (string) $todo['_id']['$oid'];
+        $date = new DateTime();
+        $timestamp = $todo['created_at']['$date']['$numberLong'] / 1000;
+        $date->setTimestamp($timestamp);
+        $formattedDate = $date->format('Y-m-d H:i:s');
+
+        echo "ID: " . $id . "\n";
+        echo "Task: " . $todo['task'] . "\n";
+        echo "Status: " . $todo['status'] . "\n";
+        echo "Created At: " . $formattedDate . "\n";
+        echo "---------------------------------\n";
+    }
+} else {
+    echo "Failed to fetch recall todos for username: " . $request['username'] . "\n";
+}
+///////////////////////////
+
+// update the todo
+$requestUpdateRecallTodoStatus = [
+    'type' => 'update_recall_todo_status',
+    'todoId' => '65fbe73cca6e503ef1063182',
+    'newStatus' => 'completed'
+];
+
+$responseUpdateRecallTodoStatus = $client->send_request($requestUpdateRecallTodoStatus, $exchangeName, $routingKey);
+
+if ($responseUpdateRecallTodoStatus && $responseUpdateRecallTodoStatus['message'] == "Recall todo status updated successfully.") {
+    echo "Recall todo status updated successfully.\n";
+} else {
+    echo "Failed to update recall todo status.\n";
+}
+//////////////////////
+

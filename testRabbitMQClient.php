@@ -10,29 +10,34 @@ $exchangeName = 'user_auth';
 $routingKey = 'user_management';
 
 
+// recall todos by username
 $request = [
-    'type' => 'list_all_car_regs'
+    'type' => 'get_recall_todos_by_username',
+    'username' => 'user',
 ];
 
-
 $response = $client->send_request($request, $exchangeName, $routingKey);
-if ($response && $response['message'] == "All car registrations fetched successfully") {
-    echo "Cars On Sale:" . PHP_EOL;
-    foreach ($response['data'] as $carReg) {
-        if ($carReg['on_sale']) {
-            echo "User: " . $carReg['username'] . " - Make: " . $carReg['make'] . ", Model: " . $carReg['model'] . ", Year: " . $carReg['year'] . " - On Sale" . PHP_EOL;
-        }
-    }
-    
-    echo PHP_EOL . "Cars Not On Sale:" . PHP_EOL;
-    foreach ($response['data'] as $carReg) {
-        if (!$carReg['on_sale']) {
-            echo "User: " . $carReg['username'] . " - Make: " . $carReg['make'] . ", Model: " . $carReg['model'] . ", Year: " . $carReg['year'] . PHP_EOL;
-        }
+
+if ($response && $response['message'] == "Recall todos fetched successfully") {
+    echo "Recall todos for user " . $request['username'] . ":\n";
+    foreach ($response['data'] as $todo) {
+        $id = (string) $todo['_id']['$oid'];
+        $date = new DateTime();
+        $timestamp = $todo['created_at']['$date']['$numberLong'] / 1000;
+        $date->setTimestamp($timestamp);
+        $formattedDate = $date->format('Y-m-d H:i:s');
+
+        echo "ID: " . $id . "\n";
+        echo "Task: " . $todo['task'] . "\n";
+        echo "Status: " . $todo['status'] . "\n";
+        echo "Created At: " . $formattedDate . "\n";
+        echo "---------------------------------\n";
     }
 } else {
-    echo "Failed to list all car registrations" . PHP_EOL;
+    echo "Failed to fetch recall todos for username: " . $request['username'] . "\n";
 }
+
+
 echo "\n\n";
 
 echo $argv[0] . " END" . PHP_EOL;
