@@ -1,6 +1,12 @@
 body, h1, h2, p, ul, li {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+.siteName {
+    color: black;
+    margin-left: 20px;
+    font: Helvetica;
 }
 
 /* Global styles */

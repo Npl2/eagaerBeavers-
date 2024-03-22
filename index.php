@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
     <header>
-        <h1 class="site-title">EagerDrivers</h1> 
+        <h1 class="siteName">EagerDrivers</h1> 
     </header>
 
     <div class="login-container">
