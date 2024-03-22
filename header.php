@@ -9,6 +9,7 @@
                         <li><a href="recallManagement.php">Recall Management</a></li>
                         <li><a href="API_test.php">API Test</a></li>
                         <li><a href="displayRegVehicle.php">User Vehicles</a></li>
+                        <li><a href="toDoDisplay.php">ToDo</a></li>
                     </ul>
                 </nav>
             </div>
