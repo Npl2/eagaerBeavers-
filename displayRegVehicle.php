@@ -30,6 +30,9 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
+    <header>
+        <h1 class="siteName">EagerDrivers</h1> 
+    </header>
 
     <?php include 'header.php'; ?>
 
