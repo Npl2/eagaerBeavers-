@@ -43,11 +43,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <title>Login Page</title>
     <link href="css/index.css" rel="stylesheet"> 
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 
-    <header>
-        <h1 class="siteName">EagerDrivers</h1> 
+<header class="bg-blue-800">
+      <nav class="m-auto w-11/12 flex items-center justify-between">
+        <h1 class="py-5 font-bold text-white text-3xl">EagerDrivers</h1>
+        <div class="flex items-center text-white">
+          <div class="flex items-center">
+            <a
+              class="p-1 bg-white text-blue-800 font-bold rounded"
+              href="register.php"
+            >
+              Register</a
+            >
+          </div>
+        </div>
+      </nav>
     </header>
 
     <div class="login-container">

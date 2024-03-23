@@ -27,8 +27,9 @@ $response = $client->send_request($request, $exchangeName, $routingKey);
 <head>
     <title>Vehicle Recall Todos</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/header.css" rel="stylesheet">
+    <!-- <link href="css/header.css" rel="stylesheet"> -->
     <link href="css/toDoDisplay.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 <?php include 'header.php'; ?>
