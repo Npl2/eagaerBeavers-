@@ -6,6 +6,7 @@
   require_once('mongoClient.php');
   require_once('mongoClient_Blog.php');
   require_once('mongoClient_car.php');
+  require_once('mongoClient_carReviews.php');
 
   use PhpAmqpLib\Connection\AMQPStreamConnection;
   use PhpAmqpLib\Message\AMQPMessage;
@@ -79,6 +80,7 @@
     var_dump($request);
     $mongoClientDB_BLOG = new MongoClientDB_BLOG();
     $carRegistration = new MongoClientDB_CAR();
+    $carReviews = new MongoClientDB_CARReviews();
   
     /* new code
     $connection = connectRabbitMQ();
@@ -156,6 +158,14 @@
         }
         $success = $carRegistration->updateRecallTodoStatus($request['todoId'], $request['newStatus']);
         return ['message' => $success ? "Recall todo status updated successfully." : "Failed to update recall todo status."];
+      
+      case "add_car_review":
+        if (!isset($request['username']) || !isset($request['make']) || !isset($request['year']) || !isset($request['model']) || !isset($request['review_text'])){
+          return ["returnCode" => '0', 'message' => "Missing information for car Reviews"];
+        }
+
+        $success = $carReviews->addCarReview($request['make'], $request['model'], $request['year'], $request['review_text'], $request['username']);
+        return ['message' => $success ? "Car review added successfully" : "Failed to add car review"];        
 
       case "validate_session":
         return doValidate($request['sessionId']);

@@ -12,29 +12,20 @@ $routingKey = 'user_management';
 
 // recall todos by username
 $request = [
-    'type' => 'get_recall_todos_by_username',
-    'username' => 'user',
+    'type' => 'add_car_review',
+    'make'=>'Honda',
+    'model'=>'Civic',
+    'year'=>'2016',
+    'username'=>'nath',
+    'review_text'=> 'It is good but not that sleek, have a tone of issue the exhaust is just mehhh!!'
 ];
 
 $response = $client->send_request($request, $exchangeName, $routingKey);
 
-if ($response && $response['message'] == "Recall todos fetched successfully") {
-    echo "Recall todos for user " . $request['username'] . ":\n";
-    foreach ($response['data'] as $todo) {
-        $id = (string) $todo['_id']['$oid'];
-        $date = new DateTime();
-        $timestamp = $todo['created_at']['$date']['$numberLong'] / 1000;
-        $date->setTimestamp($timestamp);
-        $formattedDate = $date->format('Y-m-d H:i:s');
-
-        echo "ID: " . $id . "\n";
-        echo "Task: " . $todo['task'] . "\n";
-        echo "Status: " . $todo['status'] . "\n";
-        echo "Created At: " . $formattedDate . "\n";
-        echo "---------------------------------\n";
-    }
+if ($response && $response['message'] == "Car review added successfully") {
+  echo "Car review added Sucessfully";
 } else {
-    echo "Failed to fetch recall todos for username: " . $request['username'] . "\n";
+    echo $response['message'];
 }
 
 
