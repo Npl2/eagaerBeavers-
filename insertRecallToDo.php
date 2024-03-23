@@ -1,3 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/header.css" rel="stylesheet">
+    <title>Recall Todo Insertion</title>
+</head>
+<body>
+<?php include 'header.php'; ?>
 <?php
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -7,7 +17,7 @@ require_once('rabbitMQLib.inc');
 
 
 if (!isset($_COOKIE['username'])) {
-    echo "Please log in.";
+    echo "<p>Please log in.</p>";
     exit();
 }
 
@@ -56,11 +66,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $response = $client->send_request($request, $exchangeName, $routingKey);
 
     if ($response && $response['message'] == "Recall todos inserted successfully.") {
-        echo "Recall todo successfully inserted for $make $model ($year).";
+        echo "<p>Recall todo successfully inserted for $make $model ($year).</p>";
     } else {
-        echo "Failed to insert recall todo for $make $model ($year).";
+        echo "<p>Failed to insert recall todo for $make $model ($year).</p>";
     }
 } else {
-    echo "Invalid request method.";
+    echo "<p>Invalid request method.</p>";
 }
 ?>
+
+</body>
+</html>
