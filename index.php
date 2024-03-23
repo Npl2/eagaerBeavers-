@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = $client->send_request($loginData, $exchangeName, $routingKey);
     if($response && $response['message'] === true){
         setcookie('username', $data['username'], time() + 3600, "/");
+
     }
     echo json_encode(['success' => $response]);
     exit();
@@ -84,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             username: username,
             password: password,
         };
-
+        console.log(requestData);
         fetch('<?php echo $_SERVER["PHP_SELF"]; ?>', {
             method: 'POST',
             headers: {

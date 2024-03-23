@@ -37,7 +37,20 @@ if ($recallResponse && isset($recallResponse['response']['results'])) {
         echo "<p><strong>Consequence:</strong> {$recall['Consequence']}</p>";
         echo "<p><strong>Remedy:</strong> {$recall['Remedy']}</p>";
         echo "<p><strong>Notes:</strong> {$recall['Notes']}</p>";
-        echo "<button class='add-todo-btn' onclick=\"addToTodo('{$recall['make']}', '{$recall['Model']}', '{$recall['Year']}', '{$recall['Component']}', '{$recall['Summary']}', '{$recall['Consequence']}', '{$recall['Remedy']}', '{$recall['Notes']}')\">Add to TODO</button>";
+
+        // Use a form for each recall
+        echo "<form action='insertRecallToDo.php' method='get'>";
+        echo "<input type='hidden' name='manufacturer' value='{$recall['Manufacturer']}'>";
+        echo "<input type='hidden' name='model' value='{$recall['Model']}'>";
+        echo "<input type='hidden' name='year' value='{$recall['ModelYear']}'>";
+        echo "<input type='hidden' name='make' value='{$recall['Make']}'>";
+        echo "<input type='hidden' name='component' value='{$recall['Component']}'>";
+        echo "<input type='hidden' name='summary' value='{$recall['Summary']}'>";
+        echo "<input type='hidden' name='consequence' value='{$recall['Consequence']}'>";
+        echo "<input type='hidden' name='remedy' value='{$recall['Remedy']}'>";
+        echo "<input type='hidden' name='notes' value='{$recall['Notes']}'>";
+        echo "<button type='submit' class='add-todo-btn'>Add to TODO</button>";
+        echo "</form>";
 
         echo "</div>";
         echo "----------------------------------------------";
@@ -45,48 +58,45 @@ if ($recallResponse && isset($recallResponse['response']['results'])) {
 } else {
     echo "<p>No recall information available for this vehicle.</p>";
 }
+
 ?>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('.add-todo-btn').click(function() {
-            var make = $(this).data('make');
-            var model = $(this).data('model');
-            var year = $(this).data('year');
-            var component = $(this).data('component');
-            var summary = $(this).data('summary');
-            var consequence = $(this).data('consequence');
-            var remedy = $(this).data('remedy');
-            var notes = $(this).data('notes');
+    $('.add-todo-btn').click(function() {
+        var manufacturer = $(this).data('manufacturer');
+        var model = $(this).data('model');
+        var year = $(this).data('year');
+        var component = $(this).data('component');
+        var summary = $(this).data('summary');
+        var consequence = $(this).data('consequence');
+        var remedy = $(this).data('remedy');
+        var notes = $(this).data('notes');
 
-       
-            $.ajax({
-                url: 'insertRecallToDo.php', 
-                method: 'POST',
-                data: {
-                    make: make,
-                    model: model,
-                    year: year,
-                    recalls: [{
-                        Component: component,
-                        Summary: summary,
-                        Consequence: consequence,
-                        Remedy: remedy,
-                        Notes: notes,
-                    }]
-                },
-                success: function(response) {
-                    
-                    console.log(response);
-               
-                },
-                error: function(xhr, status, error) {
-                    
-                    console.error('Error:', error);
-                   
-                }
-            });
+        $.ajax({
+            url: 'insertRecallToDo.php',
+            method: 'GET',
+            data: {
+                manufacturer: manufacturer,
+                model: model,
+                year: year,
+                recalls: [{
+                    Component: component,
+                    Summary: summary,
+                    Consequence: consequence,
+                    Remedy: remedy,
+                    Notes: notes,
+                }]
+            },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
         });
     });
+});
+
 </script>

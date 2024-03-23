@@ -13,16 +13,18 @@ if (!isset($_COOKIE['username'])) {
 
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $username = $_COOKIE['username']; 
-    $make = $_POST['make'];
-    $model = $_POST['model'];
-    $year = $_POST['year'];
-    $component = $_POST['component'];
-    $summary = $_POST['summary'];
-    $consequence = $_POST['consequence'];
-    $remedy = $_POST['remedy'];
-    $notes = $_POST['notes'];
+    $make = $_GET['make'];
+    $model = $_GET['model'];
+    
+
+    $year = $_GET['year'];
+    $component = $_GET['component'];
+    $summary = $_GET['summary'];
+    $consequence = $_GET['consequence'];
+    $remedy = $_GET['remedy'];
+    $notes = $_GET['notes'];
 
  
     $recallsTodo = [
