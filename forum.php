@@ -44,17 +44,8 @@
         <div class="p-12 w-full flex items-center justify-center">
         <div class="flex w-8/12">
             <div class="mr-5 p-5 w-4/12 bg-white shadow">
-                <h4 class="font-bold text-xl">Categories</h4>
+                <h4 class="font-bold text-xl">Options</h4>
                 <ul class="mt-5">
-                    <li class="py-2 font-semibold hover:bg-black hover:text-white hover:px-2 hover:rounded transition-all duration-200 ease-in-out">
-                        <a href="#">Cars</a>
-                    </li>
-                    <li class="py-2 font-semibold hover:bg-black hover:text-white hover:px-2 hover:rounded transition-all duration-200 ease-in-out">
-                        <a href="#">Makes</a>
-                    </li>
-                    <li class="py-2 font-semibold hover:bg-black hover:text-white hover:px-2 hover:rounded transition-all duration-200 ease-in-out">
-                        <a href="#">Models</a>
-                    </li>
                     <li class="py-2 font-semibold hover:bg-black hover:text-white hover:px-2 hover:rounded transition-all duration-200 ease-in-out">
                         <a href="#">Create Discussions Post</a>
                     </li>
