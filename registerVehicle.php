@@ -51,7 +51,7 @@
 <html>
   <head>
     <title>Vehicle Registration</title>
-    <link href="css/header.css" rel="stylesheet">
+    <!-- <link href="css/header.css" rel="stylesheet"> -->
     <link href="css/registerVehicle.css" rel="stylesheet"> 
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
