@@ -27,10 +27,14 @@ if ($response && $response['message'] === "Car registrations fetched successfull
     $carRegs = $response['data']; 
     foreach ($carRegs as $index => $carReg) {
         echo '<div class="vehicle-info">';
-        echo '<h2>Vehicle Information:</h2>';
-        echo '<p><strong>Make:</strong> ' . $carReg['make'] . '</p>';
-        echo '<p><strong>Model:</strong> ' . $carReg['model'] . '</p>';
-        echo '<p><strong>Year:</strong> ' . $carReg['year'] . '</p>';
+        echo "<div class='container mx-auto px-4 py-8'>";
+        echo "<h2 class='text-3xl font-bold mb-6'>Vehicle Information:</h2>";
+        echo "<div class='bg-white shadow-md rounded-md p-6 mb-8'>";
+        echo "<p class='mb-2'><strong>Make:</strong> {$carReg['make']}</p>";
+        echo "<p class='mb-2'><strong>Model:</strong> {$carReg['model']}</p>";
+        echo "<p class='mb-2'><strong>Year:</strong> {$carReg['year']}</p>";
+        echo "</div>";
+        echo "</div>";
         echo '<div id="recall-info-' . $index . '">'; 
         echo '</div>';
         echo '</div>';
