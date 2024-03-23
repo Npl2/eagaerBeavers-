@@ -53,6 +53,13 @@
                 >Register Vehicle</a
               >
             </li>
+            <li class="mr-5 capitalize">
+              <a
+                class="hover:p-1 hover:bg-white hover:text-blue-800 hover:font-bold hover:rounded transition-all duration-200 ease-in-out"
+                href="vehiclereviews.php"
+                >Vehicle Reviews</a
+              >
+            </li>
             <li
               class="hover:p-1 hover:bg-white hover:text-blue-800 hover:font-bold hover:rounded transition-all duration-200 ease-in-out"
               class="mr-5 capitalize"
