@@ -45,8 +45,8 @@
 
                     console.log('Failed to fetch recalls.');
                 }
-        });
-    }
+            });
+        }
 
 
 

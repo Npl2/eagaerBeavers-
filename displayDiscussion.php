@@ -50,7 +50,7 @@
                 <?php echo '<p>' . $post['title'] . '</p>' ?>
                 <?php echo '<p>' . $post['content'] . '</p>' ?>
                 <p class="mt-2 uppercase text-[0.55rem] font-bold text-right">
-                    From: ABena <span class="font-normal">|</span> Date: <?= date('Y-m-d H:i:s', intval($post['created_at']['$date']['$numberLong']) / 1000) ?>
+                    Posted on: <span class="font-normal">|</span> Date: <?= date('Y-m-d H:i:s', intval($post['created_at']['$date']['$numberLong']) / 1000) ?>
                 </p>
             </div>
             <div class="h-20 text-[0.65rem] overflow-y-auto">
@@ -60,7 +60,7 @@
                             <?= $comment['comment']; ?>
                         </p>
                         <p class="mt-1 uppercase text-[0.55rem] font-bold text-right">
-                            From: ABena <span class="font-normal">|</span> Date: <?= date('Y-m-d H:i:s', intval($comment['created_at']['$date']['$numberLong']) / 1000) ?>
+                            Posted on: <span class="font-normal">|</span> Date: <?= date('Y-m-d H:i:s', intval($comment['created_at']['$date']['$numberLong']) / 1000) ?>
                         </p>
                     </div>
                 <?php endforeach ?>

@@ -27,6 +27,7 @@ $recallResponse = $clientCar->send_request($recallRequest, $exchangeNameCar, $ro
 if ($recallResponse && isset($recallResponse['response']['results'])) {
     echo "<h2>Recalls:</h2>";
     foreach ($recallResponse['response']['results'] as $index => $recall) {
+        echo "<div class='recall-container'>";
         echo "<h3>Recall #" . ($index + 1) . ":</h3>";
         echo "<p><strong>Manufacturer:</strong> {$recall['Manufacturer']}</p>";
         echo "<p><strong>NHTSA Campaign Number:</strong> {$recall['NHTSACampaignNumber']}</p>";
@@ -36,9 +37,56 @@ if ($recallResponse && isset($recallResponse['response']['results'])) {
         echo "<p><strong>Consequence:</strong> {$recall['Consequence']}</p>";
         echo "<p><strong>Remedy:</strong> {$recall['Remedy']}</p>";
         echo "<p><strong>Notes:</strong> {$recall['Notes']}</p>";
+        echo "<button class='add-todo-btn' onclick=\"addToTodo('{$recall['make']}', '{$recall['Model']}', '{$recall['Year']}', '{$recall['Component']}', '{$recall['Summary']}', '{$recall['Consequence']}', '{$recall['Remedy']}', '{$recall['Notes']}')\">Add to TODO</button>";
+
+        echo "</div>";
         echo "----------------------------------------------";
     }
 } else {
     echo "<p>No recall information available for this vehicle.</p>";
 }
 ?>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.add-todo-btn').click(function() {
+            var make = $(this).data('make');
+            var model = $(this).data('model');
+            var year = $(this).data('year');
+            var component = $(this).data('component');
+            var summary = $(this).data('summary');
+            var consequence = $(this).data('consequence');
+            var remedy = $(this).data('remedy');
+            var notes = $(this).data('notes');
+
+       
+            $.ajax({
+                url: 'insertRecallToDo.php', 
+                method: 'POST',
+                data: {
+                    make: make,
+                    model: model,
+                    year: year,
+                    recalls: [{
+                        Component: component,
+                        Summary: summary,
+                        Consequence: consequence,
+                        Remedy: remedy,
+                        Notes: notes,
+                    }]
+                },
+                success: function(response) {
+                    
+                    console.log(response);
+               
+                },
+                error: function(xhr, status, error) {
+                    
+                    console.error('Error:', error);
+                   
+                }
+            });
+        });
+    });
+</script>
