@@ -10,7 +10,7 @@ $exchangeName = 'user_auth';
 $routingKey = 'user_management';
 
 
-// recall todos by username
+// add car review
 $request = [
     'type' => 'add_car_review',
     'make'=>'Honda',
