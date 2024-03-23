@@ -40,26 +40,44 @@
     </head>
     <body>
         <?php include 'header.php'; ?>
-        <div class="discussionBox">
-            <div class="sideBar-topics">
-                <h2>Categories</h2>
-                <ul>
-                    <li><a href="#">Cars</a></li>
-                    <li><a href="#">Makes</a></li>
-                    <li><a href="#">Models</a></li>
-                    <li><a href="createDiscussion.php">Create Discussion Post</a></li>
+        <div class="p-12 w-full flex items-center justify-center">
+        <div class="flex w-8/12">
+            <div class="mr-5 p-5 w-4/12 bg-white shadow">
+                <h4 class="font-bold text-xl">Categories</h4>
+                <ul class="mt-5">
+                    <li class="py-2 font-semibold hover:bg-black hover:text-white hover:px-2 hover:rounded transition-all duration-200 ease-in-out">
+                        <a href="#">Cars</a>
+                    </li>
+                    <li class="py-2 font-semibold hover:bg-black hover:text-white hover:px-2 hover:rounded transition-all duration-200 ease-in-out">
+                        <a href="#">Makes</a>
+                    </li>
+                    <li class="py-2 font-semibold hover:bg-black hover:text-white hover:px-2 hover:rounded transition-all duration-200 ease-in-out">
+                        <a href="#">Models</a>
+                    </li>
+                    <li class="py-2 font-semibold hover:bg-black hover:text-white hover:px-2 hover:rounded transition-all duration-200 ease-in-out">
+                        <a href="#">Create Discussions Post</a>
+                    </li>
                 </ul>
             </div>
-            <div class="user-discussion">
-                <h1>Welcome to the Discussion Forum</h1>
-                <?php foreach ($discussions as $discussion): ?>
-                    <div class="discussion">
-                        <h2 <?php echo isset($discussion['_id']['$oid']) ? 'hidden' : ''; ?>><?php echo isset($discussion['_id']['$oid']) ? $discussion['_id']['$oid'] : "ID: Not Available"; ?></h2>
-                        <h2><a href="displayDiscussion.php?discussion_id=<?php echo $discussion['_id']['$oid']; ?>"><?php echo $discussion['title']; ?></a></h2>
-                        <h2>Author: <?php echo $discussion['author']; ?></h2><br>
+            <div class="p-5 w-full">
+                <h4 class="capitalize text-4xl font-bold">
+                    Welcome to the Discussions Forum
+                </h4>
+
+                <?php foreach ($discussions as $discussion) : ?>
+                    <div class="mt-5">
+                        <div class="mb-5 p-10 cursor-pointer hover:bg-black hover:text-white transition-all duration-200 ease-in-out flex flex-col item-center justiy-center bg-white rounded-md shadow">
+                            <h2 <?php echo isset($discussion['_id']['$oid']) ? 'hidden' : ''; ?>><?php echo isset($discussion['_id']['$oid']) ? $discussion['_id']['$oid'] : "ID: Not Available"; ?></h2>
+
+                            <h3 class="mb-1 capitalize font-semibold text-2xl">
+                                <a href="displayDiscussion.php?discussion_id=<?php echo $discussion['_id']['$oid']; ?>"><?php echo $discussion['title']; ?></a>
+                            </h3>
+                            <p class="italic">Author: <?php echo $discussion['author']; ?></p>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
+    </div>
     </body>
 </html>
