@@ -1,4 +1,4 @@
-<h1 class="siteName">EagerDrivers</h1>
+<!-- <h1 class="siteName">EagerDrivers</h1> -->
 <header class="bg-blue-800">
       <nav class="m-auto w-11/12 flex items-center justify-between">
         <h1 class="py-5 font-bold text-white text-3xl">EagerDrivers</h1>

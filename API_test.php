@@ -41,7 +41,8 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 <head>
     <meta charset="UTF-8">
     <title>Get Years by Make</title>
-    <link href="css/header.css" rel="stylesheet">
+    <!-- <link href="css/header.css" rel="stylesheet"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <?php
             include 'header.php';
