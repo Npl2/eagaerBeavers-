@@ -23,121 +23,82 @@ $request = [
 $response = $client->send_request($request, $exchangeName, $routingKey);
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Vehicle Recall Todos</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link href="css/header.css" rel="stylesheet"> -->
-    <link href="css/toDoDisplay.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
 <?php include 'header.php'; ?>
 
-<div class="container">
+<div class="container mx-auto px-4 py-8">
     <?php if ($response && $response['message'] == "Recall todos fetched successfully"): ?>
-        <h2>Recall todos for user <?php echo $_COOKIE['username']; ?>:</h2>
-        <h3>Pending Todos:</h3>
-        <ul class="list-group">
+        <div class="text-xl font-semibold mb-6">Recall Todos for User: <?= htmlspecialchars($_COOKIE['username']); ?></div>
+        
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Pending Todos:</h3>
             <?php foreach ($response['data'] as $todo): ?>
                 <?php if ($todo['status'] == 'pending'): ?>
-                    <li class="list-group-item">
-                        <strong>Make:</strong> <?php echo $todo['make']; ?><br>
-                        <strong>Model:</strong> <?php echo $todo['model']; ?><br>
-                        <strong>Year:</strong> <?php echo $todo['year']; ?><br>
-                        <?php
-                        // Splitting task into sections
-                        $sections = explode(".", $todo['task']);
-                        ?>
-
-                        <strong>Recall Notice:</strong>
-                        <ul>
-                            <?php foreach ($sections as $section): ?>
-                                <?php if (strpos($section, "Recall Notice:") !== false): ?>
-                                    <li><?php echo $section; ?></li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </ul>
-
-                        <strong>Summary:</strong>
-                        <ul>
-                            <?php foreach ($sections as $section): ?>
-                                <?php if (strpos($section, "Summary:") !== false): ?>
-                                    <li><?php echo $section; ?></li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </ul>
-
-                        <strong>Consequence:</strong>
-                        <ul>
-                            <?php foreach ($sections as $section): ?>
-                                <?php if (strpos($section, "Consequence:") !== false): ?>
-                                    <li><?php echo $section; ?></li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </ul>
-
-                        <strong>Remedy:</strong>
-                        <ul>
-                            <?php foreach ($sections as $section): ?>
-                                <?php if (strpos($section, "Remedy:") !== false): ?>
-                                    <li><?php echo $section; ?></li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </ul>
-
-                        <strong>Notes:</strong>
-                        <ul>
-                            <?php foreach ($sections as $section): ?>
-                                <?php if (strpos($section, "Notes:") !== false): ?>
-                                    <li><?php echo $section; ?></li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </ul>
-
-                        <strong>Status:</strong> <?php echo $todo['status']; ?><br>
-                        <?php
-                        $date = new DateTime();
-                        $timestamp = $todo['created_at']['$date']['$numberLong'] / 1000;
-                        $date->setTimestamp($timestamp);
-                        $formattedDate = $date->format('Y-m-d H:i:s');
-                        ?>
-                        <strong>Created At:</strong> <?php echo $formattedDate; ?><br>
-                        
+                    <div class="bg-white p-6 rounded-lg shadow mb-4 flex justify-between items-center">
+                        <div>
+                            <p><strong>Make:</strong> <?= htmlspecialchars($todo['make']); ?></p>
+                            <p><strong>Model:</strong> <?= htmlspecialchars($todo['model']); ?></p>
+                            <p><strong>Year:</strong> <?= htmlspecialchars($todo['year']); ?></p>
+                            <p><strong>Component:</strong> <?= htmlspecialchars($todo['component']); ?></p>
+                            <p><strong>Summary:</strong> <?= htmlspecialchars($todo['summary']); ?></p>
+                            <p><strong>Remedy:</strong> <?= htmlspecialchars($todo['remedy']); ?></p>
+                            <p><strong>Notes:</strong> <?= htmlspecialchars($todo['notes']); ?></p>
+                            <?php
+                            $date = new DateTime();
+                            $timestamp = $todo['created_at']['$date']['$numberLong'] / 1000;
+                            $date->setTimestamp($timestamp);
+                            $formattedDate = $date->format('Y-m-d H:i:s');
+                            ?>
+                            <p><strong>Created At:</strong> <?= $formattedDate; ?></p>
+                        </div>
                         <!-- Form to update status -->
-                        <form action="updateTodo.php" method="post">
-                            <input type="hidden" name="todoId" value="<?php echo $todo['_id']['$oid']; ?>">
+                        <form action="updateTodo.php" method="post" class="flex items-center">
+                            <input type="hidden" name="todoId" value="<?= $todo['_id']['$oid']; ?>">
                             <input type="hidden" name="newStatus" value="completed">
-                            <input type="submit" value="Mark as Completed" class="btn btn-primary">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" onchange="this.form.submit()" class="form-checkbox h-5 w-5 text-blue-600"><span class="ml-2 text-gray-700">Mark as Completed</span>
+                            </label>
                         </form>
-                    </li>
+                    </div>
                 <?php endif; ?>
             <?php endforeach; ?>
-        </ul>
-        <hr>
-        <h3>Completed Todos:</h3>
-        <ul class="list-group">
-            <?php foreach ($response['data'] as $todo): ?>
-                <?php if ($todo['status'] == 'completed'): ?>
-                    <li class="list-group-item">
-                        <strong>ID:</strong> <?php echo $todo['_id']['$oid']; ?><br>
-                        <strong>Task:</strong> <?php echo $todo['task']; ?><br>
-                        <strong>Status:</strong> <?php echo $todo['status']; ?><br>
-                        <?php
-                        $date = new DateTime();
-                        $timestamp = $todo['created_at']['$date']['$numberLong'] / 1000;
-                        $date->setTimestamp($timestamp);
-                        $formattedDate = $date->format('Y-m-d H:i:s');
-                        ?>
-                        <strong>Created At:</strong> <?php echo $formattedDate; ?><br>
-                    </li>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </ul>
+        </div>
+
+        <div>
+            <h3 class="text-lg font-semibold mb-4">Completed Todos:</h3>
+            <div class="space-y-4">
+                <?php foreach ($response['data'] as $todo): ?>
+                    <?php if ($todo['status'] == 'completed'): ?>
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <p><strong>ID:</strong> <?= htmlspecialchars($todo['_id']['$oid']); ?></p>
+                            <p><strong>Make:</strong> <?= htmlspecialchars($todo['make']); ?></p>
+                            <p><strong>Model:</strong> <?= htmlspecialchars($todo['model']); ?></p>
+                            <p><strong>Year:</strong> <?= htmlspecialchars($todo['year']); ?></p>
+                            <p><strong>Component:</strong> <?= htmlspecialchars($todo['component']); ?></p>
+                            <p><strong>Status:</strong> <?= htmlspecialchars($todo['status']); ?></p>
+                            <?php
+                            $date = new DateTime();
+                            $timestamp = $todo['created_at']['$date']['$numberLong'] / 1000;
+                            $date->setTimestamp($timestamp);
+                            $formattedDate = $date->format('Y-m-d H:i:s');
+                            ?>
+                            <p><strong>Created At:</strong> <?= $formattedDate; ?></p>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
     <?php else: ?>
-        <p>No recall todos found for user <?php echo $_COOKIE['username']; ?>.</p>
+        <p class="text-center text-lg">No recall todos found for user <?= htmlspecialchars($_COOKIE['username']); ?>.</p>
     <?php endif; ?>
 </div>
 
+<script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>

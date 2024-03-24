@@ -4,21 +4,19 @@ if (!isset($_COOKIE['username'])) {
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Vehicle Listings</title>
+        <title>Vehicle Reviews</title>
         <link href="css/vehicleListings.css" rel="stylesheet"> 
-        <!-- <link href="css/header.css" rel="stylesheet"> -->
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <?php
         include 'header.php';
     ?>
-    <body class="bg-gray-100">
+    <body>
 
     </body>
 </html>

@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $consequence = $_GET['consequence'];
     $remedy = $_GET['remedy'];
     $notes = $_GET['notes'];
+    $NHTSACampaignNumber = $_GET['NHTSACampaignNumber'];
 
  
     $recallsTodo = [
@@ -43,7 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             'Summary' => $summary,
             'Consequence' => $consequence,
             'Remedy' => $remedy,
-            'Notes' => $notes
+            'Notes' => $notes,
+            'NHTSACampaignNumber' => $NHTSACampaignNumber
         ]
     ];
 
@@ -66,9 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $response = $client->send_request($request, $exchangeName, $routingKey);
 
     if ($response && $response['message'] == "Recall todos inserted successfully.") {
-        echo "<p>Recall todo successfully inserted for $make $model ($year).</p>";
+        echo "<script>alert('Recall todo successfully inserted for $make $model ($year)').</script>";
+        header ('Location: recallManagement.php');
     } else {
         echo "<p>Failed to insert recall todo for $make $model ($year).</p>";
+        header ('Location: recallManagement.php');
     }
 } else {
     echo "<p>Invalid request method.</p>";

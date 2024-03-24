@@ -51,6 +51,7 @@ if ($recallResponse && isset($recallResponse['response']['results'])) {
         echo "<input type='hidden' name='consequence' value='{$recall['Consequence']}'>";
         echo "<input type='hidden' name='remedy' value='{$recall['Remedy']}'>";
         echo "<input type='hidden' name='notes' value='{$recall['Notes']}'>";
+        echo "<input type='hidden' name='NHTSACampaignNumber' value='{$recall['NHTSACampaignNumber']}'>";
         echo "<button type='submit' class='bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300'>Add to TODO</button>";
         echo "</form>";
         echo "</div>"; 
