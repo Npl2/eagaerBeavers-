@@ -167,7 +167,19 @@
         $success = $carReviews->addCarReview($request['make'], $request['model'], $request['year'], $request['review_text'], $request['username']);
         return ['message' => $success ? "Car review added successfully" : "Failed to add car review"];        
 
+      case "search_car_reviews":
+          $make = $request['make'] ?? null;
+          $model = $request['model'] ?? null;
+          $year = $request['year'] ?? null;
+        $reviews = $carReviews->searchCarReviews($make, $model, $year);
+        return ['message' => "Car reviews fetched successfully", 'data' => $reviews];
 
+      case "display_car_details_with_reviews":
+          if (!isset($request['make']) || !isset($request['model']) || !isset($request['year'])) {
+              return ["returnCode" => '0', 'message' => "Missing information for displaying car details with reviews"];
+          }
+          $carDetailsWithReviews = $carReviews->getCarDetailsWithReviews($request['make'], $request['model'], $request['year']);
+          return ['message' => "Car details with reviews fetched successfully", 'data' => $carDetailsWithReviews];
 
       case "update_car_sale_status":
         if (!isset($request['carId'], $request['onSale'], $request['salePrice'])) {

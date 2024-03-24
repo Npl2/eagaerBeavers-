@@ -30,7 +30,32 @@ class MongoClientDB_CARReviews {
         $result = $collection->insertOne($document);
         return ['success' => $result->getInsertedCount() == 1];
     }
+
+    public function searchCarReviews($make = null, $model = null, $year = null) {
+        $query = [];
+        if ($make !== null) {
+            $query['car_make'] = new MongoDB\BSON\Regex('^' . preg_quote($make) . '$', 'i');
+        }
+        if ($model !== null) {
+            $query['car_model'] = new MongoDB\BSON\Regex('^' . preg_quote($model) . '$', 'i');
+        }
+        if ($year !== null) {
+            $query['car_year'] = (string) $year;
+        }
+        
+        return $this->db->selectCollection('carReviews')->find($query)->toArray();
+    }
+    
+
+    public function getCarDetailsWithReviews($carMake, $carModel, $carYear) {
+        $carDetails = [
+            'make' => $carMake,
+            'model' => $carModel,
+            'year' => $carYear,
+            'reviews' => $this->searchCarReviews($carMake, $carModel, $carYear)
+        ];
+
+        return $carDetails;
+    }
 }
-
-
 ?>
