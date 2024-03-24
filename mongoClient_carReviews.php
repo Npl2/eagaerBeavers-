@@ -31,6 +31,10 @@ class MongoClientDB_CARReviews {
         return ['success' => $result->getInsertedCount() == 1];
     }
 
+    public function getCarReviews(){
+        return $this->client->db->selectCollection('carReviews')->find()->toArray();
+    }
+    
     public function searchCarReviews($make = null, $model = null, $year = null) {
         $query = [];
         if ($make !== null) {

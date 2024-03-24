@@ -166,7 +166,11 @@
 
         $success = $carReviews->addCarReview($request['make'], $request['model'], $request['year'], $request['review_text'], $request['username']);
         return ['message' => $success ? "Car review added successfully" : "Failed to add car review"];        
-
+    
+      case "list_all_reviews":
+        $cars = $carReviews->getCarReviews();
+        return ['message' => "All car reviews fetched successfully", 'data' => $cars];
+    
       case "search_car_reviews":
           $make = $request['make'] ?? null;
           $model = $request['model'] ?? null;
