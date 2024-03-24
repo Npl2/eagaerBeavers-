@@ -18,7 +18,7 @@ if (!isset($_COOKIE['username'])) {
     <?php
         include 'header.php';
     ?>
-    <body>
+    <body class="bg-gray-100">
 
     </body>
 </html>

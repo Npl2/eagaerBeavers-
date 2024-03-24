@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="css/index.css" rel="stylesheet"> 
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100">
 
 <header class="bg-blue-800">
       <nav class="m-auto w-11/12 flex items-center justify-between">

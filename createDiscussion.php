@@ -58,7 +58,7 @@
         <!-- <link href="css/header.css" rel="stylesheet"> -->
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
+    <body class="bg-gray-100">
         <?php include 'header.php'; ?>
         <div class="discussionBox">
             <!-- <div class="sideBar-topics">

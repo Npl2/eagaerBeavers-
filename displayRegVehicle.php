@@ -29,7 +29,7 @@
         <!-- <link href="css/displayRegVehicle.css" rel="stylesheet">  -->
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body>
+    <body class="bg-gray-100">
 
     <?php include 'header.php'; ?>
 
