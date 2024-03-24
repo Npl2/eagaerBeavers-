@@ -1,9 +1,3 @@
-<?php
-if (!isset($_COOKIE['username'])) {
-    header('Location: index.php');
-    exit();
-}
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,10 +7,9 @@ if (!isset($_COOKIE['username'])) {
         <link href="css/vehicleListings.css" rel="stylesheet"> 
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <?php
-        include 'header.php';
-    ?>
     <body>
+        <?php include 'header.php'; ?>
+        <?php if (isset($_COOKIE['username'])): ?>
             <div class="max-w-md mx-auto my-10">
                 <form action="submit_review.php" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <div class="mb-4">
@@ -50,6 +43,8 @@ if (!isset($_COOKIE['username'])) {
                     </div>
                 </form>
             </div>
-            
+        <?php else: ?>
+            <p>Please log in to submit a review.</p>
+        <?php endif; ?>
     </body>
 </html>
