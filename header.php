@@ -26,6 +26,7 @@
                     <a class="hover:bg-blue-700 hover:font-bold rounded px-3 py-2 transition duration-200" href="toDoDisplay.php">Todo</a>
                 </li>
             </ul>
+            <span class="ml-4 text-blue-800 bg-white px-3 py-1 rounded-lg">Welcome, <?= $_COOKIE['username'] ?></span>
             <a class="ml-4 bg-white text-blue-800 font-bold rounded px-3 py-2 transition duration-200" href="logout.php">Logout</a>
         </div>
     </nav>

@@ -52,26 +52,24 @@
       <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
 <?php include 'header.php'; ?>
-
 <div class="h-screen flex items-center justify-center">
     <div class="p-5 w-4/5 shadow-md rounded">
-        <h4 class="font-bold capitalize text-center text-lg">Registered Vehicles</h4>
+        <h4 class="font-bold capitalize text-center text-lg mb-4">Registered Vehicles</h4>
 
         <?php if ($response && $response['message'] == "Car registrations fetched successfully"): ?>
-            <div class="grid grid-cols-4 gap-4 text-sm">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                 <?php foreach ($response['data'] as $carReg): ?>
-                    <div class="p-2 h-44 flex flex-col items-center justify-center shadow">
+                    <div class="p-4 bg-white rounded-md shadow">
                         <div>
                             <p class="mb-2 font-medium capitalize">Make: <span class="font-normal"><?= $carReg['make'] ?></span></p>
                             <p class="mb-2 font-medium capitalize">Model: <span class="font-normal"><?= $carReg['model'] ?></span></p>
                             <p class="mb-2 capitalize">Year: <span class="font-normal"><?= $carReg['year'] ?></span></p>
                             <p class="font-medium capitalize">On Sale: <?= $carReg['on_sale'] ? '<span class="text-green-500">Yes</span>' : '<span class="text-red-500">No</span>' ?></p>
                         </div>
-                        <form action="update_car_sale_status.php" method="post">
+                        <form action="update_car_sale_status.php" method="post" class="mt-4">
                             <input type="hidden" name="carId" value="<?= $carReg['_id']['$oid'] ?>">
-                            <div>
+                            <div class="mb-2">
                                 <label class="block text-sm font-medium text-gray-700">Sale Price</label>
                                 <input type="number" name="salePrice" placeholder="Enter sale price" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                             </div>
@@ -85,7 +83,7 @@
                                     <span class="ml-2">Not on Sale</span>
                                 </label>
                             </div>
-                            <button type="submit" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Update Sale Status</button>
+                            <button type="submit" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update Sale Status</button>
                         </form>
                     </div>
                 <?php endforeach; ?>

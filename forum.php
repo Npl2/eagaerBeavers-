@@ -47,7 +47,7 @@
                 <h4 class="font-bold text-xl">Options</h4>
                 <ul class="mt-5">
                     <li class="py-2 font-semibold hover:bg-black hover:text-white hover:px-2 hover:rounded transition-all duration-200 ease-in-out">
-                        <a href="#">Create Discussions Post</a>
+                        <a href="createDiscussion.php">Create Discussions Post</a>
                     </li>
                 </ul>
             </div>
