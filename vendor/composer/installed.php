@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '74731fe9c7490ea245232155f3045a4affbb6d95',
+        'reference' => '0f27326760f17e621c3aa4aaf03dd37a7f2ed3f3',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '74731fe9c7490ea245232155f3045a4affbb6d95',
+            'reference' => '0f27326760f17e621c3aa4aaf03dd37a7f2ed3f3',
             'dev_requirement' => false,
         ),
         'jean85/pretty-package-versions' => array(
@@ -62,6 +62,15 @@
             'install_path' => __DIR__ . '/../php-amqplib/php-amqplib',
             'aliases' => array(),
             'reference' => '76eee289e98b0b309a761787e65cbe1acbaf8c72',
+            'dev_requirement' => false,
+        ),
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.9.1',
+            'version' => '6.9.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'reference' => '039de174cd9c17a8389754d3b877a2ed22743e18',
             'dev_requirement' => false,
         ),
         'phpseclib/phpseclib' => array(

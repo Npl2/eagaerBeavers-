@@ -167,6 +167,50 @@
         $success = $carReviews->addCarReview($request['make'], $request['model'], $request['year'], $request['review_text'], $request['username']);
         return ['message' => $success ? "Car review added successfully" : "Failed to add car review"];        
 
+
+
+      case "update_car_sale_status":
+        if (!isset($request['carId'], $request['onSale'], $request['salePrice'])) {
+            return ["returnCode" => '0', 'message' => "Missing information for updating car sale status"];
+        }
+        echo "The car status is: " . ($request['onSale'] ? "On Sale" : "Not on Sale") . PHP_EOL;
+        $success = $carRegistration->updateCarSaleStatus($request['carId'], $request['onSale'],$request['salePrice']);
+        return ['message' => $success ? "Car sale status updated successfully." : "Failed to update car sale status. The car status is same as the provided one"];
+
+      case "list_cars_on_sale":
+          $cars = $carRegistration->listCarsOnSale();
+          return ['message' => "Cars on sale fetched successfully", 'data' => $cars];
+
+      case "search_cars_on_sale":
+          $make = $request['make'] ?? null;
+          $model = $request['model'] ?? null;
+          $year = $request['year'] ?? null;
+          $cars = $carRegistration->searchCarsOnSale($make, $model, $year);
+          return ['message' => "Search results fetched successfully", 'data' => $cars];
+      
+      case "place_bid":
+        if (!isset($request['carId'], $request['username'], $request['bidAmount'])) {
+            return ["returnCode" => '0', 'message' => "Missing information for placing a bid"];
+        }
+        $result = $carRegistration->placeBid($request['carId'], $request['username'], $request['bidAmount']);
+        return ['message' => $result['success'] ? "Bid placed successfully." : "Failed to place bid."];
+
+        case "get_car_details_and_bids":
+          if (!isset($request['carId'])) {
+              return ["returnCode" => '0', 'message' => "No car ID provided"];
+          }
+          $data = $carRegistration->getCarDetailsWithBids($request['carId']);
+          
+          if ($data) {
+              if (isset($data['carDetails'])) {
+                  return ['message' => "Car details and bids fetched successfully", 'data' => $data];
+              } else {
+                  return ["returnCode" => '0', 'message' => "No car found with the provided ID"];
+              }
+          } else {
+              return ["returnCode" => '0', 'message' => "Failed to fetch car details and bids"];
+          }      
+        
       case "validate_session":
         return doValidate($request['sessionId']);
     }
