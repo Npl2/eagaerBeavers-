@@ -5,7 +5,7 @@
         <div class="flex items-center text-white">
             <ul class="flex items-center space-x-4">
                 <li>
-                    <a class="hover:bg-blue-700 hover:font-bold rounded px-3 py-2 transition duration-200" href="vehicleListings.php">Vehicle Reviews</a>
+                    <a class="hover:bg-blue-700 hover:font-bold rounded px-3 py-2 transition duration-200" href="seachVehicleReviews.php">Vehicle Reviews</a>
                 </li>
                 <li>
                     <a class="hover:bg-blue-700 hover:font-bold rounded px-3 py-2 transition duration-200" href="forum.php">Discussion Forum</a>

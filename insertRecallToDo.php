@@ -6,7 +6,7 @@
     <link href="css/header.css" rel="stylesheet">
     <title>Recall Todo Insertion</title>
 </head>
-<body class="bg-gray-100">
+<body>
 <?php include 'header.php'; ?>
 <?php
 use PhpAmqpLib\Connection\AMQPStreamConnection;
