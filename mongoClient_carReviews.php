@@ -32,7 +32,9 @@ class MongoClientDB_CARReviews {
     }
 
     public function getCarReviews(){
-        return $this->client->db->selectCollection('carReviews')->find()->toArray();
+        $views = $this->db->selectCollection('carReviews')->find([]);
+        print_r ($views);
+        return iterator_to_array($views);
     }
     
     public function searchCarReviews($make = null, $model = null, $year = null) {

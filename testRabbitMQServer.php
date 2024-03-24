@@ -168,8 +168,8 @@
         return ['message' => $success ? "Car review added successfully" : "Failed to add car review"];        
     
       case "list_all_reviews":
-        $cars = $carReviews->getCarReviews();
-        return ['message' => "All car reviews fetched successfully", 'data' => $cars];
+        $carz = $carReviews->getCarReviews();
+        return ['message' => "All car reviews fetched successfully", 'data' => $carz];
     
       case "search_car_reviews":
           $make = $request['make'] ?? null;
@@ -233,7 +233,7 @@
     return array("returnCode" => '0', 'message'=>"Server received request and processed");
   }
 
-  $connection = new AMQPStreamConnection('127.0.0.1', 5672, 'test', 'test', 'testHost');
+  $connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
   $channel = $connection->channel();
 
   setupMessaging($channel);
