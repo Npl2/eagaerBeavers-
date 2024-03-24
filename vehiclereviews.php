@@ -37,9 +37,11 @@
   if ($response && $response['message'] == "Car review added successfully") {
   
     echo "<script>alert('Reviews has been added');</script>";
+    header('Location: vehiclereviews.php');
 
   } else {
     echo "<script>alert('Reviews has not been added');</script>";
+    header('Location: vehiclereviews.php');
   }
 
   exit();

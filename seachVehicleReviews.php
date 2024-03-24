@@ -7,7 +7,7 @@ $client = new rabbitMQClient("testRabbitMQ.ini", "testServer");
 $exchangeName = 'user_auth';
 $routingKey = 'user_management';
 
-$requestType = 'list_car_reviews'; 
+$requestType = 'list_all_reviews'; 
 $searchCriteria = [];
 
 if (!empty($_GET['make']) || !empty($_GET['model']) || !empty($_GET['year'])) {
