@@ -1,0 +1,14 @@
+{
+  "require": {
+      "car-api-team/carapi-php-sdk": "^1.0",
+    "symfony/http-client": "^6.4",
+    "nyholm/psr7": "^1.8",
+    "psr/http-client": "^1.0",
+    "php-amqplib/php-amqplib": "^3.6"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
+  }
+}

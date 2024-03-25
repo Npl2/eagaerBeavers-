@@ -1,0 +1,284 @@
+/////////////////////////// BLOG POSTS ////////////////////////////
+
+// ADD BLOG POST
+$loginRequest = [
+    'type' => "add_blog_post",
+    'username' => "NEWHARSH_123",
+    'title' => "What is this piece of crap?",
+    'content' => 'Suspendisse tincidunt, magna nec lobortis aliquam, magna neque ullamcorper lectus, nec posuere erat ligula nec massa. Donec ultrices libero id odio eleifend, nec ornare leo pharetra. Donec elementum purus at ligula bibendum, ut scelerisque magna fringilla. Quisque libero eros, lacinia et augue sed, porta sodales sapien. Curabitur dignissim velit tincidunt sagittis bibendum. Praesent purus dui, egestas in sem sed, dictum iaculis lacus. Nam laoreet euismod quam vitae sagittis'
+];
+
+if ($response && $response['message']) {
+    echo "Successful";
+} else {
+    echo "Request Failed";
+}
+/////////////////////////////////////
+
+// LIST BLOG POSTS
+$loginRequest = [
+    'type' => "list_blog_posts",
+];
+
+$response = $client->send_request($loginRequest, $exchangeName, $routingKey);
+
+echo "Client received response: " . PHP_EOL;
+if ($response && $response['message'] == "Blog posts fetched successfully") {
+    echo "Successful" . PHP_EOL;
+    foreach ($response['data'] as $post) {
+        // Display the ObjectId
+        if (isset($post['_id']['$oid'])) {
+            echo "ID: " . $post['_id']['$oid'] . PHP_EOL;
+        } else {
+            echo "ID: Not Available" . PHP_EOL;
+        }
+
+        echo "Title: " . $post['title'] . PHP_EOL;
+        echo "Author: " . $post['author'] . PHP_EOL;
+        echo "Content: " . $post['content'] . PHP_EOL;
+
+        if (isset($post['created_at']['$date']['$numberLong'])) {
+            $timestampInSeconds = intval($post['created_at']['$date']['$numberLong']) / 1000;
+            $date = date('Y-m-d H:i:s', $timestampInSeconds);
+            echo "Posted on: " . $date . PHP_EOL;
+        }
+        echo "---------------------------------" . PHP_EOL;
+    }
+} else {
+    echo "Request Failed" . PHP_EOL;
+}
+///////////////////////////////////////
+
+// ADD COMMENT ON A POST
+
+$loginRequest = [
+    'type' => 'add_comment_post',
+    'postId' => "65f9624a6054d3b6ab071f44",
+    'username' => "nath",
+    "comment" => "yeah man this is soo true"
+];
+
+$response = $client->send_request($loginRequest, $exchangeName, $routingKey);
+
+echo "Client received response: " . PHP_EOL;
+if ($response && $response['success'] ) {
+    echo"COMMENT ADDED";
+} else {
+    echo "Request Failed" . PHP_EOL;
+}
+/////////////////////////////////
+
+
+// GET BLOG POST WITH COMMENT
+$loginRequest = [
+    'type' => 'get_blog_post_with_comments',
+    'postId' => "65f9624a6054d3b6ab071f44"
+];
+
+$response = $client->send_request($loginRequest, $exchangeName, $routingKey);
+
+echo "Client received response: " . PHP_EOL;
+if ($response && $response['message'] == "Blog post with comments fetched successfully" && $response['data']['success']) {
+    $post = $response['data']['post'];
+    echo "ID: " . $post['_id']['$oid'] . PHP_EOL;
+    echo "Author: " . $post['author'] . PHP_EOL;
+    echo "Title: " . $post['title'] . PHP_EOL;
+    echo "Content: " . $post['content'] . PHP_EOL;
+    $timestampInSeconds = intval($post['created_at']['$date']['$numberLong']) / 1000;
+    $date = date('Y-m-d H:i:s', $timestampInSeconds);
+    echo "Posted on: " . $date . PHP_EOL;
+    echo "Comments:" . PHP_EOL;
+    foreach ($post['comments'] as $comment) {
+        echo "    Comment ID: " . $comment['_id']['$oid'] . PHP_EOL;
+        echo "    Username: " . $comment['username'] . PHP_EOL;
+        echo "    Comment: " . $comment['comment'] . PHP_EOL;
+        $commentTimestampInSeconds = intval($comment['created_at']['$date']['$numberLong']) / 1000;
+        $commentDate = date('Y-m-d H:i:s', $commentTimestampInSeconds);
+        echo "    Posted on: " . $commentDate . PHP_EOL;
+        echo "    ---------------" . PHP_EOL;
+    }
+} else {
+    echo "Request Failed" . PHP_EOL;
+}
+///////////////////////////////
+
+
+
+/////////////////////////////////////////// CAR REG METHODS ////////////////////////////////////////
+
+// register Car
+$registerCarRequest = [
+    'type' => 'register_car',
+    'username' => 'nath',
+    'make' => 'Toyota',
+    'year' => '2020',
+    'model' => 'Camry',
+    'on_sale' => true
+];
+
+$response = $client->send_request($registerCarRequest, $exchangeName, $routingKey);
+
+echo "Client received response: " . PHP_EOL;
+if ($response && $response['message'] == "Car registration successful.") {
+    echo "Car registered successfully" . PHP_EOL;
+} else {
+    echo "Car registration failed: " . $response['message'] . PHP_EOL;
+}
+////////////////////////////////////////////////
+
+// display user cars
+$request = [
+    'type' => 'get_user_car_regs',
+    'username' => 'nath'
+];
+
+$response = $client->send_request($request, $exchangeName, $routingKey);
+if ($response && $response['message'] == "Car registrations fetched successfully") {
+    foreach ($response['data'] as $carReg) {
+        echo "Car Registration: " . $carReg['car_reg'] . " - Make: " . $carReg['make'] . ", Model: " . $carReg['model'] . ", Year: " . $carReg['year'] . ($carReg['on_sale'] ? " - On Sale" : "") . PHP_EOL;
+    }
+} else {
+    echo "Failed to fetch car registrations" . PHP_EOL;
+}
+/////////////////////////////////////////
+
+// display all the cars sale and not sale
+$request = [
+    'type' => 'list_all_car_regs'
+];
+$response = $client->send_request($request, $exchangeName, $routingKey);
+if ($response && $response['message'] == "All car registrations fetched successfully") {
+    echo "Cars On Sale:" . PHP_EOL;
+    foreach ($response['data'] as $carReg) {
+        if ($carReg['on_sale']) {
+            echo "User: " . $carReg['username'] . " - Make: " . $carReg['make'] . ", Model: " . $carReg['model'] . ", Year: " . $carReg['year'] . " - On Sale" . PHP_EOL;
+        }
+    }
+    
+    echo PHP_EOL . "Cars Not On Sale:" . PHP_EOL;
+    foreach ($response['data'] as $carReg) {
+        if (!$carReg['on_sale']) {
+            echo "User: " . $carReg['username'] . " - Make: " . $carReg['make'] . ", Model: " . $carReg['model'] . ", Year: " . $carReg['year'] . PHP_EOL;
+        }
+    }
+} else {
+    echo "Failed to list all car registrations" . PHP_EOL;
+}
+//////////////////////////////////////
+
+
+
+/////////////////////////////////// RECALL TODO //////////////////////////
+
+// add todo
+
+$recall = [
+    'Manufacturer' => 'Honda (American Honda Motor Co.)',
+    'NHTSACampaignNumber' => '19V182000',
+    'Component' => 'AIR BAGS:FRONTAL:DRIVER SIDE:INFLATOR MODULE',
+    'Summary' => 'Honda (American Honda Motor Co.) is recalling specific 2003 Acura 3.2CL, 2013-2016 ILX, 2013-2014 ILX Hybrid, 2003-2006 MDX, 2007-2016 RDX, 2002-2003 3.2TL, 2004-2006, and 2009-2014 TL, 2010-2013 ZDX and 2001-2007 and 2009 Honda Accord, 2001-2005 Civic, 2003-2005 Civic Hybrid, 2001-2005 Civic GX NGV, 2002-2007 and 2010-2011 CR-V, 2003-2011 Element, 2007 Fit, 2002-2004 Odyssey, 2003-2008 Pilot, and 2006-2014 Ridgeline vehicles. The affected vehicles received a replacement driver air bag inflator as part of a previous Takata inflator recall remedy or a replacement driver air bag module containing the same inflator type as a service part. Due to a manufacturing error, in the event of a crash necessitating deployment of the driver frontal air bag, these inflators may explode.',
+    'Consequence' => 'An explosion of an inflator within the driver frontal air bag module may result in sharp metal fragments striking the driver, front seat passenger or other occupants resulting in serious injury or death.',
+    'Remedy' => 'Honda will notify owners, and dealers will replace the driver\'s air bag inflator with an alternate inflator, free of charge. The recall began April 10, 2019.',
+    'Notes' => 'Owners may also contact the National Highway Traffic Safety Administration Vehicle Safety Hotline at 1-888-327-4236 (TTY 1-800-424-9153), or go to www.safercar.gov.',
+    'ModelYear' => '2012',
+    'Make' => 'HONDA',
+    'Model' => 'Civic'
+];
+
+$username = 'exampleUsername';
+$make = 'Honda';
+$model = 'Civic';
+$year = '2012';
+
+$recallsTodo = [
+    [
+        'Component' => $recall['Component'],
+        'Summary' => $recall['Summary'],
+        'Consequence' => $recall['Consequence'],
+        'Remedy' => $recall['Remedy'],
+        'Notes' => $recall['Notes']
+    ]
+];
+
+$request = [
+    'type' => 'insert_recall_todos',
+    'username' => $username,
+    'make' => $make,
+    'model' => $model,
+    'year' => $year,
+    'recalls' => $recallsTodo,
+];
+
+$response = $client->send_request($request, $exchangeName, $routingKey);
+
+if ($response && $response['message'] == "Recall todos inserted successfully.") {
+    echo "Recall todo successfully inserted for $make $model ($year).";
+} else {
+    echo "Failed to insert recall todo for $make $model ($year).";
+}
+////////////////////////////////////////////
+
+// displat the recall todo by username
+$request = [
+    'type' => 'get_recall_todos_by_username',
+    'username' => 'exampleUsername',
+];
+
+$response = $client->send_request($request, $exchangeName, $routingKey);
+
+if ($response && $response['message'] == "Recall todos fetched successfully") {
+    echo "Recall todos for user " . $request['username'] . ":\n";
+    foreach ($response['data'] as $todo) {
+        $id = (string) $todo['_id']['$oid'];
+        $date = new DateTime();
+        $timestamp = $todo['created_at']['$date']['$numberLong'] / 1000;
+        $date->setTimestamp($timestamp);
+        $formattedDate = $date->format('Y-m-d H:i:s');
+
+        echo "ID: " . $id . "\n";
+        echo "Task: " . $todo['task'] . "\n";
+        echo "Status: " . $todo['status'] . "\n";
+        echo "Created At: " . $formattedDate . "\n";
+        echo "---------------------------------\n";
+    }
+} else {
+    echo "Failed to fetch recall todos for username: " . $request['username'] . "\n";
+}
+///////////////////////////
+
+// update the todo
+$requestUpdateRecallTodoStatus = [
+    'type' => 'update_recall_todo_status',
+    'todoId' => '65fbe73cca6e503ef1063182',
+    'newStatus' => 'completed'
+];
+
+$responseUpdateRecallTodoStatus = $client->send_request($requestUpdateRecallTodoStatus, $exchangeName, $routingKey);
+
+if ($responseUpdateRecallTodoStatus && $responseUpdateRecallTodoStatus['message'] == "Recall todo status updated successfully.") {
+    echo "Recall todo status updated successfully.\n";
+} else {
+    echo "Failed to update recall todo status.\n";
+}
+//////////////////////
+
+/////////////////////////////////////////////////// CAR REVIEWS /////////////////////////////////////////
+
+// add car review
+$request = [
+    'type' => 'add_car_review',
+    'make'=>'Honda',
+    'model'=>'Civic',
+    'year'=>'2016',
+    'username'=>'nath',
+    'review_text'=> 'It is good but not that sleek, have a tone of issue the exhaust is just mehhh!!'
+];
+
+$response = $client->send_request($request, $exchangeName, $routingKey);
+
+if ($response && $response['message'] == "Car review added successfully") {
+  echo "Car review added Sucessfully";
+} else {
+    echo $response['message'];
+}
+/////////////////////////////

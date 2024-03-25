@@ -1,0 +1,135 @@
+body, h1, h2, p, ul, li {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.siteName {
+    color: black;
+    margin-left: 20px;
+    font: Helvetica;
+}
+
+/* Global styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
+}
+
+.discussionBox {
+    display: grid;
+    grid-template-columns: 25% auto; 
+    gap: 20px; 
+    padding: 20px;
+}
+
+/* Sidebar styles */
+.sideBar-topics {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.sideBar-topics h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+.sideBar-topics ul {
+    list-style-type: none;
+}
+
+.sideBar-topics ul li {
+    margin-bottom: 10px;
+}
+
+.sideBar-topics ul li a {
+    text-decoration: none;
+    color: #555;
+}
+
+.sideBar-topics ul li a:hover {
+    color: #777;
+}
+
+/* User Discussion styles 
+.user-discussion {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.user-discussion h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.user-discussion p {
+    color: #555;
+}
+
+*/
+
+.user-discussion {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.user-discussion h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.user-discussion p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.user-discussion form {
+    margin-top: 20px;
+}
+
+.user-discussion form .form-group label {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.user-discussion form .form-group input[type="text"],
+.user-discussion form .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.user-discussion form button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.user-discussion form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.createDiscussionButton {
+    margin-top: 5px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .user-discussion {
+        padding: 15px;
+    }
+}
