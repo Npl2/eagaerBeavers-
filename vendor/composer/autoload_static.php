@@ -34,10 +34,6 @@ class ComposerStaticInit18973a58ee21aa27b5a84ef7b1035917
         array (
             'MongoDB\\' => 8,
         ),
-        'J' => 
-        array (
-            'Jean85\\' => 7,
-        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -72,10 +68,6 @@ class ComposerStaticInit18973a58ee21aa27b5a84ef7b1035917
         'MongoDB\\' => 
         array (
             0 => __DIR__ . '/..' . '/mongodb/mongodb/src',
-        ),
-        'Jean85\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/jean85/pretty-package-versions/src',
         ),
     );
 
