@@ -3,6 +3,8 @@ if(!isset($_COOKIE['username'])){
     header("Location: index.php");
 }
 
+require_once 'logError.php';
+
 ?>
 
 <!DOCTYPE html>

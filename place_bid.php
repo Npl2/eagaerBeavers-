@@ -30,3 +30,6 @@ if ($response && $response['message'] == "Bid placed successfully.") {
     // Redirect back with error message
     header('Location: car_detail.php?carId=' . urlencode($carId) . '&error=Failed to place bid');
 }
+
+require_once 'logError.php';
+require_once 'logError.php';

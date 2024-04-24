@@ -21,6 +21,9 @@ $request = [
 ];
 
 $response = $client->send_request($request, $exchangeName, $routingKey);
+
+require_once 'logError.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

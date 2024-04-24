@@ -46,6 +46,8 @@
   exit();
 }
 
+require_once 'logError.php';
+
 ?>
 
 <html>

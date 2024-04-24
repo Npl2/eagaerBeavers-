@@ -77,6 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 } else {
     echo "<p>Invalid request method.</p>";
 }
+
+require_once 'logError.php';
+
+
 ?>
 
 </body>

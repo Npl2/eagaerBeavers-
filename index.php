@@ -7,6 +7,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
+//trigger_error("This is a custom error message", E_USER_ERROR);
 
 if (isset($_COOKIE['username'])) {
     header('Location: forum.php');
@@ -36,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['success' => $response]);
     exit();
 }
+
+require_once 'logError.php';
 
 ?>
 
