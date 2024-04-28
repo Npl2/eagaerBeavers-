@@ -38,18 +38,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <?php include 'header.php'; ?>
-    
+<?php include 'header.php'; ?>
     <div class="h-screen flex items-center justify-center">
-        <div class="p-5 w-1/2 shadow-md rounded">
+        <div class="p-12 md:p-5 w-full md:w-1/2 md:shadow-md md:rounded">
             <h4 class="font-bold capitalize text-center text-lg">
                 Create Discussion
             </h4>
-
             <div class="mt-5 p-3 border border-1 border-gray-200 rounded">
-                <?php echo '<p>' . $post['title'] . '</p>' ?>
-                <?php echo '<p>' . $post['content'] . '</p>' ?>
-                <p class="mt-2 uppercase text-[0.55rem] font-bold text-right">
+                <?php echo '<p class="font-medium">' . $post['title'] . '</p>' ?>
+                <?php echo '<p class="text-[0.65rem]">' . $post['content'] . '</p>' ?>
+                <p class="mt-2 uppercase text-[0.40rem] font-bold text-right">
                     Posted on: <span class="font-normal">|</span> Date: <?= date('Y-m-d H:i:s', intval($post['created_at']['$date']['$numberLong']) / 1000) ?>
                 </p>
             </div>
@@ -59,7 +57,7 @@
                         <p>
                             <?= $comment['comment']; ?>
                         </p>
-                        <p class="mt-1 uppercase text-[0.55rem] font-bold text-right">
+                        <p class="mt-1 uppercase text-[0.40rem] font-bold text-right">
                             Posted on: <span class="font-normal">|</span> Date: <?= date('Y-m-d H:i:s', intval($comment['created_at']['$date']['$numberLong']) / 1000) ?>
                         </p>
                     </div>
