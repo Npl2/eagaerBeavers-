@@ -59,9 +59,9 @@
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
-        <?php include 'header.php'; ?>
-        <div class="discussionBox">
-            <!-- <div class="sideBar-topics">
+    <?php include 'header.php'; ?>
+    <div class="discussionBox">
+        <!-- <div class="sideBar-topics">
                 <h2>Categories</h2>
                 <ul>
                     <li><a href="#">Cars</a></li>
@@ -69,45 +69,27 @@
                     <li><a href="#">Models</a></li>
                 </ul>
             </div> -->
-            
-
         <div class="h-screen flex items-center justify-center">
-      <div class="p-5 w-96 shadow-md rounded">
-        <h4 class="font-bold capitalize text-center text-lg">
-          Create Discussion
-        </h4>
-
-        <form id="createDiscussionForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-          <div class="mt-5">
-            <label for="discussionTitle">Discussion Title</label>
-            <input
-              class="mt-1 p-1 w-full border border-gray-200 rounded"
-              type="text"
-              name="discussionTitle"
-              id="discussionTitle"
-              placeholder="Enter discussion title"
-              required
-            />
-          </div>
-          <div class="mt-5">
-            <label for="discussionContent">Discussion Title</label>
-            <textarea
-              class="w-full h-44 border border-gray-200"
-              name="discussionContent"
-              id="discussionContent"
-              placeholder="Enter discussion content"
-              required
-            ></textarea>
-          </div>
-          <div>
-            <button
-              class="createDiscussionButton mt-1 w-full border-0 bg-blue-500 hover:bg-blue-600 transition-all duration-100 ease-in-out rounded font-bold text-white" type="submit"
-            >
-              Post
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+            <div class="p-10 md:p-3 lg:p-10 w-full md:w-80 lg:w-96 md:shadow-md md:rounded">
+                <h4 class="font-bold capitalize text-center text-lg">
+                    Create Discussion
+                </h4>
+                <form id="createDiscussionForm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <div class="mt-5">
+                        <label for="discussionTitle">Discussion Title</label>
+                        <input class="mt-1 p-2 w-full border border-gray-200 rounded" type="text" name="discussionTitle" id="discussionTitle" placeholder="Enter discussion title" required />
+                    </div>
+                    <div class="mt-5">
+                        <label for="discussionContent">Discussion Title</label>
+                        <textarea class="p-2 w-full h-44 border border-gray-200" name="discussionContent" id="discussionContent" placeholder="Enter discussion content" required></textarea>
+                    </div>
+                    <div class="mt-2">
+                        <button class="createDiscussionButton mt-1 w-full border-0 bg-blue-500 hover:bg-blue-600 transition-all duration-100 ease-in-out rounded font-bold text-white" type="submit">
+                            Post
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
