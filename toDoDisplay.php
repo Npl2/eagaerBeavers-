@@ -58,7 +58,7 @@ $response = $client->send_request($request, $exchangeName, $routingKey);
                             </div>
                             <!-- Form to update status -->
                             <form action="updateTodo.php" method="post" class="flex items-center">
-                                <input type="hidden" name="todoId" value="<?= $todo['_id']['oid']; ?>">
+                                <input type="hidden" name="todoId" value="<?= $todo['_id']['$oid']; ?>">
                                 <input type="hidden" name="newStatus" value="completed">
                                 <label class="inline-flex items-center">
                                     <input type="checkbox" onchange="this.form.submit()" class="form-checkbox h-5 w-5 text-blue-600"><span class="ml-2 text-gray-700">Mark as Completed</span>
@@ -74,7 +74,7 @@ $response = $client->send_request($request, $exchangeName, $routingKey);
                     <?php foreach ($response['data'] as $todo) : ?>
                         <?php if ($todo['status'] == 'completed') : ?>
                             <div class="p-6 rounded-lg shadow bg-green-200">
-                                <p><strong>ID:</strong> <?= htmlspecialchars($todo['_id']['oid']); ?></p>
+                                <p><strong>ID:</strong> <?= htmlspecialchars($todo['_id']['$oid']); ?></p>
                                 <p><strong>Make:</strong> <?= htmlspecialchars($todo['make']); ?></p>
                                 <p><strong>Model:</strong> <?= htmlspecialchars($todo['model']); ?></p>
                                 <p><strong>Year:</strong> <?= htmlspecialchars($todo['year']); ?></p>
