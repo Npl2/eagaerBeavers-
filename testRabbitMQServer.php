@@ -5,6 +5,8 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require('car_api.php');
 
+include '/home/dmz/ip.php';
+
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
@@ -63,7 +65,7 @@ function requestProcessor($request, $channel, $replyQueue, $correlationId) {
     }
 }
 
-$connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
+$connection = new AMQPStreamConnection($rabbitmq, 5672, 'test', 'test', 'testHost');
 $channel = $connection->channel();
 
 setupMessaging($channel);
