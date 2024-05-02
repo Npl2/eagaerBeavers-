@@ -62,5 +62,7 @@ if ($response && isset($response['data'])) {
             </form>
         </div>
     </div>
+
+    <?php include 'responsiveNavScript.php'; ?>
 </body>
 </html>

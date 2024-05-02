@@ -54,5 +54,6 @@ require_once 'logError.php';
                 </form>
             </div>
             
+            <?php include 'responsiveNavScript.php'; ?>
     </body>
 </html>

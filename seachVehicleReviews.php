@@ -86,5 +86,6 @@ require_once 'logError.php';
         <?php endif; ?>
     </div>
 
+    <?php include 'responsiveNavScript.php'; ?>
 </body>
 </html>

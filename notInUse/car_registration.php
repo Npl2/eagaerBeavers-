@@ -142,5 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     document.querySelector("#submit").addEventListener("click", SendRegistrationRequest)
 
 </script>
+
+<?php include 'responsiveNavScript.php'; ?>
   </body>
 </html>

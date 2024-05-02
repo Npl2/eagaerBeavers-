@@ -96,5 +96,7 @@
             </div>
         </form>
     </div>
+
+    <?php include 'responsiveNavScript.php'; ?>
 </body>
 </html>

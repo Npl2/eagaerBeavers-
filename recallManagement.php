@@ -64,5 +64,7 @@ require_once 'logError.php';
             getCarRegistrations();
         });
     </script>
+
+<?php include 'responsiveNavScript.php'; ?>
 </body>
 </html>

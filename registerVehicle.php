@@ -148,5 +148,6 @@ require_once 'logError.php';
       }
     </script>
 
+<?php include 'responsiveNavScript.php'; ?>
   </body>
 </html>

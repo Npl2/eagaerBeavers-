@@ -99,5 +99,7 @@ require_once 'logError.php';
             <p class="text-center text-lg">No recall todos found for user <?= htmlspecialchars($_COOKIE['username']); ?>.</p>
         <?php endif; ?>
     </div>
+
+    <?php include 'responsiveNavScript.php'; ?>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/header.css" rel="stylesheet">
     <title>Recall Todo Insertion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 <?php include 'header.php'; ?>
@@ -83,5 +84,6 @@ require_once 'logError.php';
 
 ?>
 
+<?php include 'responsiveNavScript.php'; ?>
 </body>
 </html>
