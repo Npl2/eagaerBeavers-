@@ -33,16 +33,6 @@ function getVersionNumber() {
     return $version;
 }
 
-function unzipFile($zipFilePath, $extractPath) {
-    $zip = new ZipArchive;
-    if ($zip->open($zipFilePath) === TRUE) {
-        $zip->extractTo($extractPath);
-        $zip->close();
-        echo "Unzip successful.\n";
-    } else {
-        echo "Failed to unzip file.\n";
-    }
-}
 
 // Path to the directory you want to zip
 $directoryPath = '/home/npl2/IT-490';
@@ -121,10 +111,69 @@ fclose($stream);
 
 if (ssh2_scp_send($connection, $zipFilePath, $remoteDir . "/IT-490 Version $version.zip")) {
     echo "Zip file transferred successfully as Version $version.\n";
+    unzipFile($connection, $zipFilePath, $remoteDir, $version);
 } else {
     echo "Failed to transfer zip file.\n";
 }
+function unzipFile($connection, $zipFilePath, $remoteDir, $version) {
+    // Prompting the local user for the directory where the file should be unzipped
+    echo "Enter the full path of the directory where you want to unzip the file: ";
+    $unzipDestination = trim(fgets(STDIN));
 
-// Close the SSH connection
-ssh2_exec($connection, 'exit');
+    // Preparing and executing the unzip command on the remote server
+    $unzipCommand = "unzip -o " . escapeshellarg($remoteDir . "/IT-490 Version $version.zip") . " -d " . escapeshellarg($unzipDestination);
+    $unzipStream = ssh2_exec($connection, $unzipCommand);
+    stream_set_blocking($unzipStream, true);
+    
+    if (stream_get_contents($unzipStream) !== false) {
+        echo "Zip file unzipped successfully in " . $unzipDestination . ".\n";
+        
+        // Directory and file pattern for checking renaming
+        $directory = escapeshellarg($unzipDestination);
+        $filenamePattern = "eagaerBeavers-*"; // Adjust based on how files are named before being renamed
+    
+        // Polling interval and max attempts
+        $pollInterval = 10; // seconds
+        $maxAttempts = 60; // This gives 10 minutes to wait
+    
+        $fileFound = false;
+        $attempt = 0;
+    
+        while (!$fileFound && $attempt < $maxAttempts) {
+            // SSH command to check if the file has been renamed to include 'pass' or 'fail'
+            $checkCommand = "ls $directory/$filenamePattern 2>/dev/null";
+            $checkStream = ssh2_exec($connection, $checkCommand);
+            stream_set_blocking($checkStream, true);
+            $result = stream_get_contents($checkStream);
+            fclose($checkStream);
+    
+            if (strpos($result, 'pass') !== false) {
+                echo "The package has been successfully verified as a pass by the remote machine.\n";
+                $fileFound = true;
+            } elseif (strpos($result, 'fail') !== false) {
+                echo "The package has failed verification by the remote machine.\n";
+                $fileFound = true;
+            } else {
+                echo "File not yet renamed, checking again in $pollInterval seconds.\n";
+                sleep($pollInterval);
+                $attempt++;
+            }
+        }
+    
+        if (!$fileFound) {
+            echo "Verification process exceeded the time limit without a pass or fail confirmation.\n";
+        }
+    } else {
+        echo "Failed to unzip zip file at the specified location.\n";
+    }
+    
+    // Always ensure streams are closed to free resources
+    if (isset($unzipStream)) {
+        fclose($unzipStream);
+    }
+    
+    // Disconnect from the remote server
+    ssh2_disconnect($connection);
+    echo "SSH connection closed.\n";
+}
 ?>
