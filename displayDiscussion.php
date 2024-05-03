@@ -5,6 +5,7 @@
     require_once('path.inc');
     require_once('get_host_info.inc');
     require_once('rabbitMQLib.inc');
+    require_once 'logError.php';
 
     if (!isset($_GET['discussion_id'])) {
         header('Location: index.php');
