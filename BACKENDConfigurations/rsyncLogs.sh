@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Define rsync command with variables
+sync_logs() {
+    local ssh_command="$1"
+    local source_file="$2"
+    local destination="$3"
+
+    rsync -avz -e "$ssh_command" "$source_file" "$destination"
+}
+
+# Define SSH command
+ssh_command="ssh -i /home/npl2/.ssh/backendErrorLog"
+
+# Define source files and destinations
+source_file1="/var/log/rabbitmq/rabbit@it490.log"
+source_file2="/var/log/kern.log"
+destination1="webserver@webserver-VirtualBox:/home/webserver/errorLogs/"
+destination2="dmz@dmz-VirtualBox:/home/dmz/errorLogs/"
+
+# Run rsync commands every 30 seconds
+while true; do
+    sync_logs "$ssh_command" "$source_file1" "$destination1/backendRabbitErrorLogs.log"
+    sync_logs "$ssh_command" "$source_file2" "$destination1/backendRabbitErrorKernLogs.log"
+    sync_logs "$ssh_command" "$source_file1" "$destination2/backendRabbitErrorLogs.log"
+    sync_logs "$ssh_command" "$source_file2" "$destination2/backendRabbitErrorKernLogs.log"
+    sleep 30
+done
+
