@@ -1,0 +1,3 @@
+* * * * * rsync -avz -e "ssh -i /home/dmz/.ssh/dmzErrorLog" /var/log/syslog npl2@it490:/home/npl2/errorLogs/dmzErrorLogs.log
+* * * * * rsync -avz -e "ssh -i /home/dmz/.ssh/dmzErrorLog" /var/log/syslog webserver@webserver-VirtualBox:/home/webserver/errorLogs/dmzErrorLogs.log
+
