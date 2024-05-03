@@ -1,0 +1,13 @@
+# tcp_listeners.custom = 0.0.0.0:5672, 172.28.0.0/16:5672
+listeners.tcp.1 = :::5672
+
+cluster_partition_handling = pause_if_all_down
+
+## Recovery strategy. Can be either 'autoheal' or 'ignore'
+cluster_partition_handling.pause_if_all_down.recover = autoheal
+
+## Node names to check
+cluster_partition_handling.pause_if_all_down.nodes.1 = rabbit@dmz-VirtualBox
+cluster_partition_handling.pause_if_all_down.nodes.2 = rabbit@webserver-VirtualBox
+cluster_partition_handling.pause_if_all_down.nodes.3 = rabbit@it490
+

@@ -1,0 +1,3 @@
+* * * * * rsync -avz -e "ssh -i /home/npl2/.ssh/backendErrorLog" /var/log/rabbitmq/rabbit@it490.log webserver@webserver-VirtualBox:/home/webserver/errorLogs/backendRabbitErrorLogs.log
+* * * * * rsync -avz -e "ssh -i /home/npl2/.ssh/backendErrorLog" /var/log/kern.log webserver@webserver-VirtualBox:/home/webserver/errorLogs/backendRabbitErrorKernLogs.log
+
