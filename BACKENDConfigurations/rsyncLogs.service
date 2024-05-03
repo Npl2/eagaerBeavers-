@@ -1,0 +1,13 @@
+[Unit]
+Description=Distrubuted logging  start on boot
+After=network.target rabbitmq-server.service
+
+[Service]
+ExecStart=/home/npl2/rsyncLogs.sh
+Restart=always
+User=npl2
+Group=npl2
+
+[Install]
+WantedBy=multi-user.target
+
