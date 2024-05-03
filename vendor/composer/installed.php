@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'f86892d2f4a3ccb0a6d6ebca8a869e686a27b757',
+        'reference' => '0e77b41371935054e319772fc2035029aab15800',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'f86892d2f4a3ccb0a6d6ebca8a869e686a27b757',
+            'reference' => '0e77b41371935054e319772fc2035029aab15800',
             'dev_requirement' => false,
         ),
         'mongodb/mongodb' => array(
@@ -47,12 +47,12 @@
             'dev_requirement' => false,
         ),
         'php-amqplib/php-amqplib' => array(
-            'pretty_version' => 'v3.6.1',
-            'version' => '3.6.1.0',
+            'pretty_version' => 'v3.6.2',
+            'version' => '3.6.2.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../php-amqplib/php-amqplib',
             'aliases' => array(),
-            'reference' => '76eee289e98b0b309a761787e65cbe1acbaf8c72',
+            'reference' => 'cb514530ce45a6d2f636be5196010c47c3bcf6e0',
             'dev_requirement' => false,
         ),
         'phpmailer/phpmailer' => array(
@@ -103,7 +103,7 @@
         'videlalvaro/php-amqplib' => array(
             'dev_requirement' => false,
             'replaced' => array(
-                0 => 'v3.6.1',
+                0 => 'v3.6.2',
             ),
         ),
     ),
