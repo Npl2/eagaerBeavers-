@@ -1,8 +1,9 @@
-<!-- <h1 class="siteName">EagerDrivers</h1> -->
-<header class="bg-blue-800 z-50">
+<header class="w-full fixed lg:sticky lg:top-0 bg-blue-800 z-50">
         <nav class="m-auto w-11/12 flex items-center justify-between py-3">
             <h1 class="font-bold text-white text-2xl">EagerDrivers</h1>
+
             <span id="menu" class="inline-block lg:hidden text-white" data-feather="menu"></span>
+
             <!-- desktop menu -->
             <div class="hidden lg:flex items-center text-white">
                 <ul class="flex items-center">
@@ -33,8 +34,9 @@
             </div>
         </nav>
     </header>
+
     <!-- mobile menu -->
-    <header id="mobileNav" class="block lg:hidden z-50">
+    <header id="mobileNav" class="fixed w-full top-14 block lg:hidden z-50">
         <div class="flex flex-col items-start text-white bg-gray-300">
             <ul class="flex flex-col w-full font-semibold uppercase">
                 <li class="py-3 border-b border-gray-200 w-full">
@@ -64,4 +66,3 @@
             </ul>
         </div>
     </header>
-    
