@@ -1,0 +1,3 @@
+* * * * * rsync -avz -e "ssh -i /home/webserver/.ssh/frontendErrorlog" /var/log/apache2/sample_error.log  npl2@it490:/home/npl2/errorLogs/frontendErrorLogs.log
+* * * * * rsync -avz -e "ssh -i /home/webserver/.ssh/frontendErrorlog" /var/log/apache2/sample_error.log  dmz@dmz-VirtualBox:/home/dmz/errorLogs/frontendErrorLogs.log
+
