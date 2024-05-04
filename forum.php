@@ -41,7 +41,7 @@
     </head>
     <body>
     <?php include 'header.php'; ?>
-    <div class="p-5 md:p-8 lg:p-12 w-full flex items-center justify-center">
+    <div class="relative top-[3rem] lg:top-0 p-5 md:p-8 lg:p-12 w-full flex items-center justify-center">
         <div class="flex flex-col md:flex-row lg:w-8/12">
             <div class="lg:mr-5 p-5 lg:w-4/12 bg-white md:shadow">
                 <h4 class="hidden md:block font-medium lg:font-bold text-lg lg:text-xl">Options</h4>
