@@ -63,7 +63,7 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
-    <div class="max-w-md mx-auto my-10">
+    <div class=" relative top-[5rem] lg:top-0 max-w-md mx-auto">
         <form action="vehiclereviews.php" method="post" class="bg-white md:shadow-md md:rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="vehicle_make">
