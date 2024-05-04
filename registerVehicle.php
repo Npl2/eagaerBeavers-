@@ -86,7 +86,7 @@ require_once 'logError.php';
         <div id="registrationResponse" class="response-message"></div>
     </div> -->
 
-    <div class="h-screen flex items-center justify-center">
+    <div class="relative top-[5rem] h-screen flex items-start justify-center">
         <form id="registrationForm" method="post" onsubmit="return false;" class="p-5 w-full md:w-80 lg:w-96 md:shadow-md md:rounded">
             <h4 class="font-bold capitalize text-center text-lg">
                 Register Your Vehicle
