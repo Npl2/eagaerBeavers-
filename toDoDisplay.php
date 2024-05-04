@@ -42,7 +42,7 @@ require_once 'logError.php';
                 <h3 class="text-lg font-semibold mb-4">Pending Todos:</h3>
                 <?php foreach ($response['data'] as $todo) : ?>
                     <?php if ($todo['status'] == 'pending') : ?>
-                        <div class="bg-yellow-200 p-6 rounded-lg shadow mb-4 flex justify-between items-center">
+                        <div class="bg-yellow-200 p-6 rounded-lg shadow mb-4 flex justify-between items-center text-xl">
                             <div>
                                 <p><strong>Make:</strong> <?= htmlspecialchars($todo['make']); ?></p>
                                 <p><strong>Model:</strong> <?= htmlspecialchars($todo['model']); ?></p>
@@ -73,7 +73,7 @@ require_once 'logError.php';
             </div>
             <div class="mt-10">
                 <h3 class="text-lg font-semibold mb-4">Completed Todos:</h3>
-                <div class="space-y-4">
+                <div class="space-y-4 text-xl">
                     <?php foreach ($response['data'] as $todo) : ?>
                         <?php if ($todo['status'] == 'completed') : ?>
                             <div class="p-6 rounded-lg shadow bg-green-200">
