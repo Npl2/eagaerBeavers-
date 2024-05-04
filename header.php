@@ -36,8 +36,9 @@
     </header>
 
     <!-- mobile menu -->
-    <header id="mobileNav" class="fixed w-full top-14 block lg:hidden z-50">
+    <header id="mobileNav" class="fixed w-full top-14 block lg:hidden z-50 hidden">
         <div class="flex flex-col items-start text-white bg-gray-300">
+        <p class="capitalize py-3 px-2 border-b border-gray-200 w-full text-center font-medium text-xl text-blue-800">Welcome, <?= $_COOKIE['username'] ?></p>
             <ul class="flex flex-col w-full font-semibold uppercase">
                 <li class="py-3 border-b border-gray-200 w-full">
                     <a class="hover:bg-blue-700 hover:font-bold rounded px-2 py-2 transition duration-200" href="seachVehicleReviews.php">Vehicle Reviews</a>
