@@ -35,7 +35,7 @@ require_once 'logError.php';
 </head>
 <body class="bg-gray-100">
 <?php include 'header.php'; ?>
-    <div class="container w-full lg:w-1/2 mx-auto px-4 py-8">
+    <div class="elative top-[3rem] lg:top-0 container w-full lg:w-1/2 mx-auto px-4 py-8">
         <?php if ($response && $response['message'] == "Recall todos fetched successfully") : ?>
             <div class="text-xl font-semibold mb-6">Recall Todos for User: <?= htmlspecialchars($_COOKIE['username']); ?></div>
             <div>
