@@ -54,8 +54,8 @@
 </head>
 <body>
 <?php include 'header.php'; ?>
-<div class="h-screen flex items-center justify-center">
-    <div class="mt-[85rem] md:mt-[35rem] lg:mt-0 p-5 w-4/5 shadow-md rounded">
+<div class="relative top-[5rem] lg:mt-0 h-screen flex items-start justify-center">
+    <div class="p-5 w-4/5 shadow-md rounded">
         <h4 class="font-bold capitalize text-center text-lg mb-4">Registered Vehicles</h4>
 
         <?php if ($response && $response['message'] == "Car registrations fetched successfully"): ?>
