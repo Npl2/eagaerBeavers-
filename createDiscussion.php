@@ -69,7 +69,7 @@
                     <li><a href="#">Models</a></li>
                 </ul>
             </div> -->
-        <div class="h-screen flex items-center justify-center">
+        <div class="relative top-[5rem] lg:top-0 h-screen flex items-start lg:items-center justify-center">
             <div class="p-10 md:p-3 lg:p-10 w-full md:w-80 lg:w-96 md:shadow-md md:rounded">
                 <h4 class="font-bold capitalize text-center text-lg">
                     Create Discussion
