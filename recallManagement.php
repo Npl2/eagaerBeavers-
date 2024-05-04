@@ -20,7 +20,7 @@ require_once 'logError.php';
 <body class="bg-gray-100">
     <?php include 'header.php'; ?>
 
-    <div id="car-registrations">
+    <div class="pt-[3.5rem] lg:pt-0 px-2" id="car-registrations">
 
     </div>
 
