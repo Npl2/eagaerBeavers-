@@ -1,0 +1,11 @@
+[Unit]
+Description=Changes .ini ip to match cluster master ip
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/php /home/webserver/changeIP.php
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
