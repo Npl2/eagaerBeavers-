@@ -1,0 +1,14 @@
+[Unit]
+Description=DMZ API start on boot
+After=network.target
+
+[Service]
+ExecStart=/home/dmz/IT-490/eagaerBeavers-/testRabbitMQServer.php
+Restart=always
+RestartSec=10s
+User=dmz
+Group=dmz
+
+
+[Install]
+WantedBy=multi-user.target

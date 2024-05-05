@@ -1,0 +1,12 @@
+[Unit]
+Description=Distrubuted logging  start on boot
+After=network.target dmzScript.service
+
+[Service]
+ExecStart=/home/dmz/rsyncLogs.sh
+Restart=always
+User=dmz
+Group=dmz
+
+[Install]
+WantedBy=multi-user.target
