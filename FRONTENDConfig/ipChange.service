@@ -1,0 +1,11 @@
+[Unit]
+Description=Changes ip of.ini to master node ip of cluster
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/php /home/webserver/changeIP.sh
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=Distrubuted logging  start on boot
+After=network.target
+
+[Service]
+ExecStart=/home/webserver/rsyncLogs.sh
+Restart=always
+User=webserver
+Group=webserver
+
+[Install]
+WantedBy=multi-user.target
