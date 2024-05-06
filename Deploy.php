@@ -219,10 +219,11 @@ function unzipFile($connection, $zipFilePath, $remoteDir, $currentVersion) {
 
 
 // Path to the directory you want to zip
-$directoryPath = '/home/npl2/IT-490';
+echo "Enter the full path of the source directory: ";
+$directoryPath = trim(fgets(STDIN));
 
 // Path for the resulting zip file with versioning
-$zipFilePath = "/home/npl2/zip/IT-490 Version $currentVersion.zip";  // Use $currentVersion for the zip file path
+$zipFilePath = "/home/webserver/zip/IT-490 Version $currentVersion.zip";  // Use $currentVersion for the zip file path
 
 $zip = new ZipArchive();
 // Attempt to open the zip file, create it if it doesn't exist
