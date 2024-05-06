@@ -14,5 +14,4 @@ return array(
     'ParagonIE\\ConstantTime\\' => array($vendorDir . '/paragonie/constant_time_encoding/src'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'MongoDB\\' => array($vendorDir . '/mongodb/mongodb/src'),
-    'Jean85\\' => array($vendorDir . '/jean85/pretty-package-versions/src'),
 );

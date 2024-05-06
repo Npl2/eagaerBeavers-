@@ -11,6 +11,8 @@
   use PhpAmqpLib\Connection\AMQPStreamConnection;
   use PhpAmqpLib\Message\AMQPMessage;
 
+  include '/home/npl2/ip.php';
+
   function setupMessaging($channel) {
       $exchangeName = 'user_auth';
       $queueNameUser = 'testQueue';
@@ -233,7 +235,7 @@
     return array("returnCode" => '0', 'message'=>"Server received request and processed");
   }
 
-  $connection = new AMQPStreamConnection('172.28.222.209', 5672, 'test', 'test', 'testHost');
+  $connection = new AMQPStreamConnection($rabbitmq, 5672, 'test', 'test', 'testHost');
   $channel = $connection->channel();
 
   setupMessaging($channel);

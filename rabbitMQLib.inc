@@ -26,6 +26,7 @@ class rabbitMQServer
 		$this->USER     = $this->machine[$server]["USER"];
 		$this->PASSWORD = $this->machine[$server]["PASSWORD"];
 		$this->VHOST = $this->machine[$server]["VHOST"];
+		$this->exchange_type = $this->machine[$server]["EXCHANGE_TYPE"] ?? "topic";
 		if (isset( $this->machine[$server]["EXCHANGE_TYPE"]))
 		{
 			$this->exchange_type = $this->machine[$server]["EXCHANGE_TYPE"];
@@ -160,6 +161,7 @@ class rabbitMQClient
 		$this->USER     = $this->machine[$server]["USER"];
 		$this->PASSWORD = $this->machine[$server]["PASSWORD"];
 		$this->VHOST = $this->machine[$server]["VHOST"];
+		$this->exchange_type = $this->machine[$server]["EXCHANGE_TYPE"] ?? "topic";
 		if (isset( $this->machine[$server]["EXCHANGE_TYPE"]))
 		{
 			$this->exchange_type = $this->machine[$server]["EXCHANGE_TYPE"];
@@ -275,4 +277,3 @@ class rabbitMQClient
 	}
 }
 ?>
-

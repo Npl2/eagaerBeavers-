@@ -7,83 +7,24 @@
     "content-hash": "87d48b4cf73d363f5b5d7f09ff66fecf",
     "packages": [
         {
-            "name": "jean85/pretty-package-versions",
-            "version": "2.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Jean85/pretty-package-versions.git",
-                "reference": "f9fdd29ad8e6d024f52678b570e5593759b550b4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Jean85/pretty-package-versions/zipball/f9fdd29ad8e6d024f52678b570e5593759b550b4",
-                "reference": "f9fdd29ad8e6d024f52678b570e5593759b550b4",
-                "shasum": ""
-            },
-            "require": {
-                "composer-runtime-api": "^2.0.0",
-                "php": "^7.1|^8.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.2",
-                "jean85/composer-provided-replaced-stub-package": "^1.0",
-                "phpstan/phpstan": "^1.4",
-                "phpunit/phpunit": "^7.5|^8.5|^9.4",
-                "vimeo/psalm": "^4.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Jean85\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alessandro Lai",
-                    "email": "alessandro.lai85@gmail.com"
-                }
-            ],
-            "description": "A library to get pretty versions strings of installed dependencies",
-            "keywords": [
-                "composer",
-                "package",
-                "release",
-                "versions"
-            ],
-            "support": {
-                "issues": "https://github.com/Jean85/pretty-package-versions/issues",
-                "source": "https://github.com/Jean85/pretty-package-versions/tree/2.0.6"
-            },
-            "time": "2024-03-08T09:58:59+00:00"
-        },
-        {
             "name": "mongodb/mongodb",
-            "version": "1.17.1",
+            "version": "1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mongodb/mongo-php-library.git",
-                "reference": "01d0840bf0678f519e72dc71b69c8a50a0856c2d"
+                "reference": "d421c418ef56a96f3dfa6b2828f936df6848ccf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/01d0840bf0678f519e72dc71b69c8a50a0856c2d",
-                "reference": "01d0840bf0678f519e72dc71b69c8a50a0856c2d",
+                "url": "https://api.github.com/repos/mongodb/mongo-php-library/zipball/d421c418ef56a96f3dfa6b2828f936df6848ccf9",
+                "reference": "d421c418ef56a96f3dfa6b2828f936df6848ccf9",
                 "shasum": ""
             },
             "require": {
+                "composer-runtime-api": "^2.0",
                 "ext-hash": "*",
                 "ext-json": "*",
-                "ext-mongodb": "^1.17.0",
-                "jean85/pretty-package-versions": "^2.0.1",
+                "ext-mongodb": "^1.18.0",
                 "php": "^7.4 || ^8.0",
                 "psr/log": "^1.1.4|^2|^3",
                 "symfony/polyfill-php80": "^1.27",
@@ -99,7 +40,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.17.x-dev"
+                    "dev-master": "1.18.x-dev"
                 }
             },
             "autoload": {
@@ -138,9 +79,9 @@
             ],
             "support": {
                 "issues": "https://github.com/mongodb/mongo-php-library/issues",
-                "source": "https://github.com/mongodb/mongo-php-library/tree/1.17.1"
+                "source": "https://github.com/mongodb/mongo-php-library/tree/1.18.0"
             },
-            "time": "2024-03-14T10:33:11+00:00"
+            "time": "2024-03-27T17:04:50+00:00"
         },
         {
             "name": "paragonie/constant_time_encoding",
@@ -261,16 +202,16 @@
         },
         {
             "name": "php-amqplib/php-amqplib",
-            "version": "v3.6.1",
+            "version": "v3.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-amqplib/php-amqplib.git",
-                "reference": "76eee289e98b0b309a761787e65cbe1acbaf8c72"
+                "reference": "cb514530ce45a6d2f636be5196010c47c3bcf6e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/76eee289e98b0b309a761787e65cbe1acbaf8c72",
-                "reference": "76eee289e98b0b309a761787e65cbe1acbaf8c72",
+                "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/cb514530ce45a6d2f636be5196010c47c3bcf6e0",
+                "reference": "cb514530ce45a6d2f636be5196010c47c3bcf6e0",
                 "shasum": ""
             },
             "require": {
@@ -336,9 +277,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-amqplib/php-amqplib/issues",
-                "source": "https://github.com/php-amqplib/php-amqplib/tree/v3.6.1"
+                "source": "https://github.com/php-amqplib/php-amqplib/tree/v3.6.2"
             },
-            "time": "2024-02-07T17:21:26+00:00"
+            "time": "2024-04-15T18:31:22+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
