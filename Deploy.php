@@ -76,10 +76,10 @@ function handleFailure($connection, $unzipDestination, $remoteDir) {
     echo "Failure detected. Starting recovery process...\n";
 
     // List available versions for user to choose
-    $zipFiles = listAvailableVersions("/home/npl2/zip");
+    $zipFiles = listAvailableVersions("/home/webserver/zip");
     if (count($zipFiles) > 0) {
         $selectedFile = getUserVersionChoice($zipFiles);
-        $selectedFilePath = "/home/npl2/zip/" . $selectedFile;
+        $selectedFilePath = "/home/webserver/zip/" . $selectedFile;
 
         // Deleting contents of the destination before restoring
         echo "Deleting contents of the destination...\n";
@@ -117,7 +117,7 @@ function deleteRemoteDirectoryContents($connection, $remoteDir) {
 
 
 
-$versionFile = '/home/npl2/currentVersion.txt';
+$versionFile = '/home/webserver/currentVersion.txt';
 $currentVersion = 1;  
 
 // Check if the version file exists and read the current version from it
@@ -259,7 +259,7 @@ do {
     $sshPassword = trim(fgets(STDIN)); // SSH password
 
     // The remote directory remains constant
-    $remoteDir = '/home/npl2/Deploy';
+    $remoteDir = '/home/webserver/Deploy';
     
 
     // Display entered information (excluding password for security reasons)
