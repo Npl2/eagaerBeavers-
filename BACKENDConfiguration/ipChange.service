@@ -1,0 +1,11 @@
+[Unit]
+Description=Changed IP address for .ini to correct IP address
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/php /home/npl2/changeIP.sh
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

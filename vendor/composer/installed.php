@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '28b963655465fc3a83c0e2b671bf773bb8649421',
+        'reference' => 'f88e6f1dfd1c1a9caab703133228d6d24e901053',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '28b963655465fc3a83c0e2b671bf773bb8649421',
+            'reference' => 'f88e6f1dfd1c1a9caab703133228d6d24e901053',
             'dev_requirement' => false,
         ),
         'mongodb/mongodb' => array(
