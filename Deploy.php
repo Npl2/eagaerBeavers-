@@ -149,7 +149,7 @@ function unzipFile($connection, $zipFilePath, $remoteDir, $currentVersion) {
         
         // Directory and file pattern for checking renaming
         $directory = escapeshellarg($unzipDestination);
-        $filenamePattern = "/eagaerBeavers"; // Adjust based on how files are named before being renamed
+        $filenamePattern = "/grade.txt"; // Adjust based on how files are named before being renamed
     
         // Polling interval and max attempts
         $pollInterval = 10; // seconds
